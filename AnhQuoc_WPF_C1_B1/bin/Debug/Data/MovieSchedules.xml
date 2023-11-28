@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MovieSchedules>
+  <MovieSchedule Movie="MV6">
+    <CinemaTypeSchedules>
+      <CinemaTypeSchedule Type="Standard">
+        <CinemaSchedules>
+          <CinemaSchedule Cinema="S2">
+            <DateSchedules>
+              <DateSchedule Date="13/07/2023">
+                <TimeSchedules>
+                  <TimeSchedule Time="04:54" />
+                </TimeSchedules>
+              </DateSchedule>
+            </DateSchedules>
+          </CinemaSchedule>
+        </CinemaSchedules>
+      </CinemaTypeSchedule>
+    </CinemaTypeSchedules>
+  </MovieSchedule>
+  <MovieSchedule Movie="MV7">
+    <CinemaTypeSchedules />
+  </MovieSchedule>
+</MovieSchedules>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Genres>
+  <Genre Id="G1" Name="Action" />
+  <Genre Id="G2" Name="Horror" />
+  <Genre Id="G3" Name="Crime" />
+  <Genre Id="G4" Name="Comedy" />
+  <Genre Id="G5" Name="Adventure" />
+  <Genre Id="G6" Name="Science Fiction" />
+  <Genre Id="G7" Name="Animation" />
+</Genres>

@@ -1,0 +1,56 @@
+﻿<Window x:Class="AnhQuoc_WPF_C1_B1.frmAddCinema"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+        mc:Ignorable="d"
+        Title="frmCinema" Height="352.225" Width="500"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+    <StackPanel VerticalAlignment="Top">
+        <Label Name="lblTitle"
+               Grid.Column="0"
+               Margin="0 10 0 10"
+               FontWeight="Bold"
+               HorizontalAlignment="Center">Add new Cinema</Label>
+        <DataGrid Name="dgTable"
+                  ItemsSource="{Binding}"
+                  Height="220"
+                  HorizontalAlignment="Stretch"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="100" Binding="{Binding Id}" Header="Id"/>
+                <DataGridTextColumn Width="1*" Binding="{Binding Name}" Header="Name"/>
+                <DataGridTextColumn Width="150" Binding="{Binding Type}" Header="Type"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Margin="10"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Border BorderBrush="Black"
+                    BorderThickness="1">
+                <Button Name="btnCancel"
+                        Padding="5"
+                        FontSize="12"
+                        Width="70"
+                        Background="#ffffff"
+                        HorizontalAlignment="Center"
+                        Content="Cancel"
+                        Click="btnCancel_Click"/>
+            </Border>
+            <Button Name="btnConfirm"
+                    Margin="10 0 0 0"
+                    Padding="5"
+                    FontSize="12"
+                    Width="80"
+                    Background="#007bff"
+                    Foreground="White"
+                    HorizontalAlignment="Center"
+                    Content="Confirm"
+                    Click="btnConfirm_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

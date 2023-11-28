@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Customers>
+  <Customer Id="1" Name="A" Phone="111" />
+  <Customer Id="2" Name="B" Phone="222" />
+  <Customer Id="3" Name="A" Phone="111" />
+  <Customer Id="4" Name="B" Phone="111" />
+  <Customer Id="5" Name="D" Phone="132" />
+  <Customer Id="6" Name="A" Phone="1212" />
+  <Customer Id="7" Name="A" Phone="1212" />
+  <Customer Id="8" Name="V" Phone="121212" />
+  <Customer Id="9" Name="E" Phone="12121" />
+  <Customer Id="10" Name="A" Phone="111" />
+  <Customer Id="11" Name="G" Phone="121" />
+  <Customer Id="12" Name="A" Phone="1212" />
+  <Customer Id="13" Name="A" Phone="123" />
+  <Customer Id="14" Name="B" Phone="121" />
+  <Customer Id="15" Name="Tra A" Phone="111" />
+  <Customer Id="16" Name="Tran A" Phone="111" />
+  <Customer Id="17" Name="Tran A" Phone="121" />
+  <Customer Id="18" Name="Tran A" Phone="111" />
+  <Customer Id="19" Name="1" Phone="1" />
+  <Customer Id="20" Name="Tran A" Phone="111" />
+  <Customer Id="21" Name="1" Phone="11" />
+  <Customer Id="22" Name="1" Phone="111" />
+</Customers>

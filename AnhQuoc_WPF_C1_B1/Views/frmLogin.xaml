@@ -1,0 +1,61 @@
+﻿<Window x:Class="AnhQuoc_WPF_C1_B1.frmLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+        mc:Ignorable="d"
+        Title="frmLogin" Width="450" Height="500"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen"
+        Closed="Window_Closed">
+    <Border BorderBrush="Black"
+            BorderThickness="1"
+            Background="#d4ebff">
+        <StackPanel Width="400" Height="420"
+                    Background="#e6f3ff">
+            <Label VerticalContentAlignment="Center" 
+                   HorizontalContentAlignment="Left" 
+                   Padding="40 0"
+                   FontSize="50"
+                   Margin="0 15"
+                   TabIndex="-1"
+                   Foreground="Black">Sign in</Label>
+            <Label Name="lbUsername" 
+                   Margin="40 10 40 0" 
+                   Padding="0"
+                   TabIndex="-1"
+                   FontSize="20"
+                   Content="Username"></Label>
+            <TextBox Name="txtUsername" 
+                     Margin="40 10 40 0" 
+                     Height="50" 
+                     Padding="10"
+                     TabIndex="0"
+                     FontSize="20"
+                     PreviewTextInput="txtUsername_PreviewTextInput"/>
+            <Label Name="lbPassword" 
+                   Margin="40 20 40 0" 
+                   Padding="0"
+                   TabIndex="-1"
+                   FontSize="20"
+                   Content="Password"></Label>
+            <PasswordBox Name="boxPassword" 
+                     Margin="40 10 40 0" 
+                     Height="50" 
+                     Padding="10"
+                     TabIndex="1"
+                     FontSize="20"
+                     PreviewTextInput="boxPassword_PreviewTextInput"></PasswordBox>
+            <Button Name="btnSignIn"
+                    Margin="0 28"
+                    Background="#007FFD"
+                    Foreground="White"
+                    FontSize="20"
+                    Padding="50 20"
+                    TabIndex="2"
+                    HorizontalAlignment="Center"
+                    Click="btnSignIn_Click">Sign in</Button>
+        </StackPanel>
+    </Border>
+</Window>

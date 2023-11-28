@@ -1,0 +1,40 @@
+﻿<Window x:Class="AnhQuoc_WPF_C1_B1.frmCashier"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+        mc:Ignorable="d"
+        Title="Cashier window view"
+        Closed="Window_Closed">
+    <Grid Name="gdData"
+          Background="AliceBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TreeView Background="#4e73de"
+                  Grid.RowSpan="2">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="Padding" Value="0 15" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeViewItem Name="tvViewTicketPrice" Header="View Ticket price" MouseLeftButtonUp="tvViewTicketPrice_MouseLeftButtonUp"/>
+            <TreeViewItem Name="tvBooking" Header="Booking" MouseLeftButtonUp="tvBooking_MouseLeftButtonUp"/>
+            <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp"/>
+        </TreeView>
+        <Grid Grid.Column="1"
+              Name="gdView"/>
+    </Grid>
+</Window>

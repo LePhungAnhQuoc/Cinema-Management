@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="AnhQuoc_WPF_C1_B1.ucScheduleBooking"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="UserControl_Loaded">
+    <StackPanel>
+        <Grid Margin="10 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+                   TabIndex="-1"
+                   FontSize="12"
+                   Padding="10 0"
+                   VerticalContentAlignment="Center"
+                   HorizontalContentAlignment="Left"
+                   Content="Cinema Type:"/>
+            <ComboBox Grid.Column="1"
+                      IsEditable="True"
+                      IsReadOnly="True"
+                      HorizontalContentAlignment="Center"
+                      Text="Select Cinema Type"
+                      Name="cbCinemaTypes" 
+                      Padding="5"
+                      VerticalContentAlignment="Center"
+                      FontSize="12"
+                      ItemsSource="{Binding movieSchedule.CinemaTypeSchedules}"
+                      DisplayMemberPath="CinemaType"/>
+        </Grid>
+        <Grid Margin="10 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+                   TabIndex="-1"
+                   FontSize="12"
+                   Padding="10 0"
+                   VerticalContentAlignment="Center"
+                   HorizontalContentAlignment="Left"
+                   Content="Cinema:"/>
+            <ComboBox Grid.Column="1"
+                      IsEditable="True"
+                      IsReadOnly="True"
+                      HorizontalContentAlignment="Center"
+                      Text="Select Cinema"
+                      Name="cbCinemas" 
+                      Padding="5"
+                      VerticalContentAlignment="Center"
+                      FontSize="12"
+                      ItemsSource="{Binding ElementName=cbCinemaTypes, Path=SelectedItem.CinemaSchedules}"
+                      DisplayMemberPath="Cinema.Name"/>
+        </Grid>
+        <Border BorderBrush="Black"
+                BorderThickness="1"
+                Margin="0 15 0 0">
+            <StackPanel>
+                <Label HorizontalAlignment="Center">Date and Time</Label>
+                <Grid Margin="10 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ListBox Grid.Column="0"
+                             HorizontalContentAlignment="Center"
+                             Name="lbDate" 
+                             Padding="5"
+                             VerticalContentAlignment="Center"
+                             FontSize="12"
+                             ItemsSource="{Binding ElementName=cbCinemas, Path=SelectedItem.DatesSchedule}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Date, StringFormat='{}{0:dd/MM/yyyy}'}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox Grid.Column="1"
+                             HorizontalContentAlignment="Center"
+                             Name="lbTime" 
+                             Padding="5"
+                             VerticalContentAlignment="Center"
+                             FontSize="12"
+                             ItemsSource="{Binding ElementName=lbDate, Path=SelectedItem.TimeShedules}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Time, StringFormat='{}{0:hh\\:mm}'}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <StackPanel Margin="10"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Border BorderBrush="Black"
+                    BorderThickness="1">
+                <Button Name="btnCancel"
+                        Padding="5"
+                        FontSize="14"
+                        Width="70"
+                        Background="#ffffff"
+                        HorizontalAlignment="Center"
+                        Content="Cancel"
+                        Click="btnCancel_Click"/>
+            </Border>
+            <Button Name="btnConfirm"
+                    Margin="10 0 0 0"
+                    Padding="5"
+                    FontSize="14"
+                    Width="80"
+                    Background="#007bff"
+                    Foreground="White"
+                    HorizontalAlignment="Center"
+                    Content="Confirm"
+                    Click="btnConfirm_Click"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

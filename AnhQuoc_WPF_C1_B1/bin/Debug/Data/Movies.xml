@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Movies>
+  <Movie Id="MV4" Name="DORAEMON THE MOVIE: NOBITA’S SKY UTOPIA 2023" Genres="G7" ReleaseDate="26/5/2023" RunningTime="108" Rated="P" />
+  <Movie Id="MV5" Name="HOON PAYON" Genres="G2" ReleaseDate="2/6/2023" RunningTime="101" Rated="T16" />
+  <Movie Id="MV6" Name="ROUND-UP: NO WAY OUT" Genres="G1 G3" ReleaseDate="2/6/2023" RunningTime="105" Rated="T18" />
+  <Movie Id="MV7" Name="THE LITTLE MERMAID" Genres="G5" ReleaseDate="26/5/2023" RunningTime="135" Rated="K" />
+  <Movie Id="MV8" Name="LITTLE EGGS: AN AFRICAN RESCUE" Genres="G7" ReleaseDate="9/6/2023" RunningTime="89" Rated="K" />
+</Movies>
