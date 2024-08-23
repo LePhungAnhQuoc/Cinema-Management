@@ -46,14 +46,12 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (dgTable.SelectedItem == null)
             {
-                GetCinema = (Cinema)dgTable.SelectedItem;
+                return;
             }
-            catch
-            {
-                Utilities.HandleError();
-            }
+            GetCinema = (Cinema)dgTable.SelectedItem;
+
             this.Close();
             if (getFeature() == "add")
                 getUcCinemaScheduleTable().AddData(GetCinema);

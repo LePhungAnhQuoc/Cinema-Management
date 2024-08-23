@@ -64,21 +64,32 @@ namespace AnhQuoc_WPF_C1_B1
             // Checking Is Valid Infomation input
 
             TimeSchedule getTimeSchedule = lbTime.SelectedItem as TimeSchedule;
+            if (cbCinemaTypes.SelectedItem == null)
+            {
+                MessageBox.Show("Please select cinema type");
+                return;
+            }
+            if (cbCinemas.SelectedItem == null)
+            {
+                MessageBox.Show("Please select cinema");
+                return;
+            }
+
+            if (lbDate.SelectedItem == null)
+            {
+                MessageBox.Show("Please select date");
+                return;
+            }
             if (getTimeSchedule == null)
             {
-                Utilities.HandleError();
+                MessageBox.Show("Please select time");
+                return;
             }
-            try
-            {
-                newOrder.MovieOrder.CinemaType = ((CinemaTypeSchedule)cbCinemaTypes.SelectedItem).CinemaType;
-                newOrder.MovieOrder.Cinema = ((CinemaSchedule)cbCinemas.SelectedItem).Cinema;
-                newOrder.MovieOrder.Date = ((DateSchedule)lbDate.SelectedItem).Date;
-                newOrder.MovieOrder.Time = ((TimeSchedule)lbTime.SelectedItem).Time;
-            }
-            catch
-            {
-                Utilities.HandleError();
-            }
+            newOrder.MovieOrder.CinemaType = ((CinemaTypeSchedule)cbCinemaTypes.SelectedItem).CinemaType;
+            newOrder.MovieOrder.Cinema = ((CinemaSchedule)cbCinemas.SelectedItem).Cinema;
+            newOrder.MovieOrder.Date = ((DateSchedule)lbDate.SelectedItem).Date;
+            newOrder.MovieOrder.Time = ((TimeSchedule)lbTime.SelectedItem).Time;
+        
             newOrder.Customer = getUcBooking().LoadFrmCustomer();
             if (newOrder.Customer == null)
             {
@@ -96,6 +107,16 @@ namespace AnhQuoc_WPF_C1_B1
             {
                 getUcBooking().Content = null;
             }
+        }
+
+        private void cbCinemaTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lblSelectCinemaType.Visibility = Visibility.Hidden;
+        }
+
+        private void cbCinemas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lblSelectCinema.Visibility = Visibility.Hidden;
         }
     }
 }

@@ -34,13 +34,13 @@ namespace AnhQuoc_WPF_C1_B1
             set
             {
                 _getTimeSchedules = value;
-                UserControl_Loaded(null, null);
+                OnChangeDateSchedule();
             }
         }
         public Func<string> getFileSeat { get; set; }
 
         private TimeScheduleViewModel timeScheduleVM { get; set; }
-        private ObservableCollection<TimeSchedule> list;
+        private ObservableCollection<TimeSchedule> GetSource;
 
         public TimeSchedule currentItem;
         public ucTimeScheduleTable()
@@ -51,8 +51,14 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            list = new ObservableCollection<TimeSchedule>(getTimeSchedules());
-            dgTable.ItemsSource = list;
+            if (GetSource.Count > 0)
+                dgTable.SelectedIndex = 0;
+        }
+
+        private void OnChangeDateSchedule()
+        {
+            GetSource = new ObservableCollection<TimeSchedule>(getTimeSchedules());
+            dgTable.ItemsSource = GetSource;
         }
 
         private void LoadUcTimePicker(string feature)
@@ -77,7 +83,7 @@ namespace AnhQuoc_WPF_C1_B1
                 Seats = new List<List<Seat>>(),
             };
             timeScheduleVM.TimeScheduleRepo.Items.Add(newItem);
-            list.Add(newItem);
+            GetSource.Add(newItem);
             getTimeSchedules().Add(newItem);
 
             string fileSeat = timeScheduleVM.CreateFileSeatName(newItem.Time, getFileSeat());
@@ -131,7 +137,7 @@ namespace AnhQuoc_WPF_C1_B1
             {
                 Utilities.HandleError();
             }
-            list.Remove(newItem);
+            GetSource.Remove(newItem);
             getTimeSchedules().Remove(newItem);
             timeScheduleVM.TimeScheduleRepo.Remove(newItem);
             timeScheduleVM.WriteRemoveData(getMovieSchedule().Movie, getCinemaTypeSchedule().CinemaType, getCinemaSchedule().Cinema, getDateSchedule().Date, newItem);

@@ -4,46 +4,67 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="500">
+    <UserControl.Resources>
+        <Thickness x:Key="gbPadding" Left="10" Top="10" Right="10" Bottom="10" />
+        <SolidColorBrush x:Key="gbBorderBrush" Color="Gray" Opacity="1" />
+        <SolidColorBrush x:Key="lblRevenueForground" Color="Green" Opacity="1" />
+    </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <StackPanel VerticalAlignment="Center"
-                    Grid.Column="0">
-            <StackPanel HorizontalAlignment="Center"
-                        Orientation="Horizontal">
-                <Label FontSize="15"
-                       Padding="5"
-                       Content="Dated:"
-                       HorizontalAlignment="Center"/>
-                <DatePicker Background="White"
-                            VerticalContentAlignment="Center"
-                            HorizontalContentAlignment="Center"
-                            Name="date"
-                            SelectedDateChanged="date_SelectedDateChanged" />
-            </StackPanel>
-        </StackPanel>
-        <StackPanel Margin="10 0"
-                    Background="#f8f9fd"
-                    Grid.ColumnSpan="2"
-                    Grid.Row="1">
-            <Label FontSize="15"
-                   Padding="5"
-                   Content="Order list"
-                   HorizontalAlignment="Center"/>
-            <ScrollViewer CanContentScroll="True"
-                          VerticalScrollBarVisibility="Auto">
+        <Grid Grid.Row="0"
+              Margin="0 15 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="250" />
+            </Grid.ColumnDefinitions>
+            <Label  Grid.Column="0"
+                    FontSize="15"
+                    Padding="5"
+                    Content="Dated:"
+                    HorizontalAlignment="Center"/>
+            <DatePicker Grid.Column="1"
+                        Background="White"
+                        VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        Name="date"
+                        SelectedDateChanged="date_SelectedDateChanged" />
+            <Grid Grid.Column="2"
+                  Margin="10 0 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       Foreground="{StaticResource lblRevenueForground}"
+                       FontSize="15"
+                       Content="Revenue:" />
+                <Label Grid.Column="1" 
+                       FontSize="15"
+                       Foreground="{StaticResource lblRevenueForground}"
+                       FontWeight="SemiBold"
+                       Name="lblRevenue" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1"
+              Margin="10 20 10 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0"
+                      Header="Order list"
+                      FontSize="15"
+                      Padding="{StaticResource gbPadding}"
+                      BorderBrush="{StaticResource gbBorderBrush}">
                 <DataGrid IsReadOnly="True"
                           Name="dgOrders" 
-                          Height="120"
                           AutoGenerateColumns="False"
                           SelectionChanged="dgOrders_SelectionChanged">
                     <DataGrid.Columns>
@@ -53,23 +74,15 @@
                         <DataGridTextColumn Width="*" Binding="{Binding Date, StringFormat='{}{0:dd/MM/yyyy}'}" Header="Date" />
                     </DataGrid.Columns>
                 </DataGrid>
-            </ScrollViewer>
-        </StackPanel>
-        <StackPanel Margin="10 0"
-                    Grid.ColumnSpan="2"
-                    Background="#f8f9fd"
-                    Grid.Row="2">
-            <Label FontSize="15"
-                   Padding="5"
-                   Content="Detail of Order"
-                   HorizontalAlignment="Center"/>
-            <ScrollViewer CanContentScroll="True"
-                          VerticalScrollBarVisibility="Auto">
-                <DataGrid IsReadOnly="True"
-                          HorizontalAlignment="Stretch"
-                          Name="dgOrderDetails"
-                          Height="150"
-                          Background="White"
+            </GroupBox>
+            <GroupBox Grid.Row="1"
+                      Header="Order details list"
+                      Margin="0 20 0 0"
+                      FontSize="15"
+                      Padding="{StaticResource gbPadding}"
+                      BorderBrush="{StaticResource gbBorderBrush}">
+                <DataGrid Name="dgOrderDetails"
+                          IsReadOnly="True"
                           AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="80" Binding="{Binding Path=Id}" Header="Id"/>
@@ -80,25 +93,7 @@
                         <DataGridTextColumn Width="*" Binding="{Binding Path=PayMent.Price}" Header="TotalPayment"/>
                     </DataGrid.Columns>
                 </DataGrid>
-            </ScrollViewer>
-        </StackPanel>
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Grid.Column="1">
-            <StackPanel HorizontalAlignment="Center"
-                        Orientation="Horizontal">
-                <Label Foreground="Green"
-                       FontSize="15"
-                       Content="Revenue:"
-                       Width="70"/>
-                <TextBox FontSize="15"
-                            VerticalContentAlignment="Center"
-                            BorderThickness="0"
-                            Background="Transparent"
-                            IsReadOnly="True"
-                            Name="txtRevenue"
-                            Width="100"/>
-            </StackPanel>
-        </StackPanel>
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>

@@ -20,4 +20,42 @@
   <MovieSchedule Movie="MV7">
     <CinemaTypeSchedules />
   </MovieSchedule>
+  <MovieSchedule Movie="MV4">
+    <CinemaTypeSchedules>
+      <CinemaTypeSchedule Type="Standard">
+        <CinemaSchedules>
+          <CinemaSchedule Cinema="S1">
+            <DateSchedules>
+              <DateSchedule Date="25/08/2024">
+                <TimeSchedules>
+                  <TimeSchedule Time="15:00" />
+                  <TimeSchedule Time="16:30" />
+                  <TimeSchedule Time="18:00" />
+                </TimeSchedules>
+              </DateSchedule>
+            </DateSchedules>
+          </CinemaSchedule>
+        </CinemaSchedules>
+      </CinemaTypeSchedule>
+      <CinemaTypeSchedule Type="VIP">
+        <CinemaSchedules>
+          <CinemaSchedule Cinema="V2">
+            <DateSchedules>
+              <DateSchedule Date="26/08/2024">
+                <TimeSchedules>
+                  <TimeSchedule Time="07:00" />
+                </TimeSchedules>
+              </DateSchedule>
+              <DateSchedule Date="27/08/2024">
+                <TimeSchedules>
+                  <TimeSchedule Time="07:00" />
+                  <TimeSchedule Time="08:30" />
+                </TimeSchedules>
+              </DateSchedule>
+            </DateSchedules>
+          </CinemaSchedule>
+        </CinemaSchedules>
+      </CinemaTypeSchedule>
+    </CinemaTypeSchedules>
+  </MovieSchedule>
 </MovieSchedules>

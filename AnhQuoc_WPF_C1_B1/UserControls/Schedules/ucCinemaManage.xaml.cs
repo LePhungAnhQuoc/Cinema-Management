@@ -60,11 +60,13 @@ namespace AnhQuoc_WPF_C1_B1
             gdCinema.Children.Add(ucCinemaTypeTable);
 
             ucCinemaSchedule = new ucCinemaScheduleTable();
+            ucCinemaSchedule.Margin = new Thickness(0, 10, 0, 0);
+
             ucCinemaSchedule.getUcCinemaManage = () => this;
             ucCinemaSchedule.getCinemaSchedule = () => new List<CinemaSchedule>();
 
-            ucCinemaSchedule.Margin = new Thickness(0, 10, 0, 0);
             Grid.SetRow(ucCinemaSchedule, 1);
+            ucCinemaSchedule.IsEnabled = false;
             gdCinema.Children.Add(ucCinemaSchedule);
 
             StackPanel stackPanel = new StackPanel();
@@ -82,12 +84,14 @@ namespace AnhQuoc_WPF_C1_B1
             stackPanel.Children.Add(ucDateSchedule);
 
             Grid.SetRow(stackPanel, 2);
+            ucDateSchedule.IsEnabled = false;
             gdCinema.Children.Add(stackPanel);
 
             ucTimeSchedule = new ucTimeScheduleTable();
             ucTimeSchedule.getTimeSchedules = () => new List<TimeSchedule>();
 
             Grid.SetRow(ucTimeSchedule, 3);
+            ucTimeSchedule.IsEnabled = false;
             gdCinema.Children.Add(ucTimeSchedule);
         }
     }

@@ -1,11 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MovieDetails>
-  <MovieDetail Id="MV4" Description="" UrlImage="" UrlTrailer="" />
-  <MovieDetail Id="MV5" Description="" UrlImage="" UrlTrailer="" />
-  <MovieDetail Id="MV6" Description="" UrlImage="" UrlTrailer="" />
-  <MovieDetail Id="MV7" Description="" UrlImage="" UrlTrailer="" />
-  <MovieDetail Id="MV8" Description="" UrlImage="" UrlTrailer="" />
-  <MovieDetail Id="MV2" Description="" UrlImage="" UrlTrailer="" />
-  <MovieDetail Id="MV3" Description="" UrlImage="" UrlTrailer="" />
-  <MovieDetail Id="MV1" Description="" UrlImage="" UrlTrailer="" />
+  <MovieDetail Id="MV4" Description="" UrlImage="Assets/DORAEMON.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV5" Description="" UrlImage="Assets/HOON PAYON.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV6" Description="" UrlImage="Assets/ROUND UP.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV7" Description="" UrlImage="Assets/THE LITTLE MERMAID.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV8" Description="" UrlImage="Assets/LITTLE EGGS.jpg" UrlTrailer="" />
 </MovieDetails>

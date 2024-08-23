@@ -70,6 +70,10 @@ namespace AnhQuoc_WPF_C1_B1
             {
                 UrlImage = Environment.CurrentDirectory + "\\" + Constants.fNoImage;
             }
+            else
+            {
+                UrlImage = UrlImage.Insert(0, Environment.CurrentDirectory + "\\");
+            }
         }
 
         private void btnChoose_Click(object sender, RoutedEventArgs e)

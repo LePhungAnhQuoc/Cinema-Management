@@ -14,7 +14,7 @@
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Binding="{Binding Time, StringFormat='{}{0:hh\\:mm}'}" Header="Time"/>
-                <DataGridTemplateColumn Width="auto">
+                <DataGridTemplateColumn Width="180">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Width="auto"

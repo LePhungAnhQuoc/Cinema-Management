@@ -34,7 +34,7 @@ namespace AnhQuoc_WPF_C1_B1
             set
             {
                 _getCinemaSchedule = value;
-                UserControl_Loaded(null, null);
+                OnChangeCinemaType();
             }
         }
      
@@ -65,14 +65,20 @@ namespace AnhQuoc_WPF_C1_B1
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ucDateSchedule = getUcCinemaManage().ucDateSchedule;
+            
+            if (GetSource.Count > 0)
+                dgTable.SelectedIndex = 0;
+        }
+    
+        private void OnChangeCinemaType()
+        {
             cinemaScheduleVM.CinemaScheduleRepo.Items = getCinemaSchedule();
             List<Cinema> cinemas = cinemaScheduleVM.FillCinema();
 
             GetSource = new ObservableCollection<Cinema>(cinemas);
             dgTable.ItemsSource = GetSource;
-            dgTable.SelectedIndex = 0;
         }
-    
+
         public void AddData(Cinema data)
         {
             this.Content = thisContent;
@@ -179,6 +185,7 @@ namespace AnhQuoc_WPF_C1_B1
             Cinema selectCinema = dgTable.SelectedItem as Cinema;
             if (selectCinema == null)
             {
+                ucDateSchedule.IsEnabled = false;
                 ucDateSchedule.getDateSchedules = () => new List<DateSchedule>();
                 return;
             }
@@ -186,8 +193,9 @@ namespace AnhQuoc_WPF_C1_B1
             CinemaSchedule cinemaSchedule = cinemaScheduleVM.GetByCinema(selectCinema);
 
             string fileSeat = cinemaScheduleVM.CreateFileSeatName(cinemaSchedule, getFileSeat());
-            ucDateSchedule.getFileSeat = () => fileSeat;
 
+            ucDateSchedule.IsEnabled = true;
+            ucDateSchedule.getFileSeat = () => fileSeat;
             ucDateSchedule.getUcCinemaManage = getUcCinemaManage;
             ucDateSchedule.getMovieSchedule = getMovieSchedule;
             ucDateSchedule.getCinemaTypeSchedule = getCinemaTypeSchedule;

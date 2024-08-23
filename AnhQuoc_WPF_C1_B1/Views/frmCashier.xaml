@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         Title="Cashier window view"
         Closed="Window_Closed">
-    <Grid Name="gdData"
-          Background="AliceBlue">
+    <Grid Name="gdData">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="170" />
             <ColumnDefinition Width="*" />
@@ -30,7 +29,7 @@
                     </Style.Triggers>
                 </Style>
             </TreeView.ItemContainerStyle>
-            <TreeViewItem Name="tvViewTicketPrice" Header="View Ticket price" MouseLeftButtonUp="tvViewTicketPrice_MouseLeftButtonUp"/>
+            <TreeViewItem Visibility="Collapsed" Name="tvViewTicketPrice" Header="View Ticket price" MouseLeftButtonUp="tvViewTicketPrice_MouseLeftButtonUp"/>
             <TreeViewItem Name="tvBooking" Header="Booking" MouseLeftButtonUp="tvBooking_MouseLeftButtonUp"/>
             <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp"/>
         </TreeView>

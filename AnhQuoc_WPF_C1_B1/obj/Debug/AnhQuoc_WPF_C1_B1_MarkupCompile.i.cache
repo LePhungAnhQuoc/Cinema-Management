@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\quocl\OneDrive\Desktop\Dự án lưu trữ\AnhQuoc_WPF_C2_B1+++++\AnhQuoc_WPF_C1_B1\obj\Debug\
+C:\Users\quocl\OneDrive\Desktop\Cinema-Management\AnhQuoc_WPF_C1_B1\obj\Debug\
 AnhQuoc_WPF_C1_B1
 none
 false
 DEBUG;TRACE
-C:\Users\quocl\OneDrive\Desktop\Dự án lưu trữ\AnhQuoc_WPF_C2_B1+++++\AnhQuoc_WPF_C1_B1\App.xaml
-28-1049098570
+C:\Users\quocl\OneDrive\Desktop\Cinema-Management\AnhQuoc_WPF_C1_B1\App.xaml
+28-565131560
 
-931517679631
-191578020848
+90-20601194
+19-1881505383
 UserControls\Admin\ucUserTable.xaml;UserControls\Cashier\ucBooking.xaml;UserControls\Cashier\ucDisplayListPoster.xaml;UserControls\Cashier\ucMoviePoster.xaml;UserControls\Cashier\ucScheduleBooking.xaml;UserControls\Schedules\ucCinemaManage.xaml;UserControls\Schedules\ucCinemaTypeScheduleTable.xaml;UserControls\Schedules\ucCinemaScheduleTable.xaml;UserControls\Schedules\ucDateScheduleTable.xaml;UserControls\Schedules\ucMoviePickerTable.xaml;UserControls\Schedules\ucMovieScheduleTable.xaml;UserControls\Admin\ucMovieTable.xaml;UserControls\Cashier\ucSeatBooking.xaml;UserControls\Admin\ucStatistical.xaml;UserControls\Schedules\ucTimeScheduleTable.xaml;Views\frmAddAccount.xaml;Views\frmAddTime.xaml;Views\frmAddDate.xaml;Views\frmAddCinema.xaml;Views\frmAddCinemaType.xaml;Views\frmAdmin.xaml;Views\frmCreateMovie.xaml;Views\frmCustomer.xaml;Views\frmLogin.xaml;Views\frmOrder.xaml;MainWindow.xaml;Views\frmCashier.xaml;UserControls\Cashier\ucViewTicketPrice.xaml;
 
-False
+True
 

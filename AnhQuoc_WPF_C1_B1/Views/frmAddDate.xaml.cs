@@ -46,13 +46,9 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            DateTime data = DateTime.Now;
-            try { data = (DateTime)datePicker.SelectedDate; }
-            catch
-            {
-                MessageBox.Show("Please pick a date for schedule");
+            if (datePicker.SelectedDate == null)
                 return;
-            }
+            DateTime data = (DateTime)datePicker.SelectedDate;
             this.Close();
             if (getFeature() == "add")
                 getUcDateScheduleTable().AddData(data);

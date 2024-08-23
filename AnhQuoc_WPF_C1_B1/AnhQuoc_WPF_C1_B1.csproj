@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AnhQuoc_WPF_C1_B1</RootNamespace>
     <AssemblyName>AnhQuoc_WPF_C1_B1</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -365,6 +366,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="bin\Debug\Assets\no-image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\DORAEMON.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\HOON PAYON.jpg" />
+    <Resource Include="bin\Debug\Assets\LITTLE EGGS.jpg" />
+    <Resource Include="bin\Debug\Assets\ROUND UP.jpg" />
+    <Resource Include="bin\Debug\Assets\THE LITTLE MERMAID.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

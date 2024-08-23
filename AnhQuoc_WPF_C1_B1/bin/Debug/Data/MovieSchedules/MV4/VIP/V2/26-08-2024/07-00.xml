@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Seats>
+  <Seat Id="V1A" IsBooked="0" />
+  <Seat Id="V2A" IsBooked="0" />
+  <Seat Id="V3A" IsBooked="0" />
+  <Seat Id="V4A" IsBooked="0" />
+  <Seat Id="V5A" IsBooked="0" />
+  <Seat Id="V1B" IsBooked="0" />
+  <Seat Id="V2B" IsBooked="0" />
+  <Seat Id="V3B" IsBooked="0" />
+  <Seat Id="V4B" IsBooked="0" />
+  <Seat Id="V5B" IsBooked="0" />
+  <Seat Id="V1C" IsBooked="0" />
+  <Seat Id="V2C" IsBooked="0" />
+  <Seat Id="V3C" IsBooked="0" />
+  <Seat Id="V4C" IsBooked="0" />
+  <Seat Id="V5C" IsBooked="0" />
+  <Seat Id="V1D" IsBooked="0" />
+  <Seat Id="V2D" IsBooked="0" />
+  <Seat Id="V3D" IsBooked="0" />
+  <Seat Id="V4D" IsBooked="0" />
+  <Seat Id="V5D" IsBooked="0" />
+  <Seat Id="V1E" IsBooked="0" />
+  <Seat Id="V2E" IsBooked="0" />
+  <Seat Id="V3E" IsBooked="0" />
+  <Seat Id="V4E" IsBooked="0" />
+  <Seat Id="V5E" IsBooked="0" />
+</Seats>

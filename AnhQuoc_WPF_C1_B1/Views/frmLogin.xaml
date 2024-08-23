@@ -5,22 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
         mc:Ignorable="d"
-        Title="frmLogin" Width="450" Height="500"
+        Title="frmLogin" Width="450"
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
-        Closed="Window_Closed">
+        Closed="Window_Closed"
+        SizeToContent="Height">
     <Border BorderBrush="Black"
             BorderThickness="1"
-            Background="#d4ebff">
-        <StackPanel Width="400" Height="420"
-                    Background="#e6f3ff">
+            Background="#ffffff"
+            Padding="10 0">
+        <StackPanel Background="#fff">
             <Label VerticalContentAlignment="Center" 
-                   HorizontalContentAlignment="Left" 
+                   HorizontalContentAlignment="Center" 
                    Padding="40 0"
-                   FontSize="50"
-                   Margin="0 15"
+                   FontSize="40"
+                   Margin="0 25 0 15"
                    TabIndex="-1"
-                   Foreground="Black">Sign in</Label>
+                   FontWeight="Bold"
+                   Foreground="Black">Welcome</Label>
+            <Grid Margin="0 0 0 20">
+                <Border Height="80"
+                        Width="80"
+                        Background="Black"
+                        CornerRadius="10" />
+                <Label Content="A"
+                       Foreground="White"
+                       Background="Transparent"
+                       FontSize="60"
+                       Padding="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"></Label>
+                
+            </Grid>
             <Label Name="lbUsername" 
                    Margin="40 10 40 0" 
                    Padding="0"
@@ -48,7 +64,7 @@
                      FontSize="20"
                      PreviewTextInput="boxPassword_PreviewTextInput"></PasswordBox>
             <Button Name="btnSignIn"
-                    Margin="0 28"
+                    Margin="0 60"
                     Background="#007FFD"
                     Foreground="White"
                     FontSize="20"

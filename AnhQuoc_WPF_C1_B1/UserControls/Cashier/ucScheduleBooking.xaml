@@ -7,32 +7,42 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Loaded="UserControl_Loaded">
-    <StackPanel>
-        <Grid Margin="10 5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="130" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   TabIndex="-1"
-                   FontSize="12"
-                   Padding="10 0"
-                   VerticalContentAlignment="Center"
-                   HorizontalContentAlignment="Left"
-                   Content="Cinema Type:"/>
-            <ComboBox Grid.Column="1"
-                      IsEditable="True"
-                      IsReadOnly="True"
-                      HorizontalContentAlignment="Center"
-                      Text="Select Cinema Type"
-                      Name="cbCinemaTypes" 
-                      Padding="5"
-                      VerticalContentAlignment="Center"
-                      FontSize="12"
-                      ItemsSource="{Binding movieSchedule.CinemaTypeSchedules}"
-                      DisplayMemberPath="CinemaType"/>
-        </Grid>
-        <Grid Margin="10 5">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       TabIndex="-1"
+                       FontSize="12"
+                       Padding="10 0"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Left"
+                       Content="Cinema Type:"/>
+                <Grid Grid.Column="1">
+                    <ComboBox HorizontalContentAlignment="Center"
+                              Name="cbCinemaTypes" 
+                              Padding="5"
+                              VerticalContentAlignment="Center"
+                              FontSize="12"
+                              ItemsSource="{Binding movieSchedule.CinemaTypeSchedules}"
+                              DisplayMemberPath="CinemaType"
+                              SelectionChanged="cbCinemaTypes_SelectionChanged"/>
+                    <Label Name="lblSelectCinemaType"
+                           Content="Select cinema type"
+                           IsHitTestVisible="False"
+                           HorizontalAlignment="Center"></Label>
+                </Grid>
+            </Grid>
+            <Grid Margin="10 5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130" />
                 <ColumnDefinition Width="1*" />
@@ -44,24 +54,37 @@
                    VerticalContentAlignment="Center"
                    HorizontalContentAlignment="Left"
                    Content="Cinema:"/>
-            <ComboBox Grid.Column="1"
-                      IsEditable="True"
-                      IsReadOnly="True"
-                      HorizontalContentAlignment="Center"
-                      Text="Select Cinema"
-                      Name="cbCinemas" 
-                      Padding="5"
-                      VerticalContentAlignment="Center"
-                      FontSize="12"
-                      ItemsSource="{Binding ElementName=cbCinemaTypes, Path=SelectedItem.CinemaSchedules}"
-                      DisplayMemberPath="Cinema.Name"/>
+            <Grid Grid.Column="1">
+                <ComboBox HorizontalContentAlignment="Center"
+                          Name="cbCinemas"
+                          Padding="5"
+                          VerticalContentAlignment="Center"
+                          FontSize="12"
+                          ItemsSource="{Binding ElementName=cbCinemaTypes, Path=SelectedItem.CinemaSchedules}"
+                          DisplayMemberPath="Cinema.Name" 
+                          SelectionChanged="cbCinemas_SelectionChanged"/>
+                <Label Name="lblSelectCinema"
+                       Content="Select cinema"
+                       IsHitTestVisible="False"
+                       HorizontalAlignment="Center"></Label>
+            </Grid>
         </Grid>
+        </StackPanel>
+        
         <Border BorderBrush="Black"
                 BorderThickness="1"
-                Margin="0 15 0 0">
-            <StackPanel>
-                <Label HorizontalAlignment="Center">Date and Time</Label>
-                <Grid Margin="10 5">
+                Margin="0 15 0 0"
+                Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold">Date and Time</Label>
+                <Grid Grid.Row="1"
+                      Margin="10 5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="2*" />
@@ -94,12 +117,13 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-            </StackPanel>
+            </Grid>
         </Border>
-        <StackPanel Margin="10"
+        <StackPanel Grid.Row="2"
+                    Margin="25"
                     VerticalAlignment="Bottom"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
             <Border BorderBrush="Black"
                     BorderThickness="1">
                 <Button Name="btnCancel"
@@ -122,5 +146,5 @@
                     Content="Confirm"
                     Click="btnConfirm_Click"/>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </UserControl>

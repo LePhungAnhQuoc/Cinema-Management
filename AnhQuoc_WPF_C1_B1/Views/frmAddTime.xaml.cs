@@ -50,17 +50,12 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            TimeSpan data = TimeSpan.Zero;
-            try
-            {
-                DateTime tempData = DateTime.Parse(sfTimePicker.Value.ToString());
-                data = tempData.TimeOfDay;
-            }
-            catch
-            {
-                MessageBox.Show("Please pick a Time for schedule");
+            if (sfTimePicker.Value == null)
                 return;
-            }
+            
+            DateTime tempData = DateTime.Parse(sfTimePicker.Value.ToString());
+            TimeSpan data = tempData.TimeOfDay;
+            
             this.Close();
             if (getFeature() == "add")
                 getUcTimeScheduleTable().AddData(data);

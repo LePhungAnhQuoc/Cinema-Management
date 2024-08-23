@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,25 +32,60 @@ namespace AnhQuoc_WPF_C1_B1
         public Func<ucCinemaManage> getUcCinemaManage { get; set; }
 
         private CinemaTypeScheduleViewModel cinemaTypeScheduleVM;
-        private ObservableCollection<CinemaType> getSource;
         private object thisContent;
 
+        private ObservableCollection<CinemaType> _CinemaTypes;
+        public ObservableCollection<CinemaType> CinemaTypes
+        {
+            get { return _CinemaTypes; }
+            set
+            { 
+                _CinemaTypes = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private CinemaType _CurrentItem;
+        public CinemaType CurrentItem
+        {
+            get { return _CurrentItem; }
+            set 
+            { 
+                _CurrentItem = value;
+                OnPropertyChanged();
+            }
+        }
         private ucCinemaScheduleTable ucCinemaSchedule;
+
+        #region PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        #endregion
+
+
 
         public ucCinemaTypeScheduleTable()
         {
             InitializeComponent();
+            this.DataContext = this;
+
             cinemaTypeScheduleVM = new CinemaTypeScheduleViewModel();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            ucCinemaSchedule = getUcCinemaManage().ucCinemaSchedule;
             cinemaTypeScheduleVM.Repo.Items = getCinemaTypeSchedule();
             List<CinemaType> cinemaTypes = cinemaTypeScheduleVM.FillCinemaType();
 
-            getSource = new ObservableCollection<CinemaType>(cinemaTypes);
-            cbCinemaTypes.ItemsSource = getSource;
-            cbCinemaTypes.SelectedIndex = 0;
+            CinemaTypes = new ObservableCollection<CinemaType>(cinemaTypes);
+            cbCinemaTypes.ItemsSource = CinemaTypes;
+
+            if (CinemaTypes.Count > 0)
+                cbCinemaTypes.SelectedIndex = 0;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -56,25 +93,16 @@ namespace AnhQuoc_WPF_C1_B1
             MessageBoxResult msbResult = MessageBox.Show("Do you want to remove this item", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
             if (msbResult == MessageBoxResult.Cancel)
                 return;
-            CinemaType selectedItem = CinemaType.Standard;
-            try
-            {
-                selectedItem = (CinemaType)cbCinemaTypes.SelectedItem;
-            }
-            catch
-            {
-                Utilities.HandleError();
-            }
+            CinemaType selectedItem = (CinemaType)cbCinemaTypes.SelectedItem;
             CinemaTypeSchedule newItem = cinemaTypeScheduleVM.GetByCinemaType(selectedItem);
             cinemaTypeScheduleVM.Repo.Remove(newItem);
 
-            getSource.Remove(newItem.CinemaType);
+            CinemaTypes.Remove(newItem.CinemaType);
 
             cinemaTypeScheduleVM.WriteRemoveData(getMovieSchedule().Movie, newItem);
 
             string fileSeat = cinemaTypeScheduleVM.CreateFileSeatName(newItem, getFileSeat());
             Utilities.DeleteDirectory(fileSeat);
-
         }
         
         public void AddData(CinemaType data)
@@ -85,7 +113,7 @@ namespace AnhQuoc_WPF_C1_B1
                 CinemaSchedules = new List<CinemaSchedule>(),
             };
             cinemaTypeScheduleVM.Repo.Items.Add(newCinemaTypeSchedule);
-            getSource.Add(newCinemaTypeSchedule.CinemaType);
+            CinemaTypes.Add(newCinemaTypeSchedule.CinemaType);
 
             cinemaTypeScheduleVM.WriteData(getMovieSchedule().Movie, newCinemaTypeSchedule);
 
@@ -120,20 +148,19 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void cbCinemaTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CinemaType selectCinemaType = CinemaType.Standard;
-            try
+            CinemaType selectCinemaType;
+            if (cbCinemaTypes.SelectedItem == null)
             {
-                selectCinemaType = (CinemaType)cbCinemaTypes.SelectedItem;
-            }
-            catch
-            {
+                ucCinemaSchedule.IsEnabled = false;
                 ucCinemaSchedule.getCinemaSchedule = () => new List<CinemaSchedule>();
                 return;
             }
+            selectCinemaType = (CinemaType)cbCinemaTypes.SelectedItem;
+
             CinemaTypeSchedule cinemaTypeSchedule = cinemaTypeScheduleVM.GetByCinemaType(selectCinemaType);
             if (cinemaTypeSchedule == null) return;
 
-            ucCinemaSchedule = getUcCinemaManage().ucCinemaSchedule;
+            ucCinemaSchedule.IsEnabled = true;
             string fileSeat = cinemaTypeScheduleVM.CreateFileSeatName(cinemaTypeSchedule, getFileSeat());
 
             ucCinemaSchedule.getFileSeat = () => fileSeat;

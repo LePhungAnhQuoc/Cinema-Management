@@ -38,14 +38,10 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                GetCinemaType = (CinemaType)dgTable.SelectedItem;
-            }
-            catch
-            {
-                Utilities.HandleError();
-            }
+            if (dgTable.SelectedItem == null)
+                return;
+            GetCinemaType = (CinemaType)dgTable.SelectedItem;
+          
             this.Close();
             getUcCinemaTypeScheduleTable().AddData(GetCinemaType);
         }

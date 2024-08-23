@@ -117,7 +117,8 @@ namespace AnhQuoc_WPF_C1_B1
             newDetail.PayMent.DiscountRef = 0;
             newDetail.PayMent.Discount = bookSeat.Price * (newDetail.PayMent.DiscountRef / 100.0);
             newDetail.PayMent.Price = bookSeat.Price - newDetail.PayMent.Discount;
-           
+
+            newDetail.TicketType = TicketType.Adult;
             return newDetail;
         }
 
@@ -243,8 +244,8 @@ namespace AnhQuoc_WPF_C1_B1
                     orderDetailVM.OrderDetailRepo = new RepositoryBase<OrderDetail>();
                     orderDetailVM.OrderDetailRepo.Items = _orderDetails;
 
-                    CurrentSelected = orderDetailVM.FindBySeatId(seatBooked.Id);
-                    _orderDetails.Remove(CurrentSelected);
+                    _orderDetails.Remove(orderDetailVM.FindBySeatId(seatBooked.Id));
+                    CurrentSelected = null;
                 }
             }
         }
@@ -252,19 +253,20 @@ namespace AnhQuoc_WPF_C1_B1
         private void CbTicketType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TicketType item = TicketType.Adult;
-            try
+            if (cbTicketType.SelectedItem == null)
+                return;
+
+            item = (TicketType)cbTicketType.SelectedItem;
+            switch (item)
             {
-                item = (TicketType)cbTicketType.SelectedItem;
+                case TicketType.Children:
+                    CurrentSelected.PayMent.DiscountRef = 50;
+                    break;
+                case TicketType.Adult:
+                    CurrentSelected.PayMent.DiscountRef = 0;
+                    break;
             }
-            catch { }
-            if (item == TicketType.Children)
-            {
-                CurrentSelected.PayMent.DiscountRef = 50;
-            }
-            else if (item == TicketType.Adult)
-            {
-                CurrentSelected.PayMent.DiscountRef = 0;
-            }
+
             CurrentSelected.PayMent.Discount = CurrentSelected.BookedSeat.Price * (CurrentSelected.PayMent.DiscountRef / 100.0);
             CurrentSelected.PayMent.Price = CurrentSelected.BookedSeat.Price - CurrentSelected.PayMent.Discount;
         }

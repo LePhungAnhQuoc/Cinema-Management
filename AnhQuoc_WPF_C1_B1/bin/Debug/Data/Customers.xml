@@ -22,4 +22,7 @@
   <Customer Id="20" Name="Tran A" Phone="111" />
   <Customer Id="21" Name="1" Phone="11" />
   <Customer Id="22" Name="1" Phone="111" />
+  <Customer Id="23" Name="Tran Nhu An" Phone="0111111111" />
+  <Customer Id="24" Name="Nguyen Van Nam" Phone="123" />
+  <Customer Id="25" Name="Tran Van Nhien" Phone="0101" />
 </Customers>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -25,6 +26,10 @@ namespace AnhQuoc_WPF_C1_B1
 
         public MainWindow()
         {
+            CultureInfo currentCulture = new CultureInfo("vi-VN");
+            System.Threading.Thread.CurrentThread.CurrentCulture = currentCulture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = currentCulture;
+
             unitOfWork = new UnitOfWork();
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;

@@ -69,7 +69,6 @@ namespace AnhQuoc_WPF_C1_B1
 
 
             ucCinemaManage.getFrmAdmin = getFrmAdmin;
-
             ucCinemaManage.getCinemaTypeSchedules = () => newMovieSchedule.CinemaTypeSchedules;
 
             EnumViewModel enumVM = new EnumViewModel();

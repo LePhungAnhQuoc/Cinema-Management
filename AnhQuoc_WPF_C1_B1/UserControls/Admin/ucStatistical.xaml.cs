@@ -32,7 +32,7 @@ namespace AnhQuoc_WPF_C1_B1
             OrderViewModel orderVM2 = new OrderViewModel();
             orderVM2.OrderRepo = new RepositoryBase<Order>();
             orderVM2.OrderRepo.Items = lstOrder.Items;
-            txtRevenue.Text = orderVM2.TotalRevenue().ToString(Constants.formatCurrency);
+            lblRevenue.Content = orderVM2.TotalRevenue().ToString(Constants.formatCurrency);
         }
 
         private void dgOrders_SelectionChanged(object sender, SelectionChangedEventArgs e)

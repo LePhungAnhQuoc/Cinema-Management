@@ -1,3 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Orders>
+  <Order Id="1" CustomerId="23" Cinema="S2" OtherPrice="0" PayMent="150000" Date="23/08/2024">
+    <OrderDetails IdOrder="1">
+      <OrderDetail Id="1" BookedSeatId="S2C" TicketType="Adult" DiscountRef="0" Discount="0" TotalPrice="60000" />
+      <OrderDetail Id="2" BookedSeatId="S3C" TicketType="Adult" DiscountRef="0" Discount="0" TotalPrice="60000" />
+      <OrderDetail Id="3" BookedSeatId="S4C" TicketType="Children" DiscountRef="50" Discount="30000" TotalPrice="30000" />
+    </OrderDetails>
+  </Order>
+  <Order Id="2" CustomerId="24" Cinema="S2" OtherPrice="0" PayMent="150000" Date="23/08/2024">
+    <OrderDetails IdOrder="2">
+      <OrderDetail Id="1" BookedSeatId="S2B" TicketType="Adult" DiscountRef="0" Discount="0" TotalPrice="50000" />
+      <OrderDetail Id="2" BookedSeatId="S3B" TicketType="Adult" DiscountRef="0" Discount="0" TotalPrice="50000" />
+      <OrderDetail Id="3" BookedSeatId="S4B" TicketType="Adult" DiscountRef="0" Discount="0" TotalPrice="50000" />
+    </OrderDetails>
+  </Order>
+  <Order Id="3" CustomerId="25" Cinema="V2" OtherPrice="40000" PayMent="265000" Date="23/08/2024">
+    <OrderDetails IdOrder="3">
+      <OrderDetail Id="1" BookedSeatId="V2A" TicketType="Adult" DiscountRef="0" Discount="0" TotalPrice="90000" />
+      <OrderDetail Id="3" BookedSeatId="V3A" TicketType="Adult" DiscountRef="0" Discount="0" TotalPrice="90000" />
+      <OrderDetail Id="3" BookedSeatId="V4A" TicketType="Children" DiscountRef="50" Discount="45000" TotalPrice="45000" />
+    </OrderDetails>
+  </Order>
 </Orders>

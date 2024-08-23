@@ -37,7 +37,6 @@ namespace AnhQuoc_WPF_C1_B1
             set
             {
                 _getDateSchedules = value;
-                //UserControl_Loaded(null, null);
                 DateSchedules = new ObservableCollection<DateSchedule>(value());
             }
         }
@@ -49,8 +48,7 @@ namespace AnhQuoc_WPF_C1_B1
             set
             {
                 _DateSchedules = value;
-                OnPropertyChanged("DateSchedules");
-                cbDates.SelectedIndex = 0;
+                OnPropertyChanged();
             }
         }
 
@@ -87,7 +85,9 @@ namespace AnhQuoc_WPF_C1_B1
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ucTimeSchedule = getUcCinemaManage().ucTimeSchedule;
-            cbDates.SelectedIndex = 0;
+
+            if (DateSchedules.Count > 0)
+                cbDates.SelectedIndex = 0;
         }
 
         private List<string> ConvertDateSource(List<DateTime> dates)
@@ -181,23 +181,22 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void cbDates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ucTimeScheduleTable ucTimeSchedule = getUcCinemaManage().ucTimeSchedule;
             DateSchedule dateSchedule = cbDates.SelectedItem as DateSchedule;
             if (dateSchedule == null)
             {
+                ucTimeSchedule.IsEnabled = false;
                 ucTimeSchedule.getTimeSchedules = () => new List<TimeSchedule>();
                 return;
             }
             string fileSeat = dateScheduleVM.CreateFileSeatName(dateSchedule.Date, getFileSeat());
             ucTimeSchedule.getFileSeat = () => fileSeat;
 
+            ucTimeSchedule.IsEnabled = true;
             ucTimeSchedule.getUcCinemaManage = getUcCinemaManage;
-
             ucTimeSchedule.getMovieSchedule = getMovieSchedule;
             ucTimeSchedule.getCinemaTypeSchedule = getCinemaTypeSchedule;
             ucTimeSchedule.getCinemaSchedule = getCinemaSchedule;
             ucTimeSchedule.getDateSchedule = () => dateSchedule;
-
             ucTimeSchedule.getTimeSchedules = () => dateSchedule.TimeShedules;
         }
     }

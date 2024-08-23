@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Accounts>
   <Account Username="admin" Password="admin" Role="Admin" Status="1" />
-  <Account Username="user2" Password="user" Role="Cashier" Status="1" />
+  <Account Username="user" Password="user" Role="Cashier" Status="0" />
   <Account Username="cashier" Password="cashier" Role="Cashier" Status="1" />
 </Accounts>
