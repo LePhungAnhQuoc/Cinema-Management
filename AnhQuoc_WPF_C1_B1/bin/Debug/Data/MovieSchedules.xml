@@ -13,6 +13,9 @@
               </DateSchedule>
             </DateSchedules>
           </CinemaSchedule>
+          <CinemaSchedule Cinema="S1">
+            <DateSchedules />
+          </CinemaSchedule>
         </CinemaSchedules>
       </CinemaTypeSchedule>
     </CinemaTypeSchedules>
@@ -57,5 +60,8 @@
         </CinemaSchedules>
       </CinemaTypeSchedule>
     </CinemaTypeSchedules>
+  </MovieSchedule>
+  <MovieSchedule Movie="MV5">
+    <CinemaTypeSchedules />
   </MovieSchedule>
 </MovieSchedules>

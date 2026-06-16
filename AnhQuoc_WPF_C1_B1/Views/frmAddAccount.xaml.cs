@@ -47,6 +47,9 @@ namespace AnhQuoc_WPF_C1_B1
                 cbRole.SelectedItem = getUcUserTable().CurrentItem.Role;
                 txtUsername.IsEnabled = false;
             }
+
+            if (cbRole.Items.Count > 0)
+                cbRole.SelectedIndex = 0;
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)

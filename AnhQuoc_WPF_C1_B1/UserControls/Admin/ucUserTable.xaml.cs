@@ -157,9 +157,7 @@ namespace AnhQuoc_WPF_C1_B1
         private void btnLockState_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            MessageBoxResult msbResult = MessageBox.Show($"Do you want to {btn.Content} this item", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
-            if (msbResult == MessageBoxResult.Cancel)
-                return;
+
             Account newItem = null;
             try
             {
@@ -170,6 +168,12 @@ namespace AnhQuoc_WPF_C1_B1
                 Utilities.HandleError();
             }
             bool state = Convert.ToBoolean(newItem.Status);
+
+            string lockState = state ? "lock" : "unlock";
+            MessageBoxResult msbResult = MessageBox.Show($"Do you want to {lockState} this item", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
+            if (msbResult == MessageBoxResult.Cancel)
+                return;
+            
             newItem.Status = Convert.ToInt32(!state);
             accountVM.WriteUpdateData(newItem);
         }

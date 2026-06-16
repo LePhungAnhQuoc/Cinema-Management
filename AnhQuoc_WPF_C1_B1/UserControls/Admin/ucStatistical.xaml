@@ -29,7 +29,8 @@
                     Padding="5"
                     Content="Dated:"
                     HorizontalAlignment="Center"/>
-            <DatePicker Grid.Column="1"
+            <DatePicker Style="{StaticResource ResourceKey=datePicker}"
+                        Grid.Column="1"
                         Background="White"
                         VerticalContentAlignment="Center"
                         HorizontalContentAlignment="Center"
@@ -63,7 +64,8 @@
                       FontSize="15"
                       Padding="{StaticResource gbPadding}"
                       BorderBrush="{StaticResource gbBorderBrush}">
-                <DataGrid IsReadOnly="True"
+                <DataGrid Style="{StaticResource ModernDataGrid}"
+                          IsReadOnly="True"
                           Name="dgOrders" 
                           AutoGenerateColumns="False"
                           SelectionChanged="dgOrders_SelectionChanged">
@@ -81,7 +83,8 @@
                       FontSize="15"
                       Padding="{StaticResource gbPadding}"
                       BorderBrush="{StaticResource gbBorderBrush}">
-                <DataGrid Name="dgOrderDetails"
+                <DataGrid Style="{StaticResource ModernDataGrid}"
+                          Name="dgOrderDetails"
                           IsReadOnly="True"
                           AutoGenerateColumns="False">
                     <DataGrid.Columns>

@@ -14,7 +14,7 @@ namespace AnhQuoc_WPF_C1_B1
             Item = new OrderDetail();
         }
 
-        public void getList(RepositoryBase<Order> OrderRepo)
+        public void getList(RepositoryBase<OrderDetail> OrderDetailRepo)
         {
             this.OrderDetailRepo = OrderDetailRepo;
         }

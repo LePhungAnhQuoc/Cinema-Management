@@ -7,55 +7,53 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400"
              Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <local:DateConverter x:Key="dateConverter" />
+    </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   CanContentScroll="True">
         <StackPanel>
+            <Button Style="{StaticResource AddButtonStyle}"
+                    Margin="30"
+                    HorizontalAlignment="Right"
+                    Name="btnAdd"
+                    Content="Add new movie"
+                    Click="btnAdd_Click"/>
             <DataGrid IsReadOnly="True"
-                      HorizontalAlignment="Center"
+                      HorizontalAlignment="Stretch"
                       Name="dgTable"
-                      AutoGenerateColumns="False">
+                      AutoGenerateColumns="False"
+                      Style="{StaticResource ModernDataGrid}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
                     <DataGridTextColumn Binding="{Binding Rated.Id}" Header="Rated"/>
                     <DataGridTextColumn Binding="{Binding RunningTime}" Header="Running Time"/>
-                    <DataGridTextColumn Binding="{Binding ReleaseDate}" Header="ReleaseDate"/>
-                    <DataGridTemplateColumn>
+                    <DataGridTextColumn Width="*" Binding="{Binding ReleaseDate, Converter={StaticResource dateConverter}}" Header="ReleaseDate"/>
+                    <DataGridTemplateColumn Header="Operations">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Background="#dc3545" Foreground="White"
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Background="#dc3545" Foreground="White"
+                                        Style="{StaticResource OperationButtonStyle}"
                                         Name="btnDelete"
-                                        FontSize="12"
-                                        Margin="10" Padding="15 5" 
-                                        Click="btnDelete_Click">Delete</Button>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Background="#28a745" Foreground="White"
+                                        Click="btnDelete_Click">
+                                        <Path Data="{StaticResource TrashIconData}"
+                                          Fill="White" Stretch="Uniform"/>
+                                    </Button>
+                                    <Button Style="{StaticResource OperationButtonStyle}"
+                                        Background="#28a745" Foreground="White"
                                         Name="btnUpdate"
-                                        FontSize="12"
-                                        Margin="10" Padding="15 5"
-                                        Click="btnUpdate_Click">Update</Button>
+                                        Click="btnUpdate_Click">
+                                        <Path Data="{StaticResource EditIconData}"
+                                          Fill="White" Stretch="Uniform"/>
+                                    </Button>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <StackPanel Margin="0 10"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center">
-                <Button HorizontalAlignment="Center"
-                        Background="#007bff" Foreground="White"
-                        Name="btnAdd"
-                        FontSize="12"
-                        Padding="15 5"
-                        Content="Add"
-                        Width="70"
-                        Click="btnAdd_Click"/>
-            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

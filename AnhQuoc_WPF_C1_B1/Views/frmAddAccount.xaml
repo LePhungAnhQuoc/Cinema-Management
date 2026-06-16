@@ -30,7 +30,9 @@
                      Name="txtUsername" 
                      Padding="5"
                      TabIndex="0"
-                     FontSize="12"/>
+                     FontSize="12"
+                     Style="{StaticResource RoundedTextBox}">
+            </TextBox>
         </Grid>
         <Grid Margin="10 0 10 10">
             <Grid.ColumnDefinitions>
@@ -48,7 +50,8 @@
                      Name="txtPassword" 
                      Padding="5"
                      TabIndex="1"
-                     FontSize="12"></TextBox>
+                     FontSize="12"
+                     Style="{StaticResource RoundedTextBox}"></TextBox>
         </Grid>
         <Grid Margin="10 0 10 10">
             <Grid.ColumnDefinitions>
@@ -67,24 +70,26 @@
                       HorizontalContentAlignment="Center"
                       Padding="5"
                       TabIndex="1"
-                      FontSize="12"></ComboBox>
+                      FontSize="12"
+                      Style="{StaticResource ModernComboBox}"></ComboBox>
         </Grid>
         <StackPanel Margin="10"
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <Border BorderBrush="Black"
-                    BorderThickness="1">
-                <Button Name="btnCancel"
-                        Padding="5"
-                        FontSize="12"
-                        Width="70"
-                        Background="#ffffff"
-                        HorizontalAlignment="Center"
-                        Content="Cancel"
-                        Click="btnCancel_Click"/>
-            </Border>
+            <Button Name="btnCancel"
+                    Padding="5"
+                    FontSize="12"
+                    Width="70"
+                    Background="#ffffff"
+                    HorizontalAlignment="Center"
+                    Content="Cancel"
+                    Click="btnCancel_Click"
+                    Style="{StaticResource RoundedButtonStyle}"
+                    BorderThickness="1"
+                    Foreground="Black"/>
             <Button Name="btnConfirm"
+                    Style="{StaticResource RoundedButtonStyle}"
                     Margin="10 0 0 0"
                     Padding="5"
                     FontSize="12"

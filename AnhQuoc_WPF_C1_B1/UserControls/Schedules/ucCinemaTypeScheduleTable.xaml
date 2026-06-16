@@ -22,29 +22,28 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
                        HorizontalAlignment="Left">Choose Cinema Type:</Label>
-                <ComboBox Grid.Column="1"
+                <ComboBox Style="{StaticResource ModernComboBox}"
+                          Grid.Column="1"
                           Name="cbCinemaTypes"
-                          FontSize="12"
-                          Padding="5"
                           HorizontalAlignment="Stretch"
-                          VerticalContentAlignment="Center"
                           SelectionChanged="cbCinemaTypes_SelectionChanged"/>
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal">
-                    <Button HorizontalAlignment="Right"
+                    <Button Style="{StaticResource OperationButtonStyle}"
+                            HorizontalAlignment="Right"
                             Background="#007bff" Foreground="White"
                             Name="btnAdd"
-                            FontSize="12"
-                            Content="Add"
-                            Width="70"
-                            Padding="5"  Margin="10,0,0,0"
-                            Click="btnAdd_Click"/>
-                    <Button Background="#dc3545" Foreground="White"
+                            FontSize="12" Margin="10,0,0,0"
+                            Click="btnAdd_Click">
+                        <Path Data="{StaticResource addIconData}" Fill="White" Stretch="Uniform" />
+                    </Button>
+                    <Button Style="{StaticResource OperationButtonStyle}"
+                            Background="#dc3545" Foreground="White"
                             Name="btnDelete"
-                            FontSize="12" 
-                            Width="70" 
-                            Padding="5" Margin="10,0,10,0"
-                            Click="btnDelete_Click">Delete</Button>
+                            FontSize="12" Margin="10,0,10,0"
+                            Click="btnDelete_Click">
+                        <Path Data="{StaticResource TrashIconData}" Fill="White" Stretch="Uniform" />
+                    </Button>
                 </StackPanel>
             </Grid>
         </Grid>

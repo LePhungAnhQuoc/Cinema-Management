@@ -8,7 +8,14 @@
              d:DesignHeight="300" d:DesignWidth="500"
              Loaded="UserControl_Loaded">
     <StackPanel>
-        <DataGrid IsReadOnly="True"
+        <Button Style="{StaticResource AddButtonStyle}"
+                HorizontalAlignment="Right"
+                Margin="30"
+                Name="btnAdd"
+                Content="Add New Movie"
+                Click="btnAdd_Click"/>
+        <DataGrid Style="{StaticResource ModernDataGrid}"
+                  IsReadOnly="True"
                   HorizontalAlignment="Stretch"
                   Name="dgTable"
                   AutoGenerateColumns="False">
@@ -25,36 +32,31 @@
                                         HorizontalAlignment="Center"
                                         Orientation="Horizontal">
                                 <Button Background="#dc3545" Foreground="White"
+                                        Style="{StaticResource OperationButtonStyle}"
                                         Name="btnDelete"
-                                        FontSize="12"
-                                        Margin="10 5 0 5" Padding="15 5"
-                                        Click="btnDelete_Click">Delete</Button>
-                                <Button Background="#28a745" Foreground="White"
+                                        Click="btnDelete_Click">
+                                    <Path Data="{StaticResource TrashIconData}"
+                                          Fill="White" Stretch="Uniform"/>
+                                </Button>
+                                <Button Style="{StaticResource OperationButtonStyle}"
+                                        Background="#28a745" Foreground="White"
                                         Name="btnUpdate"
-                                        FontSize="12"
-                                        Margin="10 5 0 5" Padding="15 5"
-                                        Click="btnUpdate_Click">Update</Button>
-                                <Button Background="#00ccff" Foreground="White"
+                                        Click="btnUpdate_Click">
+                                    <Path Data="{StaticResource EditIconData}"
+                                          Fill="White" Stretch="Uniform"/>
+                                </Button>
+                                <Button Style="{StaticResource OperationButtonStyle}"
+                                        Background="#00ccff" Foreground="White"
                                         Name="btnDetail"
-                                        FontSize="12"
-                                        Margin="10 5 10 5" Padding="15 5"
-                                        Click="btnDetail_Click">Detail</Button>
+                                        Click="btnDetail_Click">
+                                    <Path Data="{StaticResource InfoIconData}"
+                                          Fill="White" Stretch="Uniform"/>
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Margin="0 10"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button HorizontalAlignment="Center"
-                    Background="#007bff" Foreground="White"
-                    Name="btnAdd"
-                    FontSize="12"
-                    Padding="15 5"
-                    Content="Add New Movie"
-                    Click="btnAdd_Click"/>
-        </StackPanel>
     </StackPanel>
 </UserControl>

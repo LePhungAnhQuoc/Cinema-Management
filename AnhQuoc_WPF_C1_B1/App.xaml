@@ -2,8 +2,719 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
-             StartupUri="MainWindow.xaml">
+             StartupUri="MainWindow.xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
-         
+        <Geometry x:Key="TrashIconData">
+            M12 1.75a3.25 3.25 0 0 1 3.245 3.066L15.25 5h5.25a.75.75 0 0 1 .102 1.493L20.5 6.5h-.796l-1.28 13.02a2.75 2.75 0 0 1-2.561 2.474l-.176.006H8.313a2.75 2.75 0 0 1-2.714-2.307l-.023-.174L4.295 6.5H3.5a.75.75 0 0 1-.743-.648L2.75 5.75a.75.75 0 0 1 .648-.743L3.5 5h5.25A3.25 3.25 0 0 1 12 1.75Zm6.197 4.75H5.802l1.267 12.872a1.25 1.25 0 0 0 1.117 1.122l.127.006h7.374c.6 0 1.109-.425 1.225-1.002l.02-.126L18.196 6.5ZM13.75 9.25a.75.75 0 0 1 .743.648L14.5 10v7a.75.75 0 0 1-1.493.102L13 17v-7a.75.75 0 0 1 .75-.75Zm-3.5 0a.75.75 0 0 1 .743.648L11 10v7a.75.75 0 0 1-1.493.102L9.5 17v-7a.75.75 0 0 1 .75-.75Zm1.75-6a1.75 1.75 0 0 0-1.744 1.606L10.25 5h3.5A1.75 1.75 0 0 0 12 3.25Z
+        </Geometry>
+        <Geometry x:Key="EditIconData">
+            M21.03 2.97a3.578 3.578 0 0 1 0 5.06L9.062 20a2.25 2.25 0 0 1-.999.58l-5.116 1.395a.75.75 0 0 1-.92-.921l1.395-5.116a2.25 2.25 0 0 1 .58-.999L15.97 2.97a3.578 3.578 0 0 1 5.06 0ZM15 6.06 5.062 16a.75.75 0 0 0-.193.333l-1.05 3.85 3.85-1.05A.75.75 0 0 0 8 18.938L17.94 9 15 6.06Zm2.03-2.03-.97.97L19 7.94l.97-.97a2.079 2.079 0 0 0-2.94-2.94Z
+        </Geometry>
+        <Geometry x:Key="InfoIconData">
+            M12 1.999c5.524 0 10.002 4.478 10.002 10.002 0 5.523-4.478 10.001-10.002 10.001-5.524 0-10.002-4.478-10.002-10.001C1.998 6.477 6.476 1.999 12 1.999Zm0 1.5a8.502 8.502 0 1 0 0 17.003A8.502 8.502 0 0 0 12 3.5Zm-.004 7a.75.75 0 0 1 .744.648l.007.102.003 5.502a.75.75 0 0 1-1.493.102l-.007-.101-.003-5.502a.75.75 0 0 1 .75-.75ZM12 7.003a.999.999 0 1 1 0 1.997.999.999 0 0 1 0-1.997Z
+        </Geometry>
+        <Geometry x:Key="addIconData">
+            M11.75 3a.75.75 0 0 1 .743.648l.007.102.001 7.25h7.253a.75.75 0 0 1 .102 1.493l-.102.007h-7.253l.002 7.25a.75.75 0 0 1-1.493.101l-.007-.102-.002-7.249H3.752a.75.75 0 0 1-.102-1.493L3.752 11h7.25L11 3.75a.75.75 0 0 1 .75-.75Z
+        </Geometry>
+        <Geometry x:Key="movieIconData">
+            m19.729 3.917.05.16.552 1.922a.75.75 0 0 1-.418.893l-.096.035L9.09 10.002h11.159a.75.75 0 0 1 .743.65l.007.1v8.499a2.75 2.75 0 0 1-2.583 2.745L18.25 22H5.75a2.75 2.75 0 0 1-2.745-2.582L3 19.25v-8.392l-.522-1.821a2.75 2.75 0 0 1 1.726-3.35l.16-.052 12.014-3.445a2.75 2.75 0 0 1 3.35 1.726Zm-.23 7.585H4.5v7.749c0 .604.429 1.108.998 1.224l.124.02.128.006H18.25a1.25 1.25 0 0 0 1.244-1.122l.006-.128v-7.749ZM6.272 6.649l-1.496.43a1.25 1.25 0 0 0-.886 1.42l.029.125.344 1.201.295-.085 1.714-3.09Zm4.756-1.363-2.717.779-1.714 3.09 2.718-.778 1.713-3.091Zm4.757-1.365-2.717.78-1.714 3.09 2.717-.778 1.714-3.092Zm1.848-.233-1.521 2.74 2.568-.737-.343-1.2a1.248 1.248 0 0 0-.704-.803Z
+        </Geometry>
+        <Geometry x:Key="usersIconData">
+            M12,5A3.5,3.5 0 0,0 8.5,8.5A3.5,3.5 0 0,0 12,12A3.5,3.5 0 0,0 15.5,8.5A3.5,3.5 0 0,0 12,5M12,7A1.5,1.5 0 0,1 13.5,8.5A1.5,1.5 0 0,1 12,10A1.5,1.5 0 0,1 10.5,8.5A1.5,1.5 0 0,1 12,7M5.5,8A2.5,2.5 0 0,0 3,10.5C3,11.44 3.53,12.25 4.29,12.68C4.65,12.88 5.06,13 5.5,13C5.94,13 6.35,12.88 6.71,12.68C7.08,12.47 7.39,12.17 7.62,11.81C6.89,10.86 6.5,9.7 6.5,8.5C6.5,8.41 6.5,8.31 6.5,8.22C6.2,8.08 5.86,8 5.5,8M18.5,8C18.14,8 17.8,8.08 17.5,8.22C17.5,8.31 17.5,8.41 17.5,8.5C17.5,9.7 17.11,10.86 16.38,11.81C16.5,12 16.63,12.15 16.78,12.3C16.94,12.45 17.1,12.58 17.29,12.68C17.65,12.88 18.06,13 18.5,13C18.94,13 19.35,12.88 19.71,12.68C20.47,12.25 21,11.44 21,10.5A2.5,2.5 0 0,0 18.5,8M12,14C9.66,14 5,15.17 5,17.5V19H19V17.5C19,15.17 14.34,14 12,14M4.71,14.55C2.78,14.78 0,15.76 0,17.5V19H3V17.07C3,16.06 3.69,15.22 4.71,14.55M19.29,14.55C20.31,15.22 21,16.06 21,17.07V19H24V17.5C24,15.76 21.22,14.78 19.29,14.55M12,16C13.53,16 15.24,16.5 16.23,17H7.77C8.76,16.5 10.47,16 12,16Z
+        </Geometry>
+        <GeometryGroup x:Key="orderIconData">
+            <PathGeometry Figures="M1743 3673 c-34 -7 -81 -59 -93 -104 -15 -55 1 -109 45 -148 l36 -31
+367 0 c350 0 368 1 400 20 81 50 81 184 -1 244 -27 20 -41 21 -380 22 -194 1
+-362 0 -374 -3z" />
+            <PathGeometry Figures="M1017 3504 c-59 -18 -130 -85 -149 -140 -10 -31 -13 -264 -16 -1138
+-3 -1218 -5 -1163 62 -1242 20 -23 58 -52 88 -65 l53 -24 837 -3 836 -3 -43
+77 c-151 264 -65 589 195 744 93 56 171 74 300 67 59 -2 124 -12 148 -20 l43
+-16 -3 767 -3 767 -24 59 c-28 69 -78 123 -146 156 -47 23 -62 25 -251 28
+l-201 4 0 -45 c0 -101 -56 -203 -130 -233 -41 -18 -984 -21 -1030 -3 -38 14
+-91 66 -115 114 -11 22 -23 68 -26 102 l-5 63 -186 -1 c-134 0 -199 -5 -234
+-15z m1784 -740 c17 -8 37 -30 45 -50 12 -29 12 -39 0 -68 -29 -68 -2 -66
+-740 -66 l-664 0 -26 31 c-42 49 -30 125 25 155 19 11 154 13 677 14 574 0
+657 -2 683 -16z m5 -577 c14 -16 24 -41 24 -58 0 -37 -24 -85 -49 -99 -13 -6
+-247 -10 -681 -10 l-662 0 -34 34 c-45 45 -47 94 -5 137 l30 29 676 -2 677 -3
+24 -28z m-708 -521 c26 -13 43 -37 55 -77 3 -9 -2 -30 -10 -48 -29 -59 -39
+-61 -387 -61 l-314 0 -26 31 c-42 49 -30 125 25 155 36 20 619 20 657 0z" />
+            <PathGeometry Figures="M3093 1635 c-213 -58 -349 -265 -314 -479 56 -345 463 -484 716 -245
+100 95 151 242 128 373 -43 254 -288 416 -530 351z m391 -244 c11 -12 15 -27
+12 -39 -10 -29 -342 -352 -363 -352 -25 0 -223 199 -223 225 0 25 18 45 41 45
+10 0 54 -37 98 -82 l81 -82 153 152 c84 84 160 152 169 152 8 0 23 -9 32 -19z" />
+        </GeometryGroup>
+        <GeometryGroup x:Key="orderDetailData">
+            <PathGeometry Figures="M112 2628 c-17 -17 -17 -2239 0 -2256 18 -18 1857 -17 1881 1 12 9
+17 31 19 81 l3 68 40 -58 c50 -72 92 -98 161 -98 119 0 191 124 134 232 -39
+74 -257 377 -274 380 -9 2 -33 -8 -52 -23 -19 -15 -41 -24 -49 -21 -8 3 -26
+23 -41 46 l-27 41 50 50 c59 59 106 141 128 224 29 113 16 222 -41 342 l-34
+71 0 165 0 165 -322 301 -323 300 -620 1 c-470 0 -624 -3 -633 -12z m1210
+-345 l3 -288 308 -3 307 -2 0 -101 0 -101 -22 16 c-119 86 -180 108 -315 114
+-84 3 -114 0 -170 -17 -122 -37 -244 -134 -295 -236 -11 -22 -21 -41 -23 -43
+-1 -1 -62 20 -135 47 l-133 50 -290 -104 c-159 -58 -296 -110 -303 -116 -10
+-8 -14 -37 -14 -105 0 -81 2 -95 20 -107 19 -13 20 -27 22 -268 l3 -254 281
+-112 280 -112 265 100 c145 55 268 104 273 109 5 5 9 52 9 104 1 53 3 96 6 96
+3 0 31 -7 61 -15 85 -23 212 -19 290 9 36 12 72 26 81 30 12 5 25 -4 48 -35
+17 -24 31 -46 31 -51 0 -4 -18 -20 -40 -34 -24 -16 -40 -34 -40 -47 0 -10 25
+-55 55 -98 l55 -78 0 -101 0 -100 -885 0 -885 0 0 1070 0 1070 575 0 575 0 2
+-287z m306 16 c125 -117 234 -218 242 -225 12 -12 -24 -14 -233 -14 l-247 0 0
+225 c0 124 3 225 6 225 3 0 107 -95 232 -211z m147 -488 c119 -58 206 -165
+241 -296 57 -213 -73 -441 -289 -507 -100 -30 -228 -23 -317 19 -282 130 -352
+497 -136 702 98 92 180 122 326 118 96 -3 111 -6 175 -36z m-804 -213 l117
+-42 -5 -81 c-3 -44 -8 -83 -12 -87 -3 -3 -55 -25 -115 -48 l-108 -42 -207 77
+c-113 43 -217 84 -231 91 -24 12 -24 13 -5 20 82 32 423 152 435 153 8 1 67
+-18 131 -41z m-509 -229 c73 -28 181 -69 241 -91 l107 -40 0 -44 0 -44 -37 15
+c-21 8 -132 50 -248 93 l-210 79 -3 42 c-2 22 1 41 7 41 5 0 69 -23 143 -51z
+m637 -91 c6 -17 8 -35 4 -39 -5 -4 -48 -23 -98 -42 -49 -19 -98 -38 -107 -42
+-16 -6 -18 -1 -18 36 l0 44 93 37 c50 20 97 37 104 37 6 1 16 -13 22 -31z
+m-456 -138 l167 -63 0 -223 0 -224 -52 21 c-29 11 -133 52 -230 91 l-178 71 0
+218 0 219 63 -24 c34 -12 137 -51 230 -86z m544 -24 c23 -30 65 -72 93 -93
+l51 -38 -3 -94 -3 -94 -205 -78 c-113 -43 -213 -81 -222 -85 -17 -5 -18 10
+-18 215 0 214 1 221 21 232 28 14 221 88 234 88 6 1 29 -24 52 -53z m998 -396
+c132 -190 140 -217 83 -265 -25 -22 -39 -26 -66 -21 -19 3 -40 10 -48 17 -11
+9 -209 289 -237 336 -7 11 129 105 146 100 4 -1 59 -76 122 -167z"/>
+            <PathGeometry Figures="M293 2400 c-13 -5 -23 -15 -23 -22 1 -38 3 -38 466 -36 l449 3 3 22
+c3 17 -3 26 -22 33 -32 12 -843 12 -873 0z"/>
+            <PathGeometry Figures="M279 2164 c-9 -11 -10 -20 -2 -32 9 -15 53 -17 456 -20 442 -2 446
+-2 452 18 16 50 14 50 -455 50 -387 0 -439 -2 -451 -16z"/>
+            <PathGeometry Figures="M274 1928 c-15 -47 -3 -48 464 -46 388 3 436 5 445 19 6 9 7 24 4 33
+-6 14 -49 16 -456 16 l-450 0 -7 -22z"/>
+            <PathGeometry Figures="M1239 1533 c-10 -11 -14 -46 -14 -117 0 -94 3 -105 32 -161 37 -72
+105 -137 176 -171 61 -28 70 -29 87 -9 20 24 3 51 -43 66 -26 8 -63 34 -98 69
+-73 72 -94 131 -86 241 5 76 -2 99 -29 99 -6 0 -18 -7 -25 -17z"/>
+            <PathGeometry Figures="M563 95 c0 -27 2 -38 4 -22 2 15 8 27 13 27 5 0 11 -12 13 -27 4 -26
+4 -26 6 5 1 22 -4 32 -13 32 -8 0 -17 8 -19 18 -3 9 -5 -5 -4 -33z"/>
+            <PathGeometry Figures="M1062 95 c0 -33 2 -43 7 -30 8 19 8 19 19 0 6 -11 12 -15 12 -8 0 6
+-5 15 -10 18 -8 5 -7 12 2 23 12 15 11 15 -4 4 -15 -12 -17 -10 -21 15 -2 16
+-4 6 -5 -22z"/>
+            <PathGeometry Figures="M720 120 c0 -6 -8 -10 -17 -8 -10 1 -19 -1 -20 -5 -6 -17 -2 -57 6
+-57 4 0 6 11 3 25 -3 18 0 25 11 25 9 0 17 -10 19 -22 2 -12 9 -23 16 -24 7
+-1 8 0 2 3 -12 6 -13 40 -1 45 5 2 3 9 -5 16 -9 8 -14 9 -14 2z"/>
+            <PathGeometry Figures="M908 118 c-9 -25 5 -68 21 -67 10 0 11 2 4 6 -15 5 -17 40 -4 45 5 2
+3 8 -4 15 -10 9 -15 9 -17 1z"/>
+            <PathGeometry Figures="M1453 123 c9 -2 23 -2 30 0 6 3 -1 5 -18 5 -16 0 -22 -2 -12 -5z"/>
+            <PathGeometry Figures="M1507 123 c-3 -5 -4 -21 -3 -38 1 -23 6 -30 21 -30 11 0 20 6 19 13
+-1 6 -2 23 -2 37 -2 23 -25 35 -35 18z m23 -13 c0 -5 -4 -10 -10 -10 -5 0 -10
+5 -10 10 0 6 5 10 10 10 6 0 10 -4 10 -10z m2 -35 c0 -5 -5 -11 -11 -13 -6 -2
+-11 4 -11 13 0 9 5 15 11 13 6 -2 11 -8 11 -13z"/>
+            <PathGeometry Figures="M1565 120 c-4 -6 1 -7 11 -3 13 5 16 3 11 -10 -3 -9 -2 -19 4 -22 15
+-10 -1 -27 -20 -20 -12 5 -13 4 -4 -6 19 -19 40 5 35 41 -4 29 -24 40 -37 20z"/>
+            <PathGeometry Figures="M1625 120 c-4 -6 1 -7 11 -3 13 5 16 3 11 -10 -3 -9 -2 -19 4 -22 15
+-10 -1 -27 -20 -20 -12 5 -13 4 -4 -6 10 -10 16 -9 28 1 12 10 19 10 27 2 28
+-28 57 5 43 48 -9 28 -32 25 -49 -7 l-15 -28 -1 28 c0 27 -22 38 -35 17z m93
+-24 c2 -10 -1 -23 -7 -29 -16 -16 -34 6 -26 33 8 24 28 22 33 -4z"/>
+            <PathGeometry Figures="M1761 130 c-1 -3 -3 -22 -4 -43 -2 -31 1 -37 18 -37 13 0 16 3 8 8
+-6 4 -13 23 -16 42 -2 19 -5 33 -6 30z"/>
+            <PathGeometry Figures="M1808 123 c-11 -22 -7 -64 8 -70 23 -9 34 9 26 42 -8 28 -26 44 -34
+28z m22 -13 c0 -5 -4 -10 -10 -10 -5 0 -10 5 -10 10 0 6 5 10 10 10 6 0 10 -4
+10 -10z m2 -35 c0 -5 -5 -11 -11 -13 -6 -2 -11 4 -11 13 0 9 5 15 11 13 6 -2
+11 -8 11 -13z"/>
+            <PathGeometry Figures="M1880 125 c-1 -5 -1 -21 0 -34 1 -13 -4 -28 -12 -32 -9 -6 -3 -9 17
+-9 17 0 25 4 18 8 -6 4 -13 23 -16 42 -2 19 -5 31 -7 25z"/>
+            <PathGeometry Figures="M1925 120 c-4 -6 1 -7 11 -3 13 5 16 3 11 -10 -3 -9 -2 -19 4 -22 15
+-10 -1 -27 -20 -20 -12 5 -13 3 -4 -6 16 -16 47 -3 39 17 -3 9 -6 24 -6 35 0
+20 -24 26 -35 9z"/>
+            <PathGeometry Figures="M510 93 c0 -10 4 -14 8 -8 4 6 11 13 16 18 5 4 2 7 -7 7 -10 0 -17
+-8 -17 -17z"/>
+            <PathGeometry Figures="M621 83 c-1 -27 3 -33 19 -33 14 0 20 6 19 23 -1 16 -2 18 -6 5 -7
+-27 -21 -21 -26 10 -4 25 -4 25 -6 -5z"/>
+            <PathGeometry Figures="M764 96 c-9 -23 3 -46 23 -45 17 1 17 2 1 6 -22 6 -24 23 -2 23 9 0
+14 5 12 12 -7 19 -27 21 -34 4z"/>
+            <PathGeometry Figures="M821 78 c2 -28 2 -29 6 -8 3 14 10 28 17 32 7 5 5 8 -6 8 -14 0 -18
+-8 -17 -32z"/>
+            <PathGeometry Figures="M860 93 c0 -10 4 -14 8 -8 4 6 11 13 16 18 5 4 2 7 -7 7 -10 0 -17
+-8 -17 -17z"/>
+            <PathGeometry Figures="M957 103 c-11 -10 -8 -41 4 -49 6 -3 18 1 27 9 13 13 13 19 2 31 -14
+17 -23 20 -33 9z m28 -23 c0 -7 -6 -15 -12 -17 -8 -3 -13 4 -13 17 0 13 5 20
+13 18 6 -3 12 -11 12 -18z"/>
+            <PathGeometry Figures="M1015 99 c-11 -16 -1 -19 13 -3 7 8 8 14 3 14 -5 0 -13 -5 -16 -11z"/>
+            <PathGeometry Figures="M1154 95 c-8 -20 2 -45 18 -44 10 0 10 2 1 6 -7 2 -13 13 -13 23 0
+10 6 21 13 23 9 4 9 6 -1 6 -7 1 -15 -6 -18 -14z"/>
+            <PathGeometry Figures="M1205 100 c-3 -5 0 -7 8 -4 20 7 32 -15 18 -29 -9 -9 -14 -8 -22 3
+-9 13 -10 13 -6 0 5 -21 33 -24 40 -5 13 32 -21 63 -38 35z"/>
+            <PathGeometry Figures="M1261 78 c2 -30 2 -31 6 -5 5 34 20 35 26 2 4 -23 4 -23 3 2 -1 18
+-7 29 -18 31 -15 3 -18 -3 -17 -30z"/>
+            <PathGeometry Figures="M1318 80 c6 -39 12 -39 12 0 0 17 -4 30 -8 30 -5 0 -7 -13 -4 -30z"/>
+            <PathGeometry Figures="M1461 83 c-10 -26 -10 -27 4 -9 8 11 15 23 15 28 0 15 -7 8 -19 -19z"/>
+            <PathGeometry Figures="M522 65 c-11 -12 -10 -15 3 -15 8 0 15 7 15 15 0 18 -2 18 -18 0z"/>
+            <PathGeometry Figures="M872 65 c-11 -12 -10 -15 3 -15 8 0 15 7 15 15 0 18 -2 18 -18 0z"/>
+            <PathGeometry Figures="M1017 59 c7 -7 15 -10 18 -7 3 3 -2 9 -12 12 -14 6 -15 5 -6 -5z"/>
+        </GeometryGroup>
+
+        <SolidColorBrush x:Key="ModernBlueBrush" Color="#1976D2" />
+        <SolidColorBrush x:Key="BorderGrayBrush" Color="#E0E0E0" />
+        <SolidColorBrush x:Key="ComboBoxBlueBrush" Color="#1976D2" />
+        <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#E0E0E0" />
+        <SolidColorBrush x:Key="ComboBoxHoverBrush" Color="#BDBDBD" />
+        <SolidColorBrush x:Key="GridBackground" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="RowSelectedBackground" Color="#634ad6"/>
+        <SolidColorBrush x:Key="HeaderTextColor" Color="#94A3B8"/>
+        <SolidColorBrush x:Key="CellTextColor" Color="#334155"/>
+        <SolidColorBrush x:Key="CellTextSelectedColor" Color="#ffffff"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#F1F5F9"/>
+
+        <Style x:Key="datePicker" TargetType="DatePicker">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DatePicker">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="8" 
+                                Padding="{TemplateBinding Padding}">
+
+                            <Grid x:Name="WatermarkLayout" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <DatePickerTextBox x:Name="PART_TextBox" 
+                                                   Grid.Column="0" 
+                                                   Focusable="{TemplateBinding Focusable}" 
+                                                   HorizontalContentAlignment="Stretch" 
+                                                   VerticalContentAlignment="Center" 
+                                                   BorderThickness="0" 
+                                                   Background="Transparent"/>
+
+                                <Button x:Name="PART_Button" 
+                                        Grid.Column="1" 
+                                        Foreground="{TemplateBinding Foreground}" 
+                                        Focusable="False" 
+                                        HorizontalAlignment="Stretch" 
+                                        VerticalAlignment="Stretch"
+                                        VerticalContentAlignment="Center" 
+                                        Width="20"> 
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="Transparent">
+                                                <Path Data="M 0,0 L 4,4 L 8,0 Z" 
+                                                      Fill="#666666" 
+                                                      HorizontalAlignment="Center" 
+                                                      VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Popup x:Name="PART_Popup" 
+                                       AllowsTransparency="True" 
+                                       Placement="Bottom" 
+                                       PlacementTarget="{Binding ElementName=PART_TextBox}" 
+                                       StaysOpen="False"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="Gray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="8,0,0,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal">
+                            <Border x:Name="checkBoxBorder" 
+                                    Background="{TemplateBinding Background}"
+                                    Width="20" Height="20" BorderBrush="Gray" 
+                                    BorderThickness="1" CornerRadius="4">
+                                <Viewbox Margin="3">
+                                    <Path x:Name="checkmark"
+                                          Data="M 3,7 L 6,10 L 12,3"
+                                          Stroke="Black" 
+                                          StrokeThickness="2"
+                                          StrokeStartLineCap="Round"
+                                          StrokeEndLineCap="Round"
+                                          Visibility="Collapsed"/>
+                                </Viewbox>
+                            </Border>
+                            <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="#007ACC"/>
+                                <Setter TargetName="checkBoxBorder" Property="Background" Value="#E5F3FF"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="#007ACC"/>
+                                <Setter TargetName="checkmark" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="RoundedButtonStyle">
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="buttonBorder"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="8" 
+                                    SnapsToDevicePixels="True"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Border x:Name="darkeningOverlay" 
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="Black" 
+                                    Opacity="0.0" 
+                                    CornerRadius="4" 
+                                    IsHitTestVisible="False"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="darkeningOverlay" Property="Opacity" Value="0.15"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="darkeningOverlay" Property="Opacity" Value="0.30"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="AddButtonStyle" BasedOn="{StaticResource RoundedButtonStyle}">
+            <Setter Property="Background" Value="#674ee1" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Padding" Value="20 10" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="buttonBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8" 
+                            SnapsToDevicePixels="True"
+                            Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource addIconData}"
+                      Fill="White" Stretch="Uniform" Width="15" Height="15" />
+                                <ContentPresenter Margin="10 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonBorder" Property="Background" Value="#1D4ED8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="buttonBorder" Property="Background" Value="#1E40AF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        
+        <Style x:Key="RoundedTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="6" 
+                            SnapsToDevicePixels="True">
+
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                      Focusable="false" 
+                                      HorizontalScrollBarVisibility="Hidden" 
+                                      VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#1976D2"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="1.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="OperationButtonStyle" BasedOn="{StaticResource RoundedButtonStyle}">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="10 5 0 5" />
+            <Setter Property="Padding" Value="7" />
+        </Style>
+
+        <!-- Style cho từng Item bên trong danh sách thả xuống -->
+        <Style x:Key="ModernComboBoxItem" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="Padding" Value="10,8,10,8"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border x:Name="Grid" 
+                            Background="{TemplateBinding Background}" 
+                            Padding="{TemplateBinding Padding}" 
+                            SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Hiệu ứng hover chuột vào Item -->
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Grid" Property="Background" Value="#F5F5F5"/>
+                            </Trigger>
+                            <!-- Hiệu ứng khi Item được chọn -->
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Grid" Property="Background" Value="#E3F2FD"/>
+                                <Setter Property="Foreground" Value="{StaticResource ComboBoxBlueBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style chính cho ComboBox -->
+        <Style x:Key="ModernComboBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ModernComboBoxItem}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ComboBoxBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,0,5,0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid x:Name="MainGrid" SnapsToDevicePixels="true">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition MinWidth="30" Width="0" SharedSizeGroup="ComboBoxButton"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ToggleButton đóng vai trò làm viền ngoài và nút mũi tên thả xuống -->
+                            <ToggleButton x:Name="ToggleButton" 
+                                          Grid.ColumnSpan="2"
+                                          BorderBrush="{TemplateBinding BorderBrush}" 
+                                          BorderThickness="{TemplateBinding BorderThickness}" 
+                                          Background="{TemplateBinding Background}"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          Focusable="false">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <!-- Bo góc viền ở đây (CornerRadius="4") -->
+                                        <Border x:Name="templateRoot" 
+                                            Background="{TemplateBinding Background}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}" 
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                            CornerRadius="4" 
+                                            SnapsToDevicePixels="true">
+
+                                            <!-- Mũi tên chỉ xuống vẽ bằng Path Vector -->
+                                            <Path x:Name="Arrow" 
+                                              Data="M0,0 L4,4 L8,0 Z" 
+                                              Fill="#666666" 
+                                              HorizontalAlignment="Right" 
+                                              VerticalAlignment="Center" 
+                                              Margin="0,0,10,0" 
+                                              Stretch="Uniform" 
+                                              Width="9"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <!-- Hover vào ComboBox -->
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBoxHoverBrush}"/>
+                                            </Trigger>
+                                            <!-- Khi danh sách đang mở rộng -->
+                                            <Trigger Property="IsChecked" Value="true">
+                                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBoxBlueBrush}"/>
+                                                <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource ComboBoxBlueBrush}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <!-- Vùng hiển thị Text đang được chọn -->
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              Content="{TemplateBinding SelectionBoxItem}" 
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                                              ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              IsHitTestVisible="false" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                            <TextBlock Text="{TemplateBinding Text}"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"
+                                       IsHitTestVisible="False"></TextBlock>
+
+                            <!-- Popup chứa danh sách thả xuống (Dropdown List) -->
+                            <Popup x:Name="PART_Popup" 
+                                   Grid.ColumnSpan="2"
+                                   AllowsTransparency="true" 
+                                   IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" 
+                                   Placement="Bottom" 
+                                   PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+
+                                <Border x:Name="dropDownBorder" 
+                                    Background="White"
+                                    BorderBrush="{StaticResource ComboBoxBlueBrush}" 
+                                    BorderThickness="1" 
+                                    CornerRadius="0,0,4,4" 
+                                    Margin="0,1,0,0"
+                                    MaxHeight="{TemplateBinding MaxDropDownHeight}" 
+                                    MinWidth="{Binding ActualWidth, ElementName=MainGrid}">
+                                    <ScrollViewer x:Name="DropDownScrollViewer">
+                                        <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                            <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                                <Rectangle x:Name="opaqueRect" 
+                                                       Fill="{Binding Background, ElementName=dropDownBorder}" 
+                                                       Height="{Binding ActualHeight, ElementName=dropDownBorder}" 
+                                                       Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                            </Canvas>
+                                            <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+
+                        <!-- Trigger tổng cho ComboBox -->
+                        <ControlTemplate.Triggers>
+                            <!-- Khi ComboBox có dữ liệu bên trong -->
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="dropDownBorder" Property="Height" Value="95"/>
+                            </Trigger>
+                            <!-- Khi ComboBox được Focus -->
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter TargetName="ToggleButton" Property="BorderBrush" Value="{StaticResource ComboBoxBlueBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DataGridCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource HeaderTextColor}"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Foreground" Value="{StaticResource CellTextColor}"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" 
+                                              Margin="{TemplateBinding Padding}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="{StaticResource CellTextSelectedColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,4,0,4"/>
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridRow}">
+                        <Border x:Name="DGR_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{StaticResource BorderColor}"
+                            BorderThickness="1"
+                            CornerRadius="6" 
+                            SnapsToDevicePixels="True">
+                            <SelectiveScrollingGrid>
+                                <SelectiveScrollingGrid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </SelectiveScrollingGrid.ColumnDefinitions>
+                                <SelectiveScrollingGrid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </SelectiveScrollingGrid.RowDefinitions>
+
+                                <DataGridCellsPresenter Grid.Column="1"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                                <DataGridDetailsPresenter Grid.Column="1" Grid.Row="1"
+                                                      SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                      Visibility="{TemplateBinding DetailsVisibility}"/>
+
+                                <DataGridRowHeader Grid.RowSpan="2"
+                                               SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                               Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                            </SelectiveScrollingGrid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource RowSelectedBackground}"/>
+
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="DGR_Border" Property="BorderBrush" Value="#CBD5E1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ModernDataGrid" TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="{StaticResource GridBackground}"/>
+            <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="SelectionMode" Value="Extended"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGrid}">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
+                                <ScrollViewer.Template>
+                                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter"
+                                                                        Grid.Column="1"
+                                                                        Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+
+                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                                Grid.ColumnSpan="2" Grid.Row="1"
+                                                                Margin="10,0,10,0"
+                                                                CanContentScroll="{TemplateBinding CanContentScroll}"/>
+
+                                            <ScrollBar x:Name="PART_VerticalScrollBar"
+                                                   Grid.Column="2" Grid.Row="1"
+                                                   Orientation="Vertical"
+                                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+
+                                            <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                                   Grid.Column="1" Grid.Row="2"
+                                                   Orientation="Horizontal"
+                                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                                   Maximum="{TemplateBinding ScrollableWidth}"
+                                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                   Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </ScrollViewer.Template>
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

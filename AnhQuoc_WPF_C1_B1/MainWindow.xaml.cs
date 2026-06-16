@@ -18,6 +18,7 @@ namespace AnhQuoc_WPF_C1_B1
         private AccountViewModel AccountVM;
         private CinemaViewModel CinemaVM;
         private OrderViewModel OrderVM;
+        private OrderDetailViewModel OrderDetailVM;
         private CustomerViewModel CustomerVM;
         private RatedViewModel RatedVM;
         private GenreViewModel GenreVM;
@@ -42,6 +43,8 @@ namespace AnhQuoc_WPF_C1_B1
             CinemaVM.getList(unitOfWork.GetRepositoryCinema);
             OrderVM = new OrderViewModel();
             OrderVM.getList(unitOfWork.GetRepositoryOrder);
+            OrderDetailVM = new OrderDetailViewModel();
+            OrderDetailVM.getList(unitOfWork.GetRepositoryOrderDetail);
             RatedVM = new RatedViewModel();
             RatedVM.getList(unitOfWork.GetRepositoryRated);
             GenreVM = new GenreViewModel();
@@ -60,6 +63,7 @@ namespace AnhQuoc_WPF_C1_B1
             frmLogin.getGenreRepo = () => GenreVM.GenreRepo;
             frmLogin.getRatedRepo = () => RatedVM.RatedRepo;
             frmLogin.getOrderRepo = () => OrderVM.OrderRepo;
+            frmLogin.getOrderDetailRepo = () => OrderDetailVM.OrderDetailRepo;
             frmLogin.getCinemaRepo = () => CinemaVM.CinemaRepo;
             frmLogin.getAccountRepo = () => AccountVM.AccountRepo;
             frmLogin.getCustomerRepo = () => CustomerVM.CustomerRepo;

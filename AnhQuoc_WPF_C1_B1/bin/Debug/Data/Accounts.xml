@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Accounts>
-  <Account Username="admin" Password="admin" Role="Admin" Status="1" />
-  <Account Username="user" Password="user" Role="Cashier" Status="0" />
-  <Account Username="cashier" Password="cashier" Role="Cashier" Status="1" />
+  <Account Username="admin" Password="ludb3I5Cz75QcCN/EkS4Ujm371LNYpKH4+ztvEWBDQcp9dhg5paPkkopwd0bcqqB" Email="admin@example.com" Phone="123-456-7890" Address="123 Main St" Role="Admin" Status="1" Image="/Assests/portrait-1.jpg" />
+  <Account Username="user" Password="BUAeNMq7h3+pW3nSpmzz6PRdPeIu3uYsZwzbWb1QW3yjcPK8WuB2sMQi1lO60nkf" Email="user@example.com" Phone="098-765-4321" Address="456 Oak Ave" Role="Cashier" Status="1" Image="/Assests/portrait-2.jpg" />
+  <Account Username="cashier" Password="haXlvazP0Z3K2SC8pxmZ58GXYQX7aoXyW83FojFaRJ+0JD80zN/A0goChS43hH0P" Email="cashier@example.com" Phone="555-555-5555" Address="789 Pine Rd" Role="Cashier" Status="1" Image="/Assests/portrait-3.jpg" />
 </Accounts>

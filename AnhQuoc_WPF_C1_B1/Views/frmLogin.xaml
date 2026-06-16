@@ -9,69 +9,117 @@
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         Closed="Window_Closed"
-        SizeToContent="Height">
+        SizeToContent="Height"
+        FontSize="20"
+        WindowStyle="None" AllowsTransparency="True">
     <Border BorderBrush="Black"
             BorderThickness="1"
             Background="#ffffff"
+            CornerRadius="15"
             Padding="10 0">
+        <Border.Effect>
+            <DropShadowEffect 
+            Color="Gray" 
+            Direction="315" 
+            ShadowDepth="5" 
+            Opacity="0.8" 
+            BlurRadius="10" />
+        </Border.Effect>
         <StackPanel Background="#fff">
             <Label VerticalContentAlignment="Center" 
                    HorizontalContentAlignment="Center" 
                    Padding="40 0"
                    FontSize="40"
-                   Margin="0 25 0 15"
+                   Margin="0 50"
                    TabIndex="-1"
                    FontWeight="Bold"
-                   Foreground="Black">Welcome</Label>
-            <Grid Margin="0 0 0 20">
-                <Border Height="80"
-                        Width="80"
-                        Background="Black"
-                        CornerRadius="10" />
-                <Label Content="A"
-                       Foreground="White"
-                       Background="Transparent"
-                       FontSize="60"
+                   Foreground="Black">Login</Label>
+            <StackPanel Margin="20 0">
+                <Label Name="lbUsername" 
                        Padding="0"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"></Label>
-                
+                       TabIndex="-1"
+                       FontSize="20"
+                       Content="Username"></Label>
+                <Grid>
+                    <!-- TextBox thụt lề phải (Padding) để tránh đè lên icon -->
+                    <Border BorderBrush="Gray" BorderThickness="0 0 0 1">
+                        <TextBox Name="txtUsername" 
+                             Padding="40,0,5,0" VerticalContentAlignment="Center"
+                             Height="50" 
+                             TabIndex="0"
+                             FontSize="20"
+                             PreviewTextInput="txtUsername_PreviewTextInput"
+                             BorderThickness="0" 
+                             Background="Transparent" Validation.ErrorTemplate="{x:Null}"/>
+                    </Border>
+                    <!-- Icon được căn lề phải (HorizontalAlignment="Right") -->
+                    <Image Source="/Assests/user 2.png" 
+                           Width="25" Height="25" 
+                           Margin="10,0,5,0" 
+                           HorizontalAlignment="Left" 
+                           IsHitTestVisible="False"/>
+                </Grid>
+
+                <StackPanel Margin="0 20 0 0">
+                    <Label Name="lbPassword" 
+                           Padding="0"
+                           TabIndex="-1"
+                           FontSize="20"
+                           Content="Password"></Label>
+                    <Grid>
+                        <!-- TextBox thụt lề phải (Padding) để tránh đè lên icon -->
+                        <Border BorderBrush="Gray" BorderThickness="0 0 0 1">
+                            <PasswordBox Name="boxPassword" 
+                                         VerticalContentAlignment="Center"
+                                         Height="50" 
+                                         Padding="40,0,5,0"
+                                         TabIndex="1"
+                                         FontSize="20"
+                                         PreviewTextInput="boxPassword_PreviewTextInput"
+                                         BorderThickness="0" 
+                                         Background="Transparent" Validation.ErrorTemplate="{x:Null}"></PasswordBox>
+                        </Border>
+                        <!-- Icon được căn lề phải (HorizontalAlignment="Right") -->
+                        <Image Source="/Assests/padlock.png" 
+                               Width="25" Height="25" 
+                               Margin="10,0,5,0" 
+                               HorizontalAlignment="Left" 
+                               IsHitTestVisible="False"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Margin="20" HorizontalAlignment="Right">
+    <Hyperlink NavigateUri="" Foreground="Black">
+        Forgot password?
+    </Hyperlink>
+            </TextBlock>
+            <Grid Margin="20">
+                <Button Name="btnSignIn"
+                        Background="Black"
+                        Foreground="White"
+                        FontSize="20"
+                        Padding="50 20"
+                        TabIndex="2"
+                        HorizontalAlignment="Stretch"
+                        Click="btnSignIn_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="20" Background="Black" Padding="20 10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    Login
+                </Button>
             </Grid>
-            <Label Name="lbUsername" 
-                   Margin="40 10 40 0" 
-                   Padding="0"
-                   TabIndex="-1"
-                   FontSize="20"
-                   Content="Username"></Label>
-            <TextBox Name="txtUsername" 
-                     Margin="40 10 40 0" 
-                     Height="50" 
-                     Padding="10"
-                     TabIndex="0"
-                     FontSize="20"
-                     PreviewTextInput="txtUsername_PreviewTextInput"/>
-            <Label Name="lbPassword" 
-                   Margin="40 20 40 0" 
-                   Padding="0"
-                   TabIndex="-1"
-                   FontSize="20"
-                   Content="Password"></Label>
-            <PasswordBox Name="boxPassword" 
-                     Margin="40 10 40 0" 
-                     Height="50" 
-                     Padding="10"
-                     TabIndex="1"
-                     FontSize="20"
-                     PreviewTextInput="boxPassword_PreviewTextInput"></PasswordBox>
-            <Button Name="btnSignIn"
-                    Margin="0 60"
-                    Background="#007FFD"
-                    Foreground="White"
-                    FontSize="20"
-                    Padding="50 20"
-                    TabIndex="2"
-                    HorizontalAlignment="Center"
-                    Click="btnSignIn_Click">Sign in</Button>
+            <StackPanel HorizontalAlignment="Center" Margin="0 20 0 56">
+                <Label Margin="0 0 0 10">Not a member?</Label>
+                <TextBlock HorizontalAlignment="Center">
+                    <Hyperlink NavigateUri="" Foreground="Black">
+                        Sign up now
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
         </StackPanel>
     </Border>
 </Window>

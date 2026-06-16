@@ -9,11 +9,13 @@
              Loaded="UserControl_Loaded">
     <StackPanel>
         <Label Name="lblTitle"
+               FontSize="20"
                Grid.Column="0"
                Margin="0 10 0 10"
                FontWeight="Bold"
                HorizontalAlignment="Center">Add new Movie Schedule</Label>
-        <DataGrid IsReadOnly="True"
+        <DataGrid Style="{StaticResource ModernDataGrid}"
+                  IsReadOnly="True"
                   HorizontalAlignment="Stretch"
                   Name="dgTable"
                   AutoGenerateColumns="False"
@@ -31,18 +33,19 @@
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <Border BorderBrush="Black"
-                    BorderThickness="1">
-                <Button Name="btnCancel"
-                        Padding="5"
-                        FontSize="12"
-                        Width="70"
-                        Background="#ffffff"
-                        HorizontalAlignment="Center"
-                        Content="Cancel"
-                        Click="btnCancel_Click"/>
-            </Border>
-            <Button x:Name="btnConfirm"
+            <Button Style="{StaticResource RoundedButtonStyle}"
+                    BorderThickness="1"
+                    Foreground="Black"
+                    Name="btnCancel"
+                    Padding="5"
+                    FontSize="12"
+                    Width="70"
+                    Background="#ffffff"
+                    HorizontalAlignment="Center"
+                    Content="Cancel"
+                    Click="btnCancel_Click"/>
+            <Button Style="{StaticResource RoundedButtonStyle}"
+                    x:Name="btnConfirm"
                     Margin="10 0 0 0"
                     Padding="5"
                     FontSize="12"

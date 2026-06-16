@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,23 +12,85 @@ namespace AnhQuoc_WPF_C1_B1
     /// <summary>
     /// Interaction logic for frmAdmin.xaml
     /// </summary>
-    public partial class frmAdmin : Window
+    public partial class frmAdmin : Window, INotifyPropertyChanged
     {
+        #region Properties
+        public string Username { get; set; } = "Admin";
+        private int _totalMovies;
+        public int TotalMovies
+        {
+            get { return _totalMovies; }
+            set
+            {
+                _totalMovies = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _totalAccounts;
+        public int TotalAccounts
+        {
+            get { return _totalAccounts; }
+            set
+            {
+                _totalAccounts = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _totalOrders;
+
+        public int TotalOrders
+        {
+            get { return _totalOrders; }
+            set 
+            { 
+                _totalOrders = value; 
+                OnPropertyChanged(); 
+            }
+        }
+
+        private int _totalOrderDetails;
+
+        public int TotalOrderDetails
+        {
+            get { return _totalOrderDetails; }
+            set
+            {
+                _totalOrderDetails = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        #endregion
+
         public Func<RepositoryBase<MovieSchedule>> getMovieScheduleRepo { get; set; }
         public Func<RepositoryBase<Cinema>> getCinemaRepo { get; set; }
         public Func<RepositoryBase<Movie>> getMovieRepo { get; set; }
         public Func<RepositoryBase<Genre>> getGenreRepo { get; set; }
         public Func<RepositoryBase<Rated>> getRatedRepo { get; set; }
         public Func<RepositoryBase<Order>> getOrderRepo { get; set; }
+        public Func<RepositoryBase<OrderDetail>> getOrderDetailRepo { get; set; }
+
         public Func<RepositoryBase<Account>> getAccountRepo { get; set; }
 
         public Func<frmLogin> getFrmLogin { get; set; }
         public Func<Movie> getDeleteMovie { get; set; }
         private ucMovieScheduleTable ucMovieScheduleTable;
+
+        #region INotifyPropertyChanged Implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
         public frmAdmin()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.DataContext = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -39,6 +103,12 @@ namespace AnhQuoc_WPF_C1_B1
             string filePath = Environment.CurrentDirectory + "\\Data\\MovieSchedules";
             ucMovieScheduleTable.getFileSeat = () => filePath;
             ucMovieScheduleTable.getFrmAdmin = () => this;
+
+
+            TotalMovies = getMovieRepo().Gets().Count;
+            TotalAccounts = getAccountRepo().Gets().Count;
+            TotalOrders = getOrderRepo().Gets().Count;
+            TotalOrderDetails = getOrderDetailRepo().Gets().Count;
         }
 
         private void Window_Closed(object sender, EventArgs e)

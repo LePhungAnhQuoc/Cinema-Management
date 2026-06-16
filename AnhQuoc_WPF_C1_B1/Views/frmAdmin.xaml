@@ -4,39 +4,168 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+        xmlns:template="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls.Templates"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="Admin view" Height="700"
+        Title="Admin view" Height="600" Width="1300"
         Closed="Window_Closed">
+    <Window.Resources>
+        <Style TargetType="TreeViewItem" x:Key="TreeViewItemStyle">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TreeViewItem">
+                        <Grid>
+                            <Border Name="Bd" 
+                                Background="Transparent" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Padding="{TemplateBinding Padding}" 
+                                SnapsToDevicePixels="true">
+                                <Grid>
+                                    <ContentPresenter x:Name="PART_Header" 
+                                                        ContentSource="Header" 
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=(local:TreeViewExtensions.IconSource)}" 
+                                          Width="20" Height="20" 
+                                          Margin="10,0,5,0" 
+                                          HorizontalAlignment="Right" 
+                                          IsHitTestVisible="False"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Thuộc tính thay đổi Background khi mục được chọn -->
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Bd" Property="Background" Value="#f2f0f0"/>
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="20" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <!-- Thuộc tính cho trạng thái con trỏ di chuột qua (tùy chọn) -->
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Bd" Property="Background" Value="AliceBlue"/>
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="20" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid Name="gdAdmin">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TreeView Background="#4e73de"
-                  Grid.RowSpan="2">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                    <Setter Property="FontWeight" Value="Normal" />
-                    <Setter Property="Padding" Value="0 15" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="FontWeight" Value="Bold" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TreeView.ItemContainerStyle>
-            <TreeViewItem Name="tvAccount" Header="Account" MouseLeftButtonUp="tvAccount_MouseLeftButtonUp"/>
-            <TreeViewItem Name="tvMovie" Header="Movie" MouseLeftButtonUp="tvMovie_MouseLeftButtonUp"/>
-            <TreeViewItem Name="tvMovieSchedule" Header="Movie Schedule" MouseLeftButtonUp="tvMovieSchedule_MouseLeftButtonUp"/>
-            <TreeViewItem Name="tvStatistical" Header="Statistical" MouseLeftButtonUp="tvStatistical_MouseLeftButtonUp"/>
-            <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp"/>
-        </TreeView>
-        
+        <StackPanel>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Height="70">
+                <Image Source="/Assests/AnhQuoc.jpg.jpg" 
+                            Width="30" Height="30" 
+                            Margin="10,0,5,0" 
+                            HorizontalAlignment="Left" 
+                            Stretch="UniformToFill">
+                    <Image.Clip>
+                        <EllipseGeometry Center="15,15" RadiusX="15" RadiusY="15" />
+                    </Image.Clip>
+                </Image>
+                <Label Name="lbAdminName" 
+                           VerticalContentAlignment="Center" 
+                           HorizontalContentAlignment="Left" 
+                           Padding="10 0"
+                           FontSize="20"
+                           Margin="0 10"
+                           FontWeight="SemiBold"
+                           Content="{Binding Username}"
+                           Foreground="Black"></Label>
+            </StackPanel>
+            <TreeView Background="White"
+                  Grid.RowSpan="2"
+                  BorderThickness="0"
+                  Width="250">
+                <TreeView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource TreeViewItemStyle}" TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Setter Property="Padding" Value="20" />
+                        <Setter Property="Foreground" Value="Black" />
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="Background" Value="Gray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeViewItem Name="tvAccount" Header="Account" MouseLeftButtonUp="tvAccount_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/account.png"/>
+                <TreeViewItem Name="tvMovie" Header="Movie" MouseLeftButtonUp="tvMovie_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/movie.png"/>
+                <TreeViewItem Name="tvMovieSchedule" Header="Movie Schedule" MouseLeftButtonUp="tvMovieSchedule_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/movie-schedule.png"/>
+                <TreeViewItem Name="tvStatistical" Header="Statistical" MouseLeftButtonUp="tvStatistical_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/Statistical.png"/>
+                <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/logout.png"/>
+            </TreeView>
+        </StackPanel>
+
         <Grid Grid.Column="1"
-              Name="stkView"></Grid>
+              Name="stkView"
+              Margin="30 0 0 0">
+            <StackPanel>
+                <Grid HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Margin="0 50 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Assests/Cinema Icon.jpg" Width="100" Height="100"/>
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal">
+                        <Label Grid.Column="1"
+                               VerticalContentAlignment="Center"
+                               HorizontalContentAlignment="Left"
+                               Padding="10 0 0 0"
+                               FontSize="30"
+                               FontWeight="Bold"
+                               Foreground="Black">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Welcome back, "/>
+                                <TextBlock Text="{Binding Username}"/>
+                                <TextBlock Text="!" />
+                            </StackPanel>
+                        </Label>
+                    </StackPanel>
+                </Grid>
+                <WrapPanel Margin="0 30 0 0">
+                    <template:ucDashboardCard Title="Total accounts"
+                                              Value="{Binding TotalAccounts}"
+                                              IconData="{StaticResource usersIconData}"
+                                              OuterBackground="#ff3b55"
+                                              InnerBackground="#FF5970"
+                                              Margin="10"/>
+                    <template:ucDashboardCard Title="Total movies" 
+                                              Value="{Binding TotalMovies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                              IconData="{StaticResource movieIconData}"
+                                              Margin="10"/>
+                    <template:ucDashboardCard Title="Total orders"
+                                              Value="{Binding TotalOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              IconData="{StaticResource orderIconData}"
+                                              OuterBackground="#5846FF"
+                                              InnerBackground="#8679FF"
+                                              Margin="10" />
+                    <template:ucDashboardCard Title="Total order details"
+                                              Value="{Binding TotalOrderDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              IconData="{StaticResource orderDetailData}"
+                                              OuterBackground="#1955c2"
+                                              InnerBackground="#3573E5"
+                                              Margin="10" />
+                </WrapPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

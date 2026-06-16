@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,6 +16,7 @@ namespace AnhQuoc_WPF_C1_B1
         public Func<RepositoryBase<Genre>> getGenreRepo { get; set; }
         public Func<RepositoryBase<Rated>> getRatedRepo { get; set; }
         public Func<RepositoryBase<Order>> getOrderRepo { get; set; }
+        public Func<RepositoryBase<OrderDetail>> getOrderDetailRepo { get; set; }
         public Func<RepositoryBase<Account>> getAccountRepo { get; set; }
         public Func<RepositoryBase<Cinema>> getCinemaRepo { get; set; }
         public Func<RepositoryBase<Customer>> getCustomerRepo { get; set; }
@@ -49,7 +51,10 @@ namespace AnhQuoc_WPF_C1_B1
             Account inputedAccount = new Account();
             inputedAccount.Username = txtUsername.Text;
             inputedAccount.Password = boxPassword.Password;
+            inputedAccount.Username = inputedAccount.Username.Trim();
+            inputedAccount.Password = inputedAccount.Password.Trim();
 
+            // hashing password
             Account findedAccount = AccountVM.Find(inputedAccount, 1);
 
             // Checking account
@@ -73,6 +78,7 @@ namespace AnhQuoc_WPF_C1_B1
                         frmAdmin.getGenreRepo = getGenreRepo;
                         frmAdmin.getRatedRepo = getRatedRepo;
                         frmAdmin.getOrderRepo = getOrderRepo;
+                        frmAdmin.getOrderDetailRepo = getOrderDetailRepo;
                         frmAdmin.getCinemaRepo = getCinemaRepo;
                         frmAdmin.getAccountRepo = getAccountRepo;
                         frmAdmin.Show();

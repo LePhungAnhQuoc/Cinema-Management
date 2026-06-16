@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500"
              Loaded="UserControl_Loaded">
@@ -11,54 +12,86 @@
         <local:StatusToLockConverter x:Key="statusToLockConverter" />
         <local:StatusToTextConverter x:Key="statusToTextConverter" />
     </UserControl.Resources>
-    <StackPanel Grid.Row="1">
+    <StackPanel Grid.Row="1"
+                Margin="0 30 0 0">
+        <Button Style="{StaticResource AddButtonStyle}"
+                HorizontalAlignment="Right"
+                Click="btnAdd_Click"
+                Margin="30 0 30 30"
+                Content="Add new user">
+        </Button>
         <DataGrid Name="dgTable"
                   HorizontalAlignment="Stretch"
                   IsReadOnly="True"
-                  AutoGenerateColumns="False">
-            <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                </Style>
-            </DataGrid.RowStyle>
+                  AutoGenerateColumns="False"
+                  Style="{StaticResource ModernDataGrid}">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="1*" Binding="{Binding Username}" Header="Username"/>
-                <DataGridTextColumn Width="1*"  Binding="{Binding Password}" Header="Password"/>
-                <DataGridTextColumn Width="100" Binding="{Binding Status, Converter={StaticResource statusToTextConverter}}" Header="Status"/>
-                <DataGridTemplateColumn Width="auto">
+                <DataGridTemplateColumn Width="*" Header="Member">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Width="50" Height="50" HorizontalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <Label Grid.Column="1" Content="{Binding Username}" 
+                       VerticalAlignment="Center">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Foreground" Value="White" />
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Value="True">
+                                                    <Setter Property="Foreground" Value="White" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Value="False">
+                                                    <Setter Property="Foreground" Value="Black" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="*" Binding="{Binding Email}" Header="Email"/>
+                <DataGridTextColumn Width="*" Binding="{Binding Phone}" Header="Phone"/>
+                <DataGridTextColumn Width="*" Binding="{Binding Address}" Header="Address"/>
+                <DataGridTextColumn Width="*" Binding="{Binding Status, Converter={StaticResource statusToTextConverter}}" Header="Status"/>
+                <DataGridTemplateColumn Width="110" Header="Operations">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Width="auto"
                                         HorizontalAlignment="Center"
                                         Orientation="Horizontal">
-                                <Button Background="Orange" Foreground="White"
+                                <Button Style="{StaticResource OperationButtonStyle}"
+                                        Background="Orange" Foreground="White"
                                         Name="btnLockState"
-                                        FontSize="12"
-                                        Margin="10 5 0 5" Padding="15 5"
-                                        Width="70"
-                                        Click="btnLockState_Click"
-                                        Content="{Binding Status, Converter={StaticResource statusToLockConverter}}">
+                                        Click="btnLockState_Click">
+                                    <Path Data="{Binding Status, Converter={StaticResource statusToLockConverter}}"
+                                        Fill="White" Stretch="Uniform"/>
                                 </Button>
-                                <Button Background="#28a745" Foreground="White"
+                                <Button Style="{StaticResource OperationButtonStyle}"
+                                        Background="#563ba2" Foreground="White"
                                         Name="btnUpdate"
                                         FontSize="12"
-                                        Margin="10 5 10 5" Padding="15 5"
-                                        Click="btnUpdate_Click">Update</Button>
+                                        Margin="10 5 10 5"
+                                        Padding="10"
+                                        Click="btnUpdate_Click">
+                                    <Path Data="M21.03 2.97a3.578 3.578 0 0 1 0 5.06L9.062 20a2.25 2.25 0 0 1-.999.58l-5.116 1.395a.75.75 0 0 1-.92-.921l1.395-5.116a2.25 2.25 0 0 1 .58-.999L15.97 2.97a3.578 3.578 0 0 1 5.06 0ZM15 6.06 5.062 16a.75.75 0 0 0-.193.333l-1.05 3.85 3.85-1.05A.75.75 0 0 0 8 18.938L17.94 9 15 6.06Zm2.03-2.03-.97.97L19 7.94l.97-.97a2.079 2.079 0 0 0-2.94-2.94Z"
+                                          Fill="White" Stretch="Uniform" />
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Margin="0 10"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button HorizontalAlignment="Center"
-                    Background="#007bff" Foreground="White"
-                    FontSize="12"
-                    Padding="15 5"
-                    Content="Add New User"
-                    Click="btnAdd_Click"/>
-        </StackPanel>
     </StackPanel>
 </UserControl>

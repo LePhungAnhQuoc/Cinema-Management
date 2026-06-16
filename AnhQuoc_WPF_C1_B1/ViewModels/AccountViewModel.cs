@@ -27,7 +27,7 @@ namespace AnhQuoc_WPF_C1_B1
                 {
                     if (value.Username == item.Username)
                     {
-                        if (value.Password == item.Password)
+                        if (item.Password != null && PasswordHasher.VerifyPassword(value.Password, item.Password))
                         {
                             return item;
                         }

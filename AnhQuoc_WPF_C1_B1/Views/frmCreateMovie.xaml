@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="frmCreateMovie" Height="552" Width="400"
+        Title="frmCreateMovie" Width="400"
+        SizeToContent="Height"
         Loaded="Window_Loaded">
     <StackPanel Name="stkContainer" Margin="0,0,0,5">
         <Label Name="lblHeader"
@@ -29,12 +30,13 @@
                    VerticalContentAlignment="Center"
                    HorizontalContentAlignment="Left"
                    Content="Name:" />
-            <TextBox Grid.Column="1"
-                        Name="txtName"
-                        Padding="5"
-                        VerticalContentAlignment="Center"
-                        TabIndex="0"
-                        FontSize="12"/>
+            <TextBox Style="{StaticResource RoundedTextBox}"
+                     Grid.Column="1"
+                     Name="txtName"
+                     Padding="5"
+                     VerticalContentAlignment="Center"
+                     TabIndex="0"
+                     FontSize="12"/>
         </Grid>
         <Grid Margin="10 5">
             <Grid.ColumnDefinitions>
@@ -49,6 +51,7 @@
                     HorizontalContentAlignment="Left"
                     Content="Rated:"/>
             <ComboBox Grid.Column="1"
+                      Style="{StaticResource ModernComboBox}"
                       IsEditable="True"
                       IsReadOnly="True"
                       HorizontalContentAlignment="Center"
@@ -73,7 +76,13 @@
             <ScrollViewer Grid.Column="1"
                           CanContentScroll="True"
                           VerticalScrollBarVisibility="Auto">
-                <WrapPanel Name="stkGenres" />
+                <WrapPanel Name="stkGenres">
+                    <WrapPanel.Resources>
+                        <Style TargetType="CheckBox" BasedOn="{StaticResource ModernCheckBoxStyle}">
+                            <Setter Property="Margin" Value="5" />
+                        </Style>
+                    </WrapPanel.Resources>
+                </WrapPanel>
             </ScrollViewer>
         </Grid>
         <Grid Margin="10 5">
@@ -88,7 +97,8 @@
                     VerticalContentAlignment="Center"
                     HorizontalContentAlignment="Left"
                     Content="Release Date:"/>
-            <DatePicker Grid.Column="1"
+            <DatePicker Style="{StaticResource datePicker}"
+                        Grid.Column="1"
                         Name="dateReleaseDate" 
                         Background="White"
                         VerticalContentAlignment="Center"
@@ -113,7 +123,8 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0"
+                <TextBox Style="{StaticResource RoundedTextBox}"
+                         Grid.Column="0"
                          Name="txtRunningTime" 
                          VerticalContentAlignment="Center"
                          TabIndex="4"
@@ -146,18 +157,21 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0"
+                <TextBox Style="{StaticResource RoundedTextBox}"
+                         Grid.Column="0"
                          Name="txtUrlImage" 
                          Padding="5"
                          VerticalContentAlignment="Center"
                          FontSize="12"
                          Text="{Binding UrlImage, Mode=TwoWay, UpdateSourceTrigger=Default}"/>
-                <Button Grid.Column="1"
+                <Button Style="{StaticResource RoundedButtonStyle}"
+                        Margin="10 0 0 0"
+                        Grid.Column="1"
                         Name="btnBrowseImage"
                         Padding="5"
                         FontSize="12"
-                        Background="#e3e7e8"
-                        Content="Browse.."
+                        Background="Gray"
+                        Content="Browse"
                         Click="btnUploadImage_Click"/>
             </Grid>
         </Grid>
@@ -171,7 +185,9 @@
                    VerticalContentAlignment="Center"
                    HorizontalContentAlignment="Center"
                    Content="Description"/>
-            <TextBox Name="txtDescription" 
+            <TextBox Style="{StaticResource RoundedTextBox}"
+                     VerticalContentAlignment="Top"
+                     Name="txtDescription" 
                      Margin="10"
                      Height="60"
                      TextWrapping="Wrap"
@@ -183,17 +199,19 @@
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">
-            <Border BorderBrush="Black"
-                    BorderThickness="1">
-                <Button Name="btnCancel"
-                        Padding="5"
-                        FontSize="14"
-                        Width="70"
-                        Background="#ffffff"
-                        HorizontalAlignment="Center"
-                        Content="Cancel"
-                        Click="btnCancel_Click"/>
-            </Border>
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource RoundedButtonStyle}" />
+            </StackPanel.Resources>
+            <Button Name="btnCancel"
+                    BorderThickness="1"
+                    Foreground="Black"
+                    Padding="5"
+                    FontSize="14"
+                    Width="70"
+                    Background="#ffffff"
+                    HorizontalAlignment="Center"
+                    Content="Cancel"
+                    Click="btnCancel_Click"/>
             <Button Name="btnConfirm"
                     Margin="10 0 0 0"
                     Padding="5"

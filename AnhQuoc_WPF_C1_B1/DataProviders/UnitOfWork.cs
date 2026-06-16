@@ -11,6 +11,7 @@ namespace AnhQuoc_WPF_C1_B1
         #region Fields
         private RepositoryBase<Account> Accounts;
         private RepositoryBase<Order> Orders;
+        private RepositoryBase<OrderDetail> OrderDetails;
         private RepositoryBase<Cinema> Cinemas;
         private RepositoryBase<Customer> Customers;
         private RepositoryBase<Rated> Rateds;
@@ -57,6 +58,16 @@ namespace AnhQuoc_WPF_C1_B1
                 if (this.Orders == null)
                     this.Orders = new RepositoryBase<Order>();
                 return Orders;
+            }
+        }
+
+        public RepositoryBase<OrderDetail> GetRepositoryOrderDetail
+        {
+            get
+            {
+                if (this.OrderDetails == null)
+                    this.OrderDetails = new RepositoryBase<OrderDetail>();
+                return OrderDetails;
             }
         }
 
@@ -108,6 +119,7 @@ namespace AnhQuoc_WPF_C1_B1
             Cinemas = new RepositoryBase<Cinema>();
             Customers = new RepositoryBase<Customer>();
             Orders = new RepositoryBase<Order>();
+            OrderDetails = new RepositoryBase<OrderDetail>();
             Rateds = new RepositoryBase<Rated>();
             Movies = new RepositoryBase<Movie>();
             Genres = new RepositoryBase<Genre>();
@@ -121,6 +133,7 @@ namespace AnhQuoc_WPF_C1_B1
             Cinemas.BulkInsert(seedData.LoadCinemas());
             Customers.BulkInsert(seedData.LoadCustomers());
             Orders.BulkInsert(seedData.LoadOrders(Cinemas, Customers));
+            OrderDetails.BulkInsert(seedData.LoadAllOrderDetails(null, Orders));
             Rateds.BulkInsert(seedData.LoadRateds());
             Genres.BulkInsert(seedData.LoadGenres());
             Movies.BulkInsert(seedData.LoadMovies(Genres.Items, Rateds.Items));

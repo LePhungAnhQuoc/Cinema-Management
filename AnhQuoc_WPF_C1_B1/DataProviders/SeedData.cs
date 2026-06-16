@@ -26,8 +26,12 @@ namespace AnhQuoc_WPF_C1_B1
                 {
                     newAccount = new Account();
 
+                    newAccount.Image = node.Attributes["Image"].Value;
                     newAccount.Username = node.Attributes["Username"].Value;
                     newAccount.Password = node.Attributes["Password"].Value;
+                    newAccount.Email = node.Attributes["Email"].Value;
+                    newAccount.Phone = node.Attributes["Phone"].Value;
+                    newAccount.Address = node.Attributes["Address"].Value;
                     newAccount.Role = (RoleTypes)Enum.Parse(typeof(RoleTypes), node.Attributes["Role"].Value);
                     newAccount.Status = Convert.ToInt32(node.Attributes["Status"].Value);
 
@@ -275,14 +279,30 @@ namespace AnhQuoc_WPF_C1_B1
                     MessageBox.Show(ex.Message);
                     return null;
                 }
-                seatVM.seatRepo.Items = seats;
-                Seat seatFind = seatVM.FindById(newOrderDetail.BookedSeat.Id);
-                
-                newOrderDetail.BookedSeat = seatFind;
+                if (seats != null)
+                {
+                    seatVM.seatRepo.Items = seats;
+                    Seat seatFind = seatVM.FindById(newOrderDetail.BookedSeat.Id);
+                    newOrderDetail.BookedSeat = seatFind;
+                }
                 orderDetails.Add(newOrderDetail);
             }
             DataProvider.Instance.Close();
             return orderDetails;
+        }
+
+        public List<OrderDetail> LoadAllOrderDetails(List<List<Seat>> seats, RepositoryBase<Order> orderRepo)
+        {
+            List<OrderDetail> allOrderDetails = new List<OrderDetail>();
+            foreach (Order order in orderRepo.Items)
+            {
+                List<OrderDetail> orderDetails = LoadOrderDetails(seats, order.Id);
+                if (orderDetails != null)
+                {
+                    allOrderDetails.AddRange(orderDetails);
+                }
+            }
+            return allOrderDetails;
         }
 
         public List<MovieSchedule> LoadMovieSchedules(RepositoryBase<Movie> movieRepo, RepositoryBase<Cinema> cinemaRepo)

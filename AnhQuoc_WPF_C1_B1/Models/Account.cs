@@ -19,11 +19,80 @@ namespace AnhQuoc_WPF_C1_B1
             set
             {
                 _Status = value;
-                OnPropertyChanged("Status");
+                OnPropertyChanged();
             }
         }
-        public string Username { get; set; }
-        public string Password { get; set; }
+
+        private string _Image;
+
+        public string Image
+        {
+            get { return _Image; }
+            set
+            {
+                _Image = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _Username;
+
+        public string Username
+        {
+            get { return _Username; }
+            set
+            {
+                _Username = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _Password;
+
+        public string Password
+        {
+            get { return _Password; }
+            set
+            {
+                _Password = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private string _Email;
+        public string Email
+        {
+            get { return _Email; }
+            set
+            {
+                _Email = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _Phone;
+
+        public string Phone
+        {
+            get { return _Phone; }
+            set
+            {
+                _Phone = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _Address;
+        public string Address
+        {
+            get { return _Address; }
+            set
+            {
+                _Address = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Account()
         {
