@@ -23,6 +23,7 @@ namespace AnhQuoc_WPF_C1_B1
         
         public string GetId(int no)
         {
+            no++;
             return "MV" + no.ToString();
         }
 
@@ -110,6 +111,16 @@ namespace AnhQuoc_WPF_C1_B1
             foreach (Movie item in MovieRepo.Gets())
             {
                 if (idValue == item.Id)
+                    return item;
+            }
+            return null;
+        }
+      
+        public Movie FindByName(string movieName)
+        {
+            foreach (Movie item in MovieRepo.Gets())
+            {
+                if (string.Compare(movieName, item.Name, true) == 0)
                     return item;
             }
             return null;

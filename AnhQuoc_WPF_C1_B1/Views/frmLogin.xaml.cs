@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AnhQuoc_WPF_C1_B1.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -20,6 +22,7 @@ namespace AnhQuoc_WPF_C1_B1
         public Func<RepositoryBase<Account>> getAccountRepo { get; set; }
         public Func<RepositoryBase<Cinema>> getCinemaRepo { get; set; }
         public Func<RepositoryBase<Customer>> getCustomerRepo { get; set; }
+
 
         private AccountViewModel AccountVM;
         public frmLogin()
@@ -68,6 +71,7 @@ namespace AnhQuoc_WPF_C1_B1
                 this.Hide();
                 frmAdmin frmAdmin = new frmAdmin();
                 frmAdmin.getFrmLogin = () => this;
+                frmAdmin.getAccount = () => findedAccount;
                 frmCashier frmCashier = new frmCashier();
                 frmCashier.getFrmLogin = () => this;
                 switch (findedAccount.Role)

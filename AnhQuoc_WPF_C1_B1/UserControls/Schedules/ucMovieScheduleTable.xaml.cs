@@ -15,13 +15,15 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using AnhQuoc_WPF_C1_B1.Views;
+using AnhQuoc_WPF_C1_B1.UserControls.Admin;
 
 namespace AnhQuoc_WPF_C1_B1
 {
     /// <summary>
     /// Interaction logic for ucMovieScheduleTable.xaml
     /// </summary>
-    public partial class ucMovieScheduleTable : UserControl
+    public partial class ucMovieScheduleTable : UserControl, INotifyPropertyChanged
     {
         #region Properties
         public Func<RepositoryBase<MovieSchedule>> getMovieScheduleRepo { get; set; }
@@ -35,6 +37,15 @@ namespace AnhQuoc_WPF_C1_B1
 
         public Func<string> getFileSeat { get; set; }
         private ObservableCollection<Movie> movieObs { get; set; }
+
+        #region PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        #endregion
+
         public ucMovieScheduleTable()
         {
             InitializeComponent();
@@ -54,29 +65,12 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnDetail_Click(object sender, RoutedEventArgs e)
         {
-            Movie getMovie = dgTable.SelectedItem as Movie;
-            MovieSchedule newMovieSchedule = movieScheduleVM.GetByMovie(getMovie);
+            ucMovieInformation ucMovieInformation = new ucMovieInformation();
+            ucMovieInformation.GetMovie = dgTable.SelectedItem as Movie;
 
-            if (newMovieSchedule == null)
-            {
-                Utilities.HandleError();
-            }
-            string fileSeat = movieScheduleVM.CreateFileSeatName(newMovieSchedule, getFileSeat());
-
-            ucCinemaManage ucCinemaManage = new ucCinemaManage();
-            ucCinemaManage.getFileSeat = () => fileSeat;
-            ucCinemaManage.getMovieSchedule = () => newMovieSchedule;
-
-
-            ucCinemaManage.getFrmAdmin = getFrmAdmin;
-            ucCinemaManage.getCinemaTypeSchedules = () => newMovieSchedule.CinemaTypeSchedules;
-
-            EnumViewModel enumVM = new EnumViewModel();
-            ucCinemaManage.getAllCinemaTypes = () => enumVM.GetValues<CinemaType>().ToList();
-            ucCinemaManage.getCinemaRepo = getCinemaRepo;
-
-            getFrmAdmin().stkView.Children.Clear();
-            getFrmAdmin().stkView.Children.Add(ucCinemaManage);
+            Window frmMovieInformation = new Window();
+            frmMovieInformation.Content = ucMovieInformation;
+            frmMovieInformation.Show();
         }
 
         private void LoadUcMoviePicker(string feature)
@@ -144,7 +138,7 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult msbResult = MessageBox.Show("Do you want to remove this item", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
+            MessageBoxResult msbResult = MessageBox.Show("Are you sure you want to delete this item?", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
             if (msbResult == MessageBoxResult.Cancel)
                 return;
             Movie selectedItem = dgTable.SelectedItem as Movie;
@@ -153,20 +147,57 @@ namespace AnhQuoc_WPF_C1_B1
 
         public void Btn_Delete(Movie item)
         {
-            MovieSchedule newItem = movieScheduleVM.GetByMovie(item);
-            if (newItem == null) return;
-
-            movieObs.Remove(newItem.Movie);
-            movieScheduleVM.MovieScheduleRepo.Remove(newItem);
-
-            movieScheduleVM.WriteRemoveData(newItem);
-            string fileSeat = movieScheduleVM.CreateFileSeatName(newItem, getFileSeat());
-            Utilities.DeleteDirectory(fileSeat);
+           //
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            LoadUcMoviePicker("update");
+            ucMovieInformation ucMovieInformation = new ucMovieInformation();
+            ucMovieInformation.GetMovie = dgTable.SelectedItem as Movie;
+            ucMovieInformation.IsReadonly = false;
+            Window frmMovieInformation = new Window();
+            frmMovieInformation.Content = ucMovieInformation;
+            frmMovieInformation.Show();
+            //Movie getMovie = dgTable.SelectedItem as Movie;
+            //MovieSchedule newMovieSchedule = movieScheduleVM.GetByMovie(getMovie);
+
+            //if (newMovieSchedule == null)
+            //{
+            //    Utilities.HandleError();
+            //}
+            //string fileSeat = movieScheduleVM.CreateFileSeatName(newMovieSchedule, getFileSeat());
+
+            //ucCinemaManage ucCinemaManage = new ucCinemaManage();
+            //ucCinemaManage.getFileSeat = () => fileSeat;
+            //ucCinemaManage.getMovieSchedule = () => newMovieSchedule;
+
+
+            //ucCinemaManage.getFrmAdmin = getFrmAdmin;
+            //ucCinemaManage.getCinemaTypeSchedules = () => newMovieSchedule.CinemaTypeSchedules;
+
+            //EnumViewModel enumVM = new EnumViewModel();
+            //ucCinemaManage.getAllCinemaTypes = () => enumVM.GetValues<CinemaType>().ToList();
+            //ucCinemaManage.getCinemaRepo = getCinemaRepo;
+
+            //getFrmAdmin().stkView.Children.Clear();
+            //getFrmAdmin().stkView.Children.Add(ucCinemaManage);
+
+
+            //LoadUcMoviePicker("update");
+        }
+
+        public void DeleteMovieSchedule(Movie item)
+        {
+            MovieScheduleViewModel movieScheduleViewModel = new MovieScheduleViewModel();
+            movieScheduleViewModel.MovieScheduleRepo = getMovieScheduleRepo();
+            MovieSchedule newItem = movieScheduleViewModel.GetByMovie(item);
+            if (newItem == null) return;
+
+            movieScheduleViewModel.MovieScheduleRepo.Remove(newItem);
+            movieScheduleViewModel.WriteRemoveData(newItem);
+
+            string fileSeat = movieScheduleViewModel.CreateFileSeatName(newItem, getFileSeat());
+            Utilities.DeleteDirectory(fileSeat);
         }
     }
 }

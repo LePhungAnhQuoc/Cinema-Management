@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using AnhQuoc_WPF_C1_B1.UserControls;
 
 namespace AnhQuoc_WPF_C1_B1
 {
@@ -57,7 +58,6 @@ namespace AnhQuoc_WPF_C1_B1
             this.Hide();
 
             frmLogin frmLogin = new frmLogin();
-
             frmLogin.getMovieScheduleRepo = () => MovieScheduleVM.MovieScheduleRepo;
             frmLogin.getMovieRepo = () => MovieVM.MovieRepo;
             frmLogin.getGenreRepo = () => GenreVM.GenreRepo;

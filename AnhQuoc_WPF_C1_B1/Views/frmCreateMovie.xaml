@@ -36,7 +36,8 @@
                      Padding="5"
                      VerticalContentAlignment="Center"
                      TabIndex="0"
-                     FontSize="12"/>
+                     FontSize="12"
+                     Text="{Binding Movie.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <Grid Margin="10 5">
             <Grid.ColumnDefinitions>
@@ -44,22 +45,20 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0"
-                    TabIndex="-1"
-                    FontSize="12"
-                    Padding="10 0"
-                    VerticalContentAlignment="Center"
-                    HorizontalContentAlignment="Left"
-                    Content="Rated:"/>
+                   TabIndex="-1"
+                   FontSize="12"
+                   Padding="10 0"
+                   VerticalContentAlignment="Center"
+                   HorizontalContentAlignment="Left"
+                   Content="Rated:"/>
             <ComboBox Grid.Column="1"
                       Style="{StaticResource ModernComboBox}"
-                      IsEditable="True"
-                      IsReadOnly="True"
                       HorizontalContentAlignment="Center"
-                      Text="Select Rated"
                       Name="cbRateds" 
                       Padding="5"
                       VerticalContentAlignment="Center"
-                      FontSize="12"/>
+                      FontSize="12"
+                      SelectedItem="{Binding Movie.Rated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <Grid Margin="10 5">
             <Grid.ColumnDefinitions>
@@ -104,7 +103,8 @@
                         VerticalContentAlignment="Center"
                         TabIndex="3"
                         Padding="5"
-                        FontSize="12"/>
+                        FontSize="12"
+                        SelectedDate="{Binding Movie.ReleaseDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <Grid Margin="10 5">
             <Grid.ColumnDefinitions>
@@ -129,7 +129,8 @@
                          VerticalContentAlignment="Center"
                          TabIndex="4"
                          Padding="5"
-                         FontSize="12"/>
+                         FontSize="12"
+                         Text="{Binding Movie.RunningTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Grid.Column="1"
                        TabIndex="-1"
                        FontSize="12"
@@ -163,7 +164,8 @@
                          Padding="5"
                          VerticalContentAlignment="Center"
                          FontSize="12"
-                         Text="{Binding UrlImage, Mode=TwoWay, UpdateSourceTrigger=Default}"/>
+                         IsReadOnly="True"
+                         Text="{Binding UrlImage}"/>
                 <Button Style="{StaticResource RoundedButtonStyle}"
                         Margin="10 0 0 0"
                         Grid.Column="1"
@@ -193,7 +195,8 @@
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
                      VerticalScrollBarVisibility="auto"
-                     FontSize="12"/>
+                     FontSize="12"
+                     Text="{Binding Movie.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Margin="10"
                     VerticalAlignment="Bottom"

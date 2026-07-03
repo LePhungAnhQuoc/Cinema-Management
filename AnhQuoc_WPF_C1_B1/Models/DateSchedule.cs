@@ -20,7 +20,18 @@ namespace AnhQuoc_WPF_C1_B1
                 OnPropertyChanged("Date");
             }
         }
-        public List<TimeSchedule> TimeShedules { get; set; }
+        
+        private List<TimeSchedule> _TimeShedules;
+        public List<TimeSchedule> TimeShedules
+        {
+            get { return _TimeShedules; }
+            set 
+            { 
+                _TimeShedules = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

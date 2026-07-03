@@ -10,5 +10,9 @@ namespace AnhQuoc_WPF_C1_B1
     {
         public string Id { get; set; }
         public string Detail { get; set; }
+        public override string ToString()
+        {
+            return Id;
+        }
     }
 }

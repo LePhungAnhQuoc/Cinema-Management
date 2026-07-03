@@ -147,21 +147,21 @@ namespace AnhQuoc_WPF_C1_B1
 
         public void SetSeatColor(List<List<Button>> source)
         {
-            SeatViewModel seatVM = new SeatViewModel();
-            seatVM.seatRepo.Items = seats;
+            //SeatViewModel seatVM = new SeatViewModel();
+            //seatVM.seatRepo.Items = seats;
 
-            foreach (List<Button> items in source)
-            {
-                foreach (Button item in items)
-                {
-                    Seat getSeat = seatVM.FindById(item.Content.ToString());
-                    if (getSeat == null) return;
-                    if (getSeat.IsBooked == true)
-                    {
-                        item.Background = new SolidColorBrush(btnBookedSeatColor);
-                    }
-                }
-            }
+            //foreach (List<Button> items in source)
+            //{
+            //    foreach (Button item in items)
+            //    {
+            //        Seat getSeat = seatVM.FindById(item.Content.ToString());
+            //        if (getSeat == null) return;
+            //        if (getSeat.IsBooked == true)
+            //        {
+            //            item.Background = new SolidColorBrush(btnBookedSeatColor);
+            //        }
+            //    }
+            //}
         }
 
         private void DefineRowColDefinitions(Grid grid1, int row, int col)
@@ -215,7 +215,7 @@ namespace AnhQuoc_WPF_C1_B1
             Button item = sender as Button;
 
             Seat seatBooked = seatVM.FindById(item.Content.ToString());
-            if (seatBooked.IsBooked)
+            if (true)
             {
                 MessageBox.Show("This seat has been reserved");
             }
@@ -387,7 +387,7 @@ namespace AnhQuoc_WPF_C1_B1
             foreach (OrderDetail detail in newOrder.Details)
             {
                 Seat seatBooked = detail.BookedSeat;
-                seatBooked.IsBooked = true;
+                //seatBooked.IsBooked = true;
             }
 
             XmlNode parentNode = null;

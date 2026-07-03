@@ -1,9 +1,12 @@
-﻿using System;
+﻿using AnhQuoc_WPF_C1_B1.Views;
+using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +31,31 @@ namespace AnhQuoc_WPF_C1_B1
         private ObservableCollection<Account> getSource;
         private AccountViewModel accountVM;
 
-        public Account CurrentItem;
+
+        #region Properties
+        private ImageSource _ImageSource;
+        public ImageSource ImageSource
+        {
+            get { return _ImageSource; }
+            set
+            {
+                _ImageSource = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Account _CurrentItem;
+        public Account CurrentItem
+        {
+            get { return _CurrentItem; }
+            set { 
+                _CurrentItem = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+
         private Button btnLock;
         private Button btnUnlock;
 
@@ -43,6 +70,7 @@ namespace AnhQuoc_WPF_C1_B1
         public ucUserTable()
         {
             InitializeComponent();
+            this.DataContext = this;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -63,15 +91,9 @@ namespace AnhQuoc_WPF_C1_B1
             accountVM.WriteData(newItem);
         }
 
-        public void UpdateData(Account data)
+        public void UpdateData(Account newData)
         {
-            Account oldData = CurrentItem;
-            CurrentItem.Password = data.Password;
-
-            getSource.Insert(getSource.IndexOf(oldData), data);
-            getSource.Remove(oldData);
-
-            accountVM.WriteUpdateData(data);
+            accountVM.WriteUpdateData(newData);
         }
 
         private void LoadUcCinemaPicker(string feature)
@@ -87,11 +109,13 @@ namespace AnhQuoc_WPF_C1_B1
             frmAddAccount.getRoles = () => roles;
             frmAddAccount.getUcUserTable = () => this;
             
+            frmAddAccount.getFeature = () => feature;
+
             if (feature == "update")
             {
-                CurrentItem = dgTable.SelectedValue as Account;
+                if (CurrentItem == null)
+                    CurrentItem = dgTable.SelectedItem as Account;
             }
-            frmAddAccount.getFeature = () => feature;
             frmAddAccount.ShowDialog();
         }
         
@@ -126,34 +150,6 @@ namespace AnhQuoc_WPF_C1_B1
             LoadUcCinemaPicker("update");
         }
 
-        private void btnLock_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult msbResult = MessageBox.Show("Do you want to lock this item", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
-            if (msbResult == MessageBoxResult.Cancel)
-                return;
-            Account newItem = null;
-            try
-            {
-                newItem = (Account)dgTable.SelectedItem;
-            }
-            catch
-            {
-                Utilities.HandleError();
-            }
-            newItem.Status = 0;
-            accountVM.WriteUpdateData(newItem);
-
-            btnLock = sender as Button;
-            btnLock.IsEnabled = false;
-            if (btnUnlock != null)
-                btnUnlock.IsEnabled = true;
-        }
-
-        private void btnUnlock_Click(object sender, RoutedEventArgs e)
-        {
-         
-        }
-
         private void btnLockState_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -167,13 +163,13 @@ namespace AnhQuoc_WPF_C1_B1
             {
                 Utilities.HandleError();
             }
-            bool state = Convert.ToBoolean(newItem.Status);
 
-            string lockState = state ? "lock" : "unlock";
-            MessageBoxResult msbResult = MessageBox.Show($"Do you want to {lockState} this item", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
-            if (msbResult == MessageBoxResult.Cancel)
+            frmLockUserNotify frmLockUserNotify = new frmLockUserNotify(newItem);
+            frmLockUserNotify.ShowDialog();
+            if (frmLockUserNotify.DialogResult == false)
                 return;
-            
+
+            bool state = Convert.ToBoolean(newItem.Status);
             newItem.Status = Convert.ToInt32(!state);
             accountVM.WriteUpdateData(newItem);
         }

@@ -66,11 +66,11 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <StackPanel Grid.Row="0" Orientation="Horizontal" Height="70">
-                <Image Source="/Assests/AnhQuoc.jpg.jpg" 
-                            Width="30" Height="30" 
-                            Margin="10,0,5,0" 
-                            HorizontalAlignment="Left" 
-                            Stretch="UniformToFill">
+                <Image Source="{Binding AccountImage}"
+                       Width="30" Height="30" 
+                       Margin="10,0,5,0" 
+                       HorizontalAlignment="Left" 
+                       Stretch="UniformToFill">
                     <Image.Clip>
                         <EllipseGeometry Center="15,15" RadiusX="15" RadiusY="15" />
                     </Image.Clip>
@@ -82,7 +82,7 @@
                            FontSize="20"
                            Margin="0 10"
                            FontWeight="SemiBold"
-                           Content="{Binding Username}"
+                           Content="{Binding Account.Username}"
                            Foreground="Black"></Label>
             </StackPanel>
             <TreeView Background="White"
@@ -91,8 +91,6 @@
                   Width="250">
                 <TreeView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource TreeViewItemStyle}" TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                         <Setter Property="FontWeight" Value="Normal" />
                         <Setter Property="Padding" Value="20" />
                         <Setter Property="Foreground" Value="Black" />
@@ -104,11 +102,11 @@
                         </Style.Triggers>
                     </Style>
                 </TreeView.ItemContainerStyle>
-                <TreeViewItem Name="tvAccount" Header="Account" MouseLeftButtonUp="tvAccount_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/account.png"/>
-                <TreeViewItem Name="tvMovie" Header="Movie" MouseLeftButtonUp="tvMovie_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/movie.png"/>
-                <TreeViewItem Name="tvMovieSchedule" Header="Movie Schedule" MouseLeftButtonUp="tvMovieSchedule_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/movie-schedule.png"/>
-                <TreeViewItem Name="tvStatistical" Header="Statistical" MouseLeftButtonUp="tvStatistical_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/Statistical.png"/>
-                <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/Assests/logout.png"/>
+                <TreeViewItem Name="tvAccount" Header="Account" MouseLeftButtonUp="tvAccount_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/account.png"/>
+                <TreeViewItem Name="tvMovie" Header="Movie" MouseLeftButtonUp="tvMovie_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/movie.png"/>
+                <TreeViewItem Name="tvMovieSchedule" Header="Movie Schedule" MouseLeftButtonUp="tvMovieSchedule_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/movie-schedule.png"/>
+                <TreeViewItem Name="tvStatistical" Header="Statistical" MouseLeftButtonUp="tvStatistical_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/Statistical.png"/>
+                <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/logout.png"/>
             </TreeView>
         </StackPanel>
 
@@ -123,22 +121,23 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <Image Source="/Assests/Cinema Icon.jpg" Width="100" Height="100"/>
+                    <Image Source="/Assets/CinemaIcon.png" Width="60" Height="60" />
                     <StackPanel Grid.Column="1"
-                                Orientation="Horizontal">
+                                Orientation="Vertical">
+                        <Label Grid.Column="1"
+                               VerticalContentAlignment="Center"
+                               HorizontalContentAlignment="Left"
+                               Padding="10 0 0 0"
+                               FontSize="20"
+                               Foreground="Black"
+                               Content="Welcome back to," />
                         <Label Grid.Column="1"
                                VerticalContentAlignment="Center"
                                HorizontalContentAlignment="Left"
                                Padding="10 0 0 0"
                                FontSize="30"
-                               FontWeight="Bold"
-                               Foreground="Black">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Welcome back, "/>
-                                <TextBlock Text="{Binding Username}"/>
-                                <TextBlock Text="!" />
-                            </StackPanel>
-                        </Label>
+                               Foreground="Black"
+                               Content="{Binding Account.Username}" />
                     </StackPanel>
                 </Grid>
                 <WrapPanel Margin="0 30 0 0">
@@ -146,7 +145,6 @@
                                               Value="{Binding TotalAccounts}"
                                               IconData="{StaticResource usersIconData}"
                                               OuterBackground="#ff3b55"
-                                              InnerBackground="#FF5970"
                                               Margin="10"/>
                     <template:ucDashboardCard Title="Total movies" 
                                               Value="{Binding TotalMovies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -156,13 +154,11 @@
                                               Value="{Binding TotalOrders, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               IconData="{StaticResource orderIconData}"
                                               OuterBackground="#5846FF"
-                                              InnerBackground="#8679FF"
                                               Margin="10" />
                     <template:ucDashboardCard Title="Total order details"
                                               Value="{Binding TotalOrderDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               IconData="{StaticResource orderDetailData}"
                                               OuterBackground="#1955c2"
-                                              InnerBackground="#3573E5"
                                               Margin="10" />
                 </WrapPanel>
             </StackPanel>

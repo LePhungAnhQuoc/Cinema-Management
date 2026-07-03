@@ -10,50 +10,55 @@
     <UserControl.Resources>
         <local:DateConverter x:Key="dateConverter" />
     </UserControl.Resources>
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  CanContentScroll="True">
-        <StackPanel>
-            <Button Style="{StaticResource AddButtonStyle}"
-                    Margin="30"
-                    HorizontalAlignment="Right"
-                    Name="btnAdd"
-                    Content="Add new movie"
-                    Click="btnAdd_Click"/>
-            <DataGrid IsReadOnly="True"
-                      HorizontalAlignment="Stretch"
-                      Name="dgTable"
-                      AutoGenerateColumns="False"
-                      Style="{StaticResource ModernDataGrid}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
-                    <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
-                    <DataGridTextColumn Binding="{Binding Rated.Id}" Header="Rated"/>
-                    <DataGridTextColumn Binding="{Binding RunningTime}" Header="Running Time"/>
-                    <DataGridTextColumn Width="*" Binding="{Binding ReleaseDate, Converter={StaticResource dateConverter}}" Header="ReleaseDate"/>
-                    <DataGridTemplateColumn Header="Operations">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Background="#dc3545" Foreground="White"
-                                        Style="{StaticResource OperationButtonStyle}"
-                                        Name="btnDelete"
-                                        Click="btnDelete_Click">
-                                        <Path Data="{StaticResource TrashIconData}"
-                                          Fill="White" Stretch="Uniform"/>
-                                    </Button>
-                                    <Button Style="{StaticResource OperationButtonStyle}"
-                                        Background="#28a745" Foreground="White"
-                                        Name="btnUpdate"
-                                        Click="btnUpdate_Click">
-                                        <Path Data="{StaticResource EditIconData}"
-                                          Fill="White" Stretch="Uniform"/>
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
-    </ScrollViewer>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Style="{StaticResource AddButtonStyle}"
+                Margin="30"
+                HorizontalAlignment="Right"
+                Name="btnAdd"
+                Content="Add new movie"
+                Click="btnAdd_Click"/>
+        <DataGrid Grid.Row="1"
+                  VerticalAlignment="Stretch"
+                  IsReadOnly="True"
+                HorizontalAlignment="Stretch"
+                Name="dgTable"
+                AutoGenerateColumns="False"
+                Style="{StaticResource ModernDataGrid}"
+                SelectedItem="{Binding CurrentItem}"
+                    ScrollViewer.CanContentScroll="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                <DataGridTextColumn Binding="{Binding Rated.Id}" Header="Rated"/>
+                <DataGridTextColumn Binding="{Binding RunningTime}" Header="Running Time"/>
+                <DataGridTextColumn Width="*" Binding="{Binding ReleaseDate, Converter={StaticResource dateConverter}}" Header="ReleaseDate"/>
+                <DataGridTemplateColumn Header="Operations">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Background="#dc3545" Foreground="White"
+                                    Style="{StaticResource OperationButtonStyle}"
+                                    Name="btnDelete"
+                                    Click="btnDelete_Click">
+                                    <Path Data="{StaticResource TrashIconData}"
+                                        Fill="White" Stretch="Uniform"/>
+                                </Button>
+                                <Button Style="{StaticResource OperationButtonStyle}"
+                                    Background="#28a745" Foreground="White"
+                                    Name="btnUpdate"
+                                    Click="btnUpdate_Click">
+                                    <Path Data="{StaticResource EditIconData}"
+                                        Fill="White" Stretch="Uniform"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl>

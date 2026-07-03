@@ -1,7 +1,11 @@
-﻿using System;
+﻿using AnhQuoc_WPF_C1_B1.UserControls.Admin;
+using AnhQuoc_WPF_C1_B1.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,20 +24,43 @@ namespace AnhQuoc_WPF_C1_B1
     /// <summary>
     /// Interaction logic for ucMovieTable.xaml
     /// </summary>
-    public partial class ucMovieTable : UserControl
+    public partial class ucMovieTable : UserControl, INotifyPropertyChanged
     {
         public Func<RepositoryBase<Movie>> getMovieRepo { get; set; }
         public Func<RepositoryBase<Genre>> getGenreRepo { get; set; }
         public Func<RepositoryBase<Rated>> getRatedRepo { get; set; }
+        public Func<RepositoryBase<MovieSchedule>> getMovieScheduleRepo { get; set; }
 
         public Func<frmAdmin> getFrmAdmin { get; set; }
 
         private ObservableCollection<Movie> MoviesOb;
 
+        #region Properties
+        private Movie _CurrentItem;
+        public Movie CurrentItem
+        {
+            get { return _CurrentItem; }
+            set 
+            { 
+                _CurrentItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        #endregion
         public ucMovieTable()
         {
             InitializeComponent();
             MoviesOb = new ObservableCollection<Movie>();
+            this.DataContext = this;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -64,7 +91,6 @@ namespace AnhQuoc_WPF_C1_B1
             MovieViewModel movieVM = new MovieViewModel();
             
             // Add to list
-            if (getMovieRepo == null) return; 
             getMovieRepo().Add(newMovie);
 
             // Add to database
@@ -97,10 +123,8 @@ namespace AnhQuoc_WPF_C1_B1
             DataProvider.Instance.pathData = Constants.fMovieDetails;
             DataProvider.Instance.Open();
             child = DataProvider.Instance.nodeRoot.ChildNodes[indexOf];
-            DataProvider.Instance.nodeRoot.AppendChild(child);
+            DataProvider.Instance.nodeRoot.RemoveChild(child);
             DataProvider.Instance.Close();
-
-            this.MoviesOb.RemoveAt(indexOf);
         }
 
         private void UpdateData(int indexOf, Movie inputMovie)
@@ -128,9 +152,6 @@ namespace AnhQuoc_WPF_C1_B1
             oldNode = DataProvider.Instance.nodeRoot.ChildNodes[indexOf];
             DataProvider.Instance.nodeRoot.ReplaceChild(newNode, oldNode);
             DataProvider.Instance.Close();
-
-            // Update
-            this.MoviesOb[indexOf] = inputMovie;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -147,23 +168,24 @@ namespace AnhQuoc_WPF_C1_B1
 
             if (frmCreateMovie.frmReply)
             {
-                Movie newMovie = frmCreateMovie.movie;
-                //AddData(newMovie);
+                AddData(frmCreateMovie.Movie);
             }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult msgResult = MessageBox.Show("Are you sure you want to delete this movie and all the schedules?", "Are you sure", MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel);
+            frmDeleteMovie frmDeleteMovie = new frmDeleteMovie();
+            frmDeleteMovie.Movie = CurrentItem;
+            frmDeleteMovie.ShowDialog();
 
-            if (msgResult == MessageBoxResult.OK)
+            if (frmDeleteMovie.DialogResult == true)
             {
                 int currentRowIndex = dgTable.Items.IndexOf(dgTable.CurrentItem);
-                MoviesOb.RemoveAt(currentRowIndex);
-
                 getFrmAdmin().getDeleteMovie = () => getMovieRepo().GetByIndex(currentRowIndex);
                 getFrmAdmin().DeleteMovieSchedule();
-               
+
+                MoviesOb.RemoveAt(currentRowIndex);
+
                 DeleteData(currentRowIndex);
             }
         }
@@ -171,11 +193,10 @@ namespace AnhQuoc_WPF_C1_B1
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             int currentRowIndex = dgTable.Items.IndexOf(dgTable.CurrentItem);
-            Movie getMovie = MoviesOb[currentRowIndex];
 
             frmCreateMovie frmCreateMovie = new frmCreateMovie();
             frmCreateMovie.optionFrm = () => "update";
-            frmCreateMovie.movie = getMovie;
+            frmCreateMovie.Movie = CurrentItem;
             frmCreateMovie.getGenres = () => getGenreRepo().Gets();
             frmCreateMovie.getRateds = () => getRatedRepo().Gets();
 
@@ -186,8 +207,7 @@ namespace AnhQuoc_WPF_C1_B1
 
             if (frmCreateMovie.frmReply)
             {
-                Movie newMovie = frmCreateMovie.movie;
-                //UpdateData(currentRowIndex, newMovie);
+                UpdateData(currentRowIndex, CurrentItem);
             }
         }
     }

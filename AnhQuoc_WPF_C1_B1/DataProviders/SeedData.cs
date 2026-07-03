@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -76,7 +78,7 @@ namespace AnhQuoc_WPF_C1_B1
                 cinemas.Add(newCinema);
             }
             DataProvider.Instance.Close();
-            LoadSeatsCinemas(cinemas);
+            // LoadSeatsCinemas(cinemas);
             return cinemas;
         }
 
@@ -394,7 +396,7 @@ namespace AnhQuoc_WPF_C1_B1
                 List<CinemaTypeSchedule> cinemaTypeSchedules = movie.CinemaTypeSchedules;
                 foreach (var cinemaType in cinemaTypeSchedules)
                 {
-                    List<CinemaSchedule> cinemaSchedules = cinemaType.CinemaSchedules;
+                    var cinemaSchedules = cinemaType.CinemaSchedules;
                     foreach (var cinema in cinemaSchedules)
                     {
                         List<DateSchedule> dateSchedules = cinema.DatesSchedule;

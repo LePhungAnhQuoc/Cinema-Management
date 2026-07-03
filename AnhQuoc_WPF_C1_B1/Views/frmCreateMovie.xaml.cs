@@ -1,9 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using AutoMapper;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPFCustomMessageBox;
+using static System.Net.WebRequestMethods;
 
 namespace AnhQuoc_WPF_C1_B1
 {
@@ -23,6 +27,10 @@ namespace AnhQuoc_WPF_C1_B1
     /// </summary>
     public partial class frmCreateMovie : Window, INotifyPropertyChanged
     {
+        #region Feilds
+        private Movie _movieCopy;
+        #endregion
+
         public bool frmReply;
         public Func<string> optionFrm;
 
@@ -34,9 +42,8 @@ namespace AnhQuoc_WPF_C1_B1
         public Func<List<Genre>> getGenres;
         public Func<List<Rated>> getRateds;
 
-        #region BindingUrlImage
-        private string _UrlImage;
-        public string UrlImage
+        private ImageSource _UrlImage;
+        public ImageSource UrlImage
         {
             get
             {
@@ -48,19 +55,29 @@ namespace AnhQuoc_WPF_C1_B1
                 OnPropertyChanged("UrlImage");
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName = "")
+
+        private Movie _Movie;
+        public Movie Movie
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get { return _Movie; }
+            set { 
+                _Movie = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        #region PropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         #endregion
-
-        public Movie movie { get; set; }
 
         public frmCreateMovie()
         {
             InitializeComponent();
-            UrlImage = string.Empty;
             
             frmReply = false;
             this.DataContext = this;
@@ -68,16 +85,22 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (optionFrm() == "update")
+            {
+                _movieCopy = new Movie();
+                Utilities.CopyProperties(Movie, _movieCopy);
+            }
             if (optionFrm == null)
                 return;
             ResetValues();
+            this.DataContext = this;
         }
 
         public void ResetValues()
         {
             if (optionFrm() == "add")
-                movie = new Movie();
-            if (movie == null)
+                Movie = new Movie();
+            if (Movie == null)
                 return;
             cbRateds.ItemsSource = null;
             LoadRateds();
@@ -89,14 +112,6 @@ namespace AnhQuoc_WPF_C1_B1
             {
                 this.Title = "Update new movie";
                 lblHeader.Content = this.Title;
-
-                txtName.Text = movie.Name;
-                cbRateds.SelectedIndex = getRateds().IndexOf(movie.Rated);
-                CheckedCheckBox(movie.Genres, checkBoxs);
-                dateReleaseDate.SelectedDate = movie.ReleaseDate;
-                txtRunningTime.Text = movie.RunningTime.ToString();
-                txtUrlImage.Text = movie.UrlImage;
-                txtDescription.Text = movie.Description;
             }
             else
             {
@@ -110,6 +125,9 @@ namespace AnhQuoc_WPF_C1_B1
             ObservableCollection<Rated> _rateds = new ObservableCollection<Rated>(getRateds());
             cbRateds.ItemsSource = _rateds;
             cbRateds.DisplayMemberPath = "Id";
+
+            if (_rateds.Count > 0)
+                cbRateds.SelectedIndex = 0;
         }
 
         public List<Genre> GetCheckedGenres()
@@ -173,36 +191,11 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnUploadImage_Click(object sender, RoutedEventArgs e)
         {
-            Image imgUrlImage = new Image();
-            string getUrl = GetFileUploadedUrl();
-            if (getUrl == null || getUrl == string.Empty)
+            string fileName = null;
+            UrlImage = Utilities.SelectImage("Movies", ref fileName);
+            if (UrlImage == null)
                 return;
-            try
-            {
-                // Checking isValid
-                imgUrlImage.Source = new BitmapImage(new Uri(getUrl, UriKind.Absolute));
-            }
-            catch
-            {
-                MessageBox.Show("This image is not valid", string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-            UrlImage = getUrl;
-        }
-
-        private string GetFileUploadedUrl(string filter = null)
-        {
-            OpenFileDialog openFile = new OpenFileDialog();
-
-            if (filter != null)
-            {
-                openFile.Filter = filter;
-            }
-
-            bool? responsed = openFile.ShowDialog();
-            if (responsed == null || responsed == false)
-                return string.Empty;
-            return openFile.FileName;
+            Movie.UrlImage = fileName;
         }
 
         private bool Checking()
@@ -235,7 +228,6 @@ namespace AnhQuoc_WPF_C1_B1
             }
 
             List<Genre> genres = GetCheckedGenres();
-            string urlImage = UrlImage;
             Rated rated = cbRateds.SelectedItem as Rated;
 
             if (genres.Count == 0)
@@ -244,11 +236,6 @@ namespace AnhQuoc_WPF_C1_B1
                 return false;
             }
 
-            //if (Utilities.IsEmpty(urlImage))
-            //{
-            //    MessageBox.Show($"Please pick the {"movie image"}", string.Empty, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
-            //    return false;
-            //}
             if (rated == null)
             {
                 MessageBox.Show($"Please pick the {"movie rated"}", string.Empty, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
@@ -259,40 +246,31 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult msbResult = CustomMessageBox.ShowOKCancel(
-            "Do you confirm all changes",
-            "Confirm infomation",
-            "Confirm",
-            "Cancel");
-            if (msbResult == MessageBoxResult.OK)
-            {
-                if (!Checking())
-                    return;
-
-                List<Genre> genres = GetCheckedGenres();
-                Rated rated = cbRateds.SelectedItem as Rated;
-                string urlImage = UrlImage;
-
-                int no = getMovieRepo().Length();
-                MovieViewModel movieVM = new MovieViewModel();
-
-                if (movie == null)
-                    return;
-                movie.Id = movieVM.GetId(no);
-                movie.Name = txtName.Text;
-                movie.Rated = rated;
-                movie.Genres = genres;
-                movie.RunningTime = Convert.ToInt32(txtRunningTime.Text);
-                movie.ReleaseDate = Convert.ToDateTime(dateReleaseDate.SelectedDate);
-                movie.Description = txtDescription.Text;
-                movie.UrlImage = urlImage;
-
-
-                frmReply = true;
-                this.Close();
+            if (!Checking())
                 return;
-            }
+
+            MovieViewModel movieViewModel = new MovieViewModel();
+            movieViewModel.MovieRepo = getMovieRepo();
+
+            Movie movieFinded = movieViewModel.FindByName(Movie.Name);
+            if (movieFinded != null)
+            {
+                MessageBox.Show("This movie was already on the list.", "Warning", MessageBoxButton.OK);
+                return;
+            }    
+
+            List<Genre> genres = GetCheckedGenres();
+
+            int length = getMovieRepo().Length();
+            MovieViewModel movieVM = new MovieViewModel();
+
+            Movie.Id = movieVM.GetId(length);
+            Movie.Genres = genres;
+
+            frmReply = true;
+            this.Close();
         }
+        
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -302,7 +280,7 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
-            ResetValues();
+            Utilities.FeatureNotDevelopNotify();
         }
     }
 }

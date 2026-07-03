@@ -8,16 +8,21 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Loaded="UserControl_Loaded">
     <StackPanel Grid.Row="1">
+        <Button HorizontalAlignment="Center"
+                Background="#007bff" Foreground="White"
+                FontSize="12"
+                Padding="15 5"
+                Content="Add new Cinema"
+                Click="btnAdd_Click"/>
         <DataGrid Name="dgTable"
+                  Style="{StaticResource ModernDataGrid}"
+                  ItemsSource="{Binding Cinemas}"
+                  SelectedItem="{Binding CurrentItem}"
+                  SelectionMode="Extended"
                   HorizontalAlignment="Stretch"
                   IsReadOnly="True"
                   AutoGenerateColumns="False"
                   SelectionChanged="dgTable_SelectionChanged">
-            <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                </Style>
-            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Width="40" Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn Width="*"  Binding="{Binding Name}" Header="Name"/>
@@ -44,15 +49,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Margin="0 10"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button HorizontalAlignment="Center"
-                    Background="#007bff" Foreground="White"
-                    FontSize="12"
-                    Padding="15 5"
-                    Content="Add new Cinema"
-                    Click="btnAdd_Click"/>
-        </StackPanel>
     </StackPanel>
 </UserControl>

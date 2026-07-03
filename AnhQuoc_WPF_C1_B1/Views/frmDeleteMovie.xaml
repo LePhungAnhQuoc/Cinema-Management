@@ -1,0 +1,38 @@
+﻿<Window x:Class="AnhQuoc_WPF_C1_B1.Views.frmDeleteMovie"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1.Views"
+        xmlns:admin="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls.Admin"
+        mc:Ignorable="d"
+        Title="frmDeleteMovie" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <admin:ucMovieInformation Grid.Row="0"
+                                  GetMovie="{Binding Movie}"/>
+        <!-- Footer -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical"
+                    Margin="0 0 0 20">
+            <TextBlock Name="txtWarning"
+                       HorizontalAlignment="Center"
+                        Style="{StaticResource WarningStyle}"
+                        Text="Are you sure you want to delete this movie and all related screening schedules?"
+                        TextWrapping="Wrap"
+                        Margin="0 10 0 20"
+                        FontSize="20"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="btnYes"
+                                Style="{StaticResource ConfirmButtonStyle}"
+                                Click="btnYes_Click"/>
+                <Button Margin="10 0 0 0"
+                                Style="{StaticResource CancelButtonStyle}"
+                                Click="BtnNo_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

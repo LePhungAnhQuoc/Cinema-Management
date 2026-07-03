@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnhQuoc_WPF_C1_B1
 {
-    public class EnumViewModel
+    internal class EnumViewModel
     {
         public IEnumerable<T> GetValues<T>()
         {

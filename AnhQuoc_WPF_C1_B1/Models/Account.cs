@@ -5,26 +5,13 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace AnhQuoc_WPF_C1_B1
 {
     public class Account: INotifyPropertyChanged
     {
-        public RoleTypes Role { get; set; }
-
-        private int _Status;
-        public int Status
-        {
-            get { return _Status; }
-            set
-            {
-                _Status = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _Image;
-
         public string Image
         {
             get { return _Image; }
@@ -36,7 +23,6 @@ namespace AnhQuoc_WPF_C1_B1
         }
 
         private string _Username;
-
         public string Username
         {
             get { return _Username; }
@@ -48,7 +34,6 @@ namespace AnhQuoc_WPF_C1_B1
         }
 
         private string _Password;
-
         public string Password
         {
             get { return _Password; }
@@ -59,6 +44,7 @@ namespace AnhQuoc_WPF_C1_B1
             }
         }
 
+        public RoleTypes Role { get; set; }
 
         private string _Email;
         public string Email
@@ -94,16 +80,22 @@ namespace AnhQuoc_WPF_C1_B1
             }
         }
 
+        private int _Status;
+        public int Status
+        {
+            get { return _Status; }
+            set
+            {
+                _Status = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Account()
         {
             this.Username = string.Empty;
             this.Password = string.Empty;
-        }
-
-        public Account(string Username, string Password)
-        {
-            this.Username = Username;
-            this.Password = Password;
+            this.Status = 1;
         }
 
         #region PropertyChanged

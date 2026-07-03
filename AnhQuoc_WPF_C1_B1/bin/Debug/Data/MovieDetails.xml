@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MovieDetails>
-  <MovieDetail Id="MV4" Description="" UrlImage="Assets/DORAEMON.jpg" UrlTrailer="" />
-  <MovieDetail Id="MV5" Description="" UrlImage="Assets/HOON PAYON.jpg" UrlTrailer="" />
-  <MovieDetail Id="MV6" Description="" UrlImage="Assets/ROUND UP.jpg" UrlTrailer="" />
-  <MovieDetail Id="MV7" Description="" UrlImage="Assets/THE LITTLE MERMAID.jpg" UrlTrailer="" />
-  <MovieDetail Id="MV8" Description="" UrlImage="Assets/LITTLE EGGS.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV1" Description="In 2085, when Earth is plunged into eternal darkness due to a climate catastrophe, humanity is forced to live in underground cities illuminated by artificial energy. Kaelen, a brilliant mechanical engineer, stumbles upon an ancient device capable of reversing time to a point before the sun disappears. However, each time the device is activated, he must sacrifice the memories of those he loves most. Caught between saving humanity and being forgotten by his own family, Kaelen is forced to make a harsh choice on his solitary journey against fate." UrlImage="C:\Users\Admin\Pictures\Avatar\portrait-1.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV2" Description="Phim siêu hay" UrlImage="portrait-2.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV3" Description="Con hổ nó rình con cáo" UrlImage="AnhQuoc.jpg.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV4" Description="Phim rất hay!" UrlImage="portrait-7.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV5" Description="" UrlImage="portrait-5.jpg" UrlTrailer="" />
 </MovieDetails>

@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Accounts>
-  <Account Username="admin" Password="ludb3I5Cz75QcCN/EkS4Ujm371LNYpKH4+ztvEWBDQcp9dhg5paPkkopwd0bcqqB" Email="admin@example.com" Phone="123-456-7890" Address="123 Main St" Role="Admin" Status="1" Image="/Assests/portrait-1.jpg" />
-  <Account Username="user" Password="BUAeNMq7h3+pW3nSpmzz6PRdPeIu3uYsZwzbWb1QW3yjcPK8WuB2sMQi1lO60nkf" Email="user@example.com" Phone="098-765-4321" Address="456 Oak Ave" Role="Cashier" Status="1" Image="/Assests/portrait-2.jpg" />
-  <Account Username="cashier" Password="haXlvazP0Z3K2SC8pxmZ58GXYQX7aoXyW83FojFaRJ+0JD80zN/A0goChS43hH0P" Email="cashier@example.com" Phone="555-555-5555" Address="789 Pine Rd" Role="Cashier" Status="1" Image="/Assests/portrait-3.jpg" />
+  <Account Username="Nhat Minh" Password="$argon2id$m=65536,t=4,p=2$UiYI9r4KjslRZS95iqrx+w==$d6wg7Utvmc4Hs/dKL/2CzTuDxmykkf+0jf1xliMeRXk=" Email="nhatminh@gmail.com" Phone="123-456-7890" Address="123 Main St" Role="Admin" Status="1" Image="portrait-2.jpg" />
+  <Account Username="anhthu" Password="$argon2id$m=65536,t=4,p=2$ohZn0ELInfgjtyGCFGKu9Q==$V+CfH9/kuBXYafK+HWQnB8ig8fSRpVvgKOhPQYoAA3s=" Role="Cashier" Status="1" Image="portrait-6.jpg" Email="anhthu@gmail.com" Phone="0901931333" Address="Ly Tu Trong" />
 </Accounts>

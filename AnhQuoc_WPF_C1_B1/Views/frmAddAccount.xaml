@@ -4,101 +4,249 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+        xmlns:converter="clr-namespace:AnhQuoc_WPF_C1_B1.Converters"
         mc:Ignorable="d"
-        Title="frmCinema" Height="244.495" Width="400"
+        Title="frmCinema" Width="600"
         WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded">
-    <StackPanel VerticalAlignment="Top">
-        <Label Name="lblTitle"
-               Grid.Column="0"
-               Margin="0 10 0 10"
-               FontWeight="Bold"
-               HorizontalAlignment="Center">Add new Account</Label>
-        <Grid Margin="10 0 10 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   Name="lbUsername" 
-                   Padding="5"
-                   TabIndex="-1"
-                   FontSize="12"
-                   HorizontalAlignment="Left"
-                   Content="Username:"></Label>
-            <TextBox Grid.Column="1"
-                     Name="txtUsername" 
-                     Padding="5"
-                     TabIndex="0"
-                     FontSize="12"
-                     Style="{StaticResource RoundedTextBox}">
-            </TextBox>
-        </Grid>
-        <Grid Margin="10 0 10 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   Name="lbPassword" 
-                   Padding="5"
-                   HorizontalAlignment="Left"
-                   TabIndex="-1"
-                   FontSize="12"
-                   Content="Password: "></Label>
-            <TextBox Grid.Column="1"
-                     Name="txtPassword" 
-                     Padding="5"
-                     TabIndex="1"
-                     FontSize="12"
-                     Style="{StaticResource RoundedTextBox}"></TextBox>
-        </Grid>
-        <Grid Margin="10 0 10 10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   Name="lbRole" 
-                   Padding="5"
-                   HorizontalAlignment="Left"
-                   TabIndex="-1"
-                   FontSize="12"
-                   Content="Role: "></Label>
-            <ComboBox Grid.Column="1"
-                      Name="cbRole" 
-                      HorizontalContentAlignment="Center"
-                      Padding="5"
-                      TabIndex="1"
-                      FontSize="12"
-                      Style="{StaticResource ModernComboBox}"></ComboBox>
-        </Grid>
-        <StackPanel Margin="10"
-                    VerticalAlignment="Bottom"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-            <Button Name="btnCancel"
-                    Padding="5"
-                    FontSize="12"
-                    Width="70"
-                    Background="#ffffff"
-                    HorizontalAlignment="Center"
-                    Content="Cancel"
-                    Click="btnCancel_Click"
-                    Style="{StaticResource RoundedButtonStyle}"
-                    BorderThickness="1"
-                    Foreground="Black"/>
-            <Button Name="btnConfirm"
-                    Style="{StaticResource RoundedButtonStyle}"
-                    Margin="10 0 0 0"
-                    Padding="5"
-                    FontSize="12"
-                    Width="80"
-                    Background="#007bff"
-                    Foreground="White"
-                    HorizontalAlignment="Center"
-                    Content="Confirm"
-                    Click="btnConfirm_Click"/>
-        </StackPanel>
-    </StackPanel>
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Loaded="Window_Loaded"
+        Height="700">
+    <Window.Resources>
+        <converter:CornerRadiusSideConverter x:Key="cornerRadiusSideConverter" />
+        <converter:FeatureToVisibilityConverter x:Key="featureToVisibilityConverter" />
+    </Window.Resources>
+    <Border BorderBrush="#CCCCCC"
+            BorderThickness="1"
+            CornerRadius="15"
+            Background="White"
+            Padding="5">
+        <Border BorderBrush="#CCCCCC"
+                BorderThickness="1"
+                CornerRadius="15"
+                Background="White">
+            <Grid VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Border VerticalAlignment="Top"
+                            Background="#ebe9e6"
+                            Height="100"
+                            CornerRadius="{Binding CornerRadius, 
+                            RelativeSource={RelativeSource AncestorType=Border}, 
+                            Converter={StaticResource cornerRadiusSideConverter}, 
+                            ConverterParameter=Top}"/>
+                    <StackPanel HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Margin="10">
+                        <Border Width="100" 
+                                Height="100" 
+                                CornerRadius="50" 
+                                BorderBrush="White" 
+                                BorderThickness="2">
+                            <Border.Background>
+                                <ImageBrush ImageSource="{Binding ImageURL}" Stretch="UniformToFill"/>
+                            </Border.Background>
+                        </Border>
+                        <Label FontSize="20"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"
+                               Content="{Binding GetAccount.Username}"/>
+                        <Label FontSize="15"
+                               Foreground="#8a8988"
+                               HorizontalAlignment="Center"
+                               Content="{Binding GetAccount.Email}"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Margin="0 0 20 0"
+                                Orientation="Horizontal">
+                        <Button Style="{StaticResource OutlineButtonStyle}" Margin="0 0 10 0">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Width="14" Height="14" 
+                                      Stretch="Uniform" 
+                                      Fill="#344054" 
+                                      Margin="0,0,8,0" 
+                                      VerticalAlignment="Center"
+                                      Data="{StaticResource LinkIcon}" />
+                                <TextBlock Text="Copy link" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource OutlineButtonStyle}">View profile</Button>
+                    </StackPanel>
+                </Grid>
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel>
+                        <Border BorderThickness="0 1 0 0"
+                            BorderBrush="#c2c1c0"
+                            Margin="10"
+                            Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label FontWeight="Bold">Username</Label>
+                                <TextBox Name="txtUsername" 
+                                     TabIndex="0"
+                                     Grid.Column="2"
+                                     Style="{StaticResource RoundedTextBox}"
+                                         Text="{Binding GetAccount.Username}"></TextBox>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0 1 0 0"
+                            BorderBrush="#c2c1c0"
+                            Margin="10"
+                            Padding="10"
+                            Visibility="{Binding Feature, Converter={StaticResource featureToVisibilityConverter}}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label FontWeight="Bold">Password</Label>
+                                <TextBox Name="txtPassword" 
+                                     TabIndex="0"
+                                     Grid.Column="2"
+                                     Style="{StaticResource RoundedTextBox}"
+                                         Text="{Binding GetAccount.Password}"></TextBox>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0 1 0 0"
+                            BorderBrush="#c2c1c0"
+                            Margin="10"
+                            Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label FontWeight="Bold">Role</Label>
+                                <ComboBox Grid.Column="1"
+                                      Name="cbRole"
+                                      TabIndex="1"
+                                      Style="{StaticResource ModernComboBox}"
+                                      SelectedItem="{Binding GetAccount.Role}"></ComboBox>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0 1 0 0"
+                            BorderBrush="#c2c1c0"
+                            Margin="10"
+                            Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label FontWeight="Bold">Email</Label>
+                                <TextBox Name="txtEmail" 
+                                     TabIndex="0"
+                                     Grid.Column="2"
+                                     Style="{StaticResource RoundedTextBox}"
+                                     Text="{Binding GetAccount.Email}"></TextBox>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0 1 0 0"
+                            BorderBrush="#c2c1c0"
+                            Margin="10"
+                            Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label FontWeight="Bold">Phone</Label>
+                                <TextBox Name="txtPhone" 
+                                     TabIndex="0"
+                                     Grid.Column="2"
+                                     Style="{StaticResource RoundedTextBox}"
+                                     Text="{Binding GetAccount.Phone}"></TextBox>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0 1 0 0"
+                            BorderBrush="#c2c1c0"
+                            Margin="10"
+                            Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label FontWeight="Bold">Address</Label>
+                                <TextBox Name="txtAddress" 
+                                     TabIndex="0"
+                                     Grid.Column="2"
+                                     Style="{StaticResource RoundedTextBox}"
+                                     Text="{Binding GetAccount.Address}"></TextBox>
+                            </Grid>
+                        </Border>
+                        <Border BorderThickness="0 1 0 1"
+                            BorderBrush="#c2c1c0"
+                            Margin="10"
+                            Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label FontWeight="Bold">Profile photo</Label>
+                                <StackPanel Orientation="Horizontal"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center">
+                                    <Border Width="50" 
+                                        Height="50" 
+                                        CornerRadius="50" 
+                                        BorderBrush="#EAECF0" 
+                                        BorderThickness="2">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding ImageURL}" Stretch="UniformToFill"/>
+                                        </Border.Background>
+                                    </Border>
+                                    <Button x:Name="btnReplaceImage"
+                                        Margin="10 0 0 0"
+                                        Style="{StaticResource OutlineButtonStyle}"
+                                        VerticalAlignment="Center"
+                                        Click="btnReplaceImage_Click">Click to replace</Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid Grid.Row="2"
+                      Margin="10">
+                    <Button Visibility="{Binding Feature, Converter={StaticResource featureToVisibilityConverter}, ConverterParameter='Collapse'}"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource OutlineButtonStyle}"
+                            Foreground="{StaticResource DeleteButtonColor}"
+                            Click="BtnDelete_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Width="14" Height="14" 
+                                    Stretch="Uniform" 
+                                    Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
+                                    Margin="0,0,8,0" 
+                                    VerticalAlignment="Center"
+                                    Data="{StaticResource TrashIconData}" />
+                            <TextBlock Text="Delete user" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button Style="{StaticResource OutlineButtonStyle}"
+                                BorderBrush="Black"
+                                Content="Cancel"
+                                Click="BtnCancel_Click"/>
+                        <Button Margin="10 0 0 0"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Content="Save changes"
+                                Click="SaveChanges_Click">
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
 </Window>

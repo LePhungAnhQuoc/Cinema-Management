@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnhQuoc_WPF_C1_B1.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,9 @@ namespace AnhQuoc_WPF_C1_B1
                 {
                     if (value.Username == item.Username)
                     {
-                        if (item.Password != null && PasswordHasher.VerifyPassword(value.Password, item.Password))
+                        bool isMatch = Argon2idHasher.VerifyPassword(value.Password, item.Password);
+
+                        if (item.Password != null && isMatch)
                         {
                             return item;
                         }
@@ -73,7 +76,23 @@ namespace AnhQuoc_WPF_C1_B1
             newAttr = DataProvider.Instance.createAttr("Status");
             newAttr.Value = item.Status.ToString();
             newNode.Attributes.Append(newAttr);
-            
+
+            newAttr = DataProvider.Instance.createAttr("Image");
+            newAttr.Value = item.Image.ToString();
+            newNode.Attributes.Append(newAttr);
+
+            newAttr = DataProvider.Instance.createAttr("Email");
+            newAttr.Value = item.Email.ToString();
+            newNode.Attributes.Append(newAttr);
+
+            newAttr = DataProvider.Instance.createAttr("Phone");
+            newAttr.Value = item.Phone.ToString();
+            newNode.Attributes.Append(newAttr);
+
+            newAttr = DataProvider.Instance.createAttr("Address");
+            newAttr.Value = item.Address.ToString();
+            newNode.Attributes.Append(newAttr);
+
             root.AppendChild(newNode);
             DataProvider.Instance.Close();
         }
@@ -89,6 +108,12 @@ namespace AnhQuoc_WPF_C1_B1
             updateNode.Attributes["Password"].Value = newItem.Password;
             updateNode.Attributes["Role"].Value = newItem.Role.ToString();
             updateNode.Attributes["Status"].Value = newItem.Status.ToString();
+            updateNode.Attributes["Image"].Value = newItem.Image;
+            updateNode.Attributes["Email"].Value = newItem.Email;
+            updateNode.Attributes["Phone"].Value = newItem.Phone;
+            updateNode.Attributes["Address"].Value = newItem.Address;
+
+
             DataProvider.Instance.Close();
         }
     }

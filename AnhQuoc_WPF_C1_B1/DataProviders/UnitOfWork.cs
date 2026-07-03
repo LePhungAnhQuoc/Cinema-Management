@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnhQuoc_WPF_C1_B1
 {
-    class UnitOfWork
+    public class UnitOfWork
     {
         #region Fields
         private RepositoryBase<Account> Accounts;

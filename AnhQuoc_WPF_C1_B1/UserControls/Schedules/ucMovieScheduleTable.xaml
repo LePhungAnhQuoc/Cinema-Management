@@ -20,16 +20,15 @@
                   Name="dgTable"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="50" Binding="{Binding Id}" Header="Id"/>
+                <DataGridTextColumn Width="auto" Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn Width="1*" Binding="{Binding Name}" Header="Name"/>
-                <DataGridTextColumn Width="50" Binding="{Binding Rated.Id}" Header="Rated"/>
-                <DataGridTextColumn Width="100" Binding="{Binding RunningTime}" Header="Running Time"/>
-                <DataGridTextColumn Width="100" Binding="{Binding ReleaseDate, StringFormat='{}{0:dd/MM/yyyy}'}" Header="ReleaseDate"/>
-                <DataGridTemplateColumn Width="auto">
+                <DataGridTextColumn Width="auto" Binding="{Binding Rated.Id}" Header="Rated"/>
+                <DataGridTextColumn Width="auto" Binding="{Binding RunningTime}" Header="Running Time"/>
+                <DataGridTextColumn Width="auto" Binding="{Binding ReleaseDate, StringFormat='{}{0:dd/MM/yyyy}'}" Header="ReleaseDate"/>
+                <DataGridTemplateColumn Width="auto" Header="Operations">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Width="auto"
-                                        HorizontalAlignment="Center"
+                            <StackPanel HorizontalAlignment="Center"
                                         Orientation="Horizontal">
                                 <Button Background="#dc3545" Foreground="White"
                                         Style="{StaticResource OperationButtonStyle}"

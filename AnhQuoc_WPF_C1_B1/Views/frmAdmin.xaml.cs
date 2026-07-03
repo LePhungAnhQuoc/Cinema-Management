@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace AnhQuoc_WPF_C1_B1
 {
@@ -15,6 +16,19 @@ namespace AnhQuoc_WPF_C1_B1
     public partial class frmAdmin : Window, INotifyPropertyChanged
     {
         #region Properties
+        private ImageSource _AccountImage;
+
+        public ImageSource AccountImage
+        {
+            get { return _AccountImage; }
+            set 
+            { 
+                _AccountImage = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public string Username { get; set; } = "Admin";
         private int _totalMovies;
         public int TotalMovies
@@ -75,8 +89,21 @@ namespace AnhQuoc_WPF_C1_B1
         public Func<RepositoryBase<Account>> getAccountRepo { get; set; }
 
         public Func<frmLogin> getFrmLogin { get; set; }
+        public Func<Account> getAccount { get; set; }
         public Func<Movie> getDeleteMovie { get; set; }
         private ucMovieScheduleTable ucMovieScheduleTable;
+
+        private Account _account;
+
+        public Account Account
+        {
+            get { return _account; }
+            set 
+            { 
+                _account = value;
+                OnPropertyChanged();
+            }
+        }
 
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
@@ -90,11 +117,14 @@ namespace AnhQuoc_WPF_C1_B1
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.DataContext = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Account = getAccount();
+            AccountImage = Utilities.GetImageURL(Account.Image);
+            this.DataContext = this;
+
             ucMovieScheduleTable = new ucMovieScheduleTable();
             ucMovieScheduleTable.getMovieScheduleRepo = getMovieScheduleRepo;
             ucMovieScheduleTable.getMovieRepo = getMovieRepo;
@@ -141,6 +171,7 @@ namespace AnhQuoc_WPF_C1_B1
             ucMovieTable.getMovieRepo = getMovieRepo;
             ucMovieTable.getGenreRepo = getGenreRepo;
             ucMovieTable.getRatedRepo = getRatedRepo;
+            ucMovieTable.getMovieScheduleRepo = getMovieScheduleRepo;
 
             stkView.Children.Clear();
             stkView.Children.Add(ucMovieTable);
@@ -154,7 +185,7 @@ namespace AnhQuoc_WPF_C1_B1
 
         public void DeleteMovieSchedule()
         {
-            ucMovieScheduleTable.Btn_Delete(getDeleteMovie());
+            ucMovieScheduleTable.DeleteMovieSchedule(getDeleteMovie());
         }
 
         private void tvAccount_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,20 @@ namespace AnhQuoc_WPF_C1_B1.Views
     /// </summary>
     public partial class frmLockUserNotify : Window
     {
-        public frmLockUserNotify()
+        public frmLockUserNotify(Account account)
         {
             InitializeComponent();
+            this.DataContext = account;
+        }
+
+        private void BtnYes_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
+
+        private void btnNo_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }

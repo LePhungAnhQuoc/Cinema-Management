@@ -110,7 +110,7 @@ namespace AnhQuoc_WPF_C1_B1
             CinemaTypeSchedule newCinemaTypeSchedule = new CinemaTypeSchedule
             {
                 CinemaType = data,
-                CinemaSchedules = new List<CinemaSchedule>(),
+                CinemaSchedules = new List<CinemaSchedule>()
             };
             cinemaTypeScheduleVM.Repo.Items.Add(newCinemaTypeSchedule);
             CinemaTypes.Add(newCinemaTypeSchedule.CinemaType);

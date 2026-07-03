@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="AnhQuoc_WPF_C1_B1.UserControls.ucDisplaySeats"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="#1A1A1A">
+        <UserControl.Resources>
+            <!-- Seat Style using DataTriggers for dynamic colors -->
+        <Style x:Key="DynamicSeatStyle" TargetType="Button">
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <!-- The RenderTransform allows us to smoothly scale up on hover -->
+                        <Border x:Name="border" 
+                        Background="{TemplateBinding Background}" 
+                        CornerRadius="6"
+                        RenderTransformOrigin="0.5,0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </Border.RenderTransform>
+
+                            <Grid>
+                                <!-- Interaction Overlay Layer -->
+                                <Border x:Name="InteractionOverlay" CornerRadius="6" Background="Transparent"/>
+
+                                <!-- Content Presenter (Text) -->
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <!-- 1. HOVER STATE: Slightly scale up and add a white tint -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="InteractionOverlay" Property="Background" Value="#15FFFFFF"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.08" ScaleY="1.08"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <!-- 2. CLICK / PRESSED STATE: Shrink down slightly and darken -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="InteractionOverlay" Property="Background" Value="#30000000"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <!-- Maintain your dynamic background color bindings -->
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Type}" Value="Standard">
+                    <Setter Property="Background" Value="#6A24D6"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="VIP">
+                    <Setter Property="Background" Value="#E5252D"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Booked">
+                    <Setter Property="Background" Value="#3A3D40"/>
+                    <!-- Optional: Disable hover/click interactions for already booked seats -->
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Type}" Value="Selected">
+                    <Setter Property="Background" Value="#D81B60"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Screen Title -->
+                <RowDefinition Height="*"/>
+                <!-- Seating Layout Box -->
+                <RowDefinition Height="Auto"/>
+                <!-- Bottom Legend Footer -->
+            </Grid.RowDefinitions>
+
+            <!-- SCREEN INDICATOR -->
+            <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,30">
+                <Border Width="240" Height="3" Background="White"/>
+                <TextBlock Text="MÀN HÌNH" Foreground="White" HorizontalAlignment="Center" Margin="0,6,0,0" FontSize="12" />
+            </StackPanel>
+
+            <!-- DYNAMIC ITEMS CONTROL -->
+            <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <!-- Outer ItemsControl handles Rows (Vertical) -->
+            <ItemsControl ItemsSource="{Binding Seats}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- Vertical stack for Rows A, B, C... -->
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Inner ItemsControl handles Seats within that specific row -->
+                        <ItemsControl ItemsSource="{Binding}" Margin="0,2">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <!-- CRITICAL FIX: Explicitly force columns to lay out horizontally -->
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <!-- ContentControl dynamically switches between a real Seat or a Blank space -->
+                                    <ContentControl Content="{Binding}">
+                                        <ContentControl.Style>
+                                            <Style TargetType="ContentControl">
+                                                <!-- 1. Style template for valid seat objects -->
+                                                <Setter Property="ContentTemplate">
+                                                    <Setter.Value>
+                                                        <DataTemplate>
+                                                            <Button Style="{StaticResource DynamicSeatStyle}" 
+                                                        Content="{Binding Name}" 
+                                                        Margin="4,0"/>
+                                                        </DataTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+
+                                                <!-- 2. Style template for empty spacer slots (nulls) -->
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                                        <Setter Property="ContentTemplate">
+                                                            <Setter.Value>
+                                                                <DataTemplate>
+                                                                    <!-- Pure, empty invisible spacer to form the aisles -->
+                                                                    <Border Width="20" Background="Transparent"/>
+                                                                </DataTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ContentControl.Style>
+                                    </ContentControl>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Vùng trung tâm Outline (Hardcoded overlay boundary matching center grid row dimensions) -->
+                <!-- Fits over rows 3, 4, 5 (D, E, F) and cols 5, 6, 7, 8 -->
+                <Border BorderBrush="#10B981" BorderThickness="1.5" CornerRadius="8" IsHitTestVisible="False"
+                    Height="132" VerticalAlignment="Top" Margin="210,112,295,0"/>
+            </Grid>
+
+            <!-- LEGEND COMPONENT FOOTER -->
+            <WrapPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0,30,0,10">
+                <StackPanel Orientation="Horizontal" Margin="15,0">
+                    <Border Width="18" Height="18" Background="#3A3D40" CornerRadius="4"/>
+                    <TextBlock Text="Đã đặt" Foreground="White" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="12"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="15,0">
+                    <Border Width="18" Height="18" Background="#E5252D" CornerRadius="4"/>
+                    <TextBlock Text="Ghế VIP" Foreground="White" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="12"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="15,0">
+                    <Border Width="18" Height="18" Background="Transparent" BorderBrush="#D81B60" BorderThickness="2" CornerRadius="4"/>
+                    <TextBlock Text="Ghế bạn chọn" Foreground="White" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="12"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="15,0">
+                    <Border Width="18" Height="18" Background="Transparent" BorderBrush="#10B981" BorderThickness="1.5" CornerRadius="4"/>
+                    <TextBlock Text="Vùng trung tâm" Foreground="White" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="12"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="15,0">
+                    <Border Width="18" Height="18" Background="#6A24D6" CornerRadius="4"/>
+                    <TextBlock Text="Ghế thường" Foreground="White" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="12"/>
+                </StackPanel>
+            </WrapPanel>
+        </Grid>
+</UserControl>

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace AnhQuoc_WPF_C1_B1
 {
@@ -47,10 +49,50 @@ namespace AnhQuoc_WPF_C1_B1
                 }
                 Seat seat = new Seat();
                 seat.Id = idSeat;
+
+                Type seatType = seat.GetType();
+
+                foreach (XmlAttribute attribute in seatNode.Attributes)
+                {
+                    // Find a property on the Seat object that matches the XML attribute name
+                    PropertyInfo property = seatType.GetProperty(attribute.Name, BindingFlags.Public | BindingFlags.Instance);
+
+                    // If a matching writable property is found, assign the value
+                    if (property != null && property.CanWrite)
+                    {
+                        try
+                        {
+                            // Handle Nullable types smoothly (e.g., int?, double?)
+                            Type targetType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+
+                            // Handle Enums specifically if your SeatType uses one
+                            object convertedValue;
+                            if (targetType.IsEnum)
+                            {
+                                convertedValue = Enum.Parse(targetType, attribute.Value);
+                            }
+                            else
+                            {
+                                // Safely convert the string value to the property's primitive type (int, double, bool, etc.)
+                                convertedValue = Convert.ChangeType(attribute.Value, targetType);
+                            }
+
+                            // Assign the value to the object
+                            property.SetValue(seat, convertedValue);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Debugging tip: Catch conversion errors if XAML/XML values don't align with model types
+                            System.Diagnostics.Debug.WriteLine($"Failed to map attribute {attribute.Name}: {ex.Message}");
+                        }
+                    }
+                }
+
+
                 try
                 {
                     int nIsBooked = Convert.ToInt32(seatNode.Attributes["IsBooked"].Value);
-                    seat.IsBooked = Convert.ToBoolean(nIsBooked);
+                    //seat.IsBooked = Convert.ToBoolean(nIsBooked);
                 }
                 catch { }
                 seatRow.Add(seat);
@@ -90,7 +132,6 @@ namespace AnhQuoc_WPF_C1_B1
 
         public void WriteListSeat(List<List<Seat>> lstSeats, string fileName)
         {
-            XmlAttribute newAttr = null;
             DataProvider.Instance.pathData = fileName;
             DataProvider.Instance.Open();
 
@@ -101,20 +142,31 @@ namespace AnhQuoc_WPF_C1_B1
                 {
                     XmlNode newNode = DataProvider.Instance.createNode("Seat");
 
-                    newAttr = DataProvider.Instance.createAttr("Id");
-                    newAttr.Value = seat.Id;
-                    newNode.Attributes.Append(newAttr);
-                    try
+                    // Get all public instance properties of the seat object
+                    PropertyInfo[] properties = seat.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+                    foreach (PropertyInfo property in properties)
                     {
-                        newAttr = DataProvider.Instance.createAttr("IsBooked");
-                        newAttr.Value = Convert.ToInt32(seat.IsBooked).ToString();
-                        newNode.Attributes.Append(newAttr);
+                        // Skip properties that cannot be read (just in case)
+                        if (!property.CanRead) continue;
+
+                        // Get the current value of the property from your seat object
+                        object value = property.GetValue(seat);
+
+                        // Only serialize if the value is not null
+                        if (value != null)
+                        {
+                            // 1. Create the XML Attribute using its C# property name (e.g., "Id", "Price", "Type")
+                            XmlAttribute newAttr = DataProvider.Instance.createAttr(property.Name);
+
+                            // 2. Assign the string representation of the value
+                            newAttr.Value = value.ToString();
+
+                            // 3. Append it to the node's attributes collection
+                            newNode.Attributes.Append(newAttr);
+                        }
                     }
-                    catch
-                    {
-                        Utilities.HandleError();
-                        return;
-                    }
+
                     root.AppendChild(newNode);
                 }
             }

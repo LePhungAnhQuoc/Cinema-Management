@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+             xmlns:converter="clr-namespace:AnhQuoc_WPF_C1_B1.Converters"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500"
@@ -11,6 +12,7 @@
     <UserControl.Resources>
         <local:StatusToLockConverter x:Key="statusToLockConverter" />
         <local:StatusToTextConverter x:Key="statusToTextConverter" />
+        <converter:ImageConverter x:Key="imageConverter" />
     </UserControl.Resources>
     <StackPanel Grid.Row="1"
                 Margin="0 30 0 0">
@@ -24,7 +26,8 @@
                   HorizontalAlignment="Stretch"
                   IsReadOnly="True"
                   AutoGenerateColumns="False"
-                  Style="{StaticResource ModernDataGrid}">
+                  Style="{StaticResource ModernDataGrid}"
+                  SelectedItem="{Binding CurrentItem, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="*" Header="Member">
                     <DataGridTemplateColumn.CellTemplate>
@@ -36,7 +39,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Ellipse Width="50" Height="50" HorizontalAlignment="Center">
                                     <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
+                                        <ImageBrush ImageSource="{Binding Image, Converter={StaticResource imageConverter}}" Stretch="UniformToFill"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <Label Grid.Column="1" Content="{Binding Username}" 

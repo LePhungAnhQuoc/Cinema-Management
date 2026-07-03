@@ -55,6 +55,21 @@ namespace AnhQuoc_WPF_C1_B1
         }
         #endregion
 
+        #region Properties
+        public ObservableCollection<Cinema> Cinemas { get; set; }
+        private IList<Cinema> _SelectedItems;
+        public IList<Cinema> SelectedItems
+        {
+            get { return _SelectedItems; }
+            set 
+            {
+                _SelectedItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
         private CinemaSchedule CurrentCinemaSchedule;
         public ucCinemaScheduleTable()
         {
@@ -64,15 +79,14 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ucDateSchedule = getUcCinemaManage().ucDateSchedule;
-            
-            if (GetSource.Count > 0)
-                dgTable.SelectedIndex = 0;
+            Cinemas = new ObservableCollection<Cinema>(App.UnitOfWork.GetRepositoryCinema.Items);
+
+            this.DataContext = this;
         }
     
         private void OnChangeCinemaType()
         {
-            cinemaScheduleVM.CinemaScheduleRepo.Items = getCinemaSchedule();
+            cinemaScheduleVM.CinemaScheduleRepo.Items = getCinemaSchedule().ToList();
             List<Cinema> cinemas = cinemaScheduleVM.FillCinema();
 
             GetSource = new ObservableCollection<Cinema>(cinemas);
@@ -179,28 +193,10 @@ namespace AnhQuoc_WPF_C1_B1
         {
             LoadUcCinemaPicker("update");
         }
-        
+
         private void dgTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Cinema selectCinema = dgTable.SelectedItem as Cinema;
-            if (selectCinema == null)
-            {
-                ucDateSchedule.IsEnabled = false;
-                ucDateSchedule.getDateSchedules = () => new List<DateSchedule>();
-                return;
-            }
-            getUcCinemaManage().lblCinemaInfo.Content = $"Cinema Choose: {selectCinema.Name}";
-            CinemaSchedule cinemaSchedule = cinemaScheduleVM.GetByCinema(selectCinema);
-
-            string fileSeat = cinemaScheduleVM.CreateFileSeatName(cinemaSchedule, getFileSeat());
-
-            ucDateSchedule.IsEnabled = true;
-            ucDateSchedule.getFileSeat = () => fileSeat;
-            ucDateSchedule.getUcCinemaManage = getUcCinemaManage;
-            ucDateSchedule.getMovieSchedule = getMovieSchedule;
-            ucDateSchedule.getCinemaTypeSchedule = getCinemaTypeSchedule;
-            ucDateSchedule.getCinemaSchedule = () => cinemaSchedule;
-            ucDateSchedule.getDateSchedules = () => cinemaSchedule.DatesSchedule;
+            SelectedItems = dgTable.SelectedItems.Cast<Cinema>().ToList();
         }
     }
 }

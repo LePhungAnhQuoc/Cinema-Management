@@ -6,49 +6,74 @@
              xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls.Templates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Width="300">
-        <Border CornerRadius="75" 
-            Background="{Binding OuterBackground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            Padding="10">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="CapsuleBgBrush" Color="#FB0022" />
+        <SolidColorBrush x:Key="CapsuleDarkBgBrush" Color="#E50019" />
+        <SolidColorBrush x:Key="TextWhiteBrush" Color="#FFFFFF" />
 
-            <Border Background="{Binding InnerBackground, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                    CornerRadius="75"
-                    Padding="10">
+        <SolidColorBrush x:Key="InnerPanelBrush" Color="#20FFFFFF" />
+        <SolidColorBrush x:Key="GlossOverlayBrush" Color="#15FFFFFF" />
+
+        <ControlTemplate x:Key="PendingCapsuleTemplate" TargetType="ContentControl">
+            <Border CornerRadius="60" 
+                Background="{Binding OuterBackground, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                Width="320" 
+                Height="150" 
+                ClipToBounds="True">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                    <Border CornerRadius="50" 
+                        Margin="12" 
+                        Background="{StaticResource InnerPanelBrush}"
+                        BorderBrush="#30FFFFFF"
+                        BorderThickness="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                    <Grid Margin="10,0,0,0">
-                        <Ellipse Fill="#4DFFFFFF" 
-                             Margin="8,8,0,0"
-                             Height="100" Width="100"/>
+                            <Grid Grid.Column="0" Margin="10,0,15,0" VerticalAlignment="Center">
+                                <Ellipse Width="76" Height="76" Stroke="#40FFFFFF" StrokeThickness="1"/>
+                                <Ellipse Width="70" Height="70" Stroke="#E0FFFFFF" StrokeThickness="1.5" Fill="#10FFFFFF"/>
 
-                        <Ellipse Fill="{Binding InnerBackground, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                             StrokeThickness="1" 
-                             Stroke="White"
-                             Height="100" Width="100"/>
+                                <Path Data="{Binding IconData, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                  Fill="{StaticResource TextWhiteBrush}" 
+                                  Stretch="Uniform" 
+                                  Width="30" 
+                                  Height="30" 
+                                  VerticalAlignment="Center" 
+                                  HorizontalAlignment="Center"/>
+                            </Grid>
 
-                        <Path Data="{Binding IconData, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                          Fill="White" 
-                          Stretch="Uniform" 
-                          Width="40" Height="40"/>
-                    </Grid>
+                            <StackPanel Grid.Column="1" 
+                                    VerticalAlignment="Center" 
+                                    Margin="5,0,20,0">
+                                <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                           Foreground="{StaticResource TextWhiteBrush}" 
+                                           FontFamily="Segoe UI Semibold" 
+                                           FontSize="24" 
+                                           FontWeight="Light"
+                                           Opacity="0.95"
+                                           VerticalAlignment="Center"
+                                           TextWrapping="Wrap"/>
 
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0,15,0">
-                        <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                               Foreground="White"
-                               FontSize="20" 
-                               TextWrapping="Wrap"/>
-                        <TextBlock Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                               Foreground="White"
-                               FontSize="25" 
-                               FontWeight="Bold" 
-                               Margin="0,2,0,0"/>
-                    </StackPanel>
+                                <TextBlock Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                       Foreground="{StaticResource TextWhiteBrush}" 
+                                       FontFamily="Segoe UI" 
+                                       FontSize="48" 
+                                       FontWeight="Bold" 
+                                       Margin="0,-5,0,0"
+                                       VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
                 </Grid>
             </Border>
-        </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <ContentControl Template="{StaticResource PendingCapsuleTemplate}" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

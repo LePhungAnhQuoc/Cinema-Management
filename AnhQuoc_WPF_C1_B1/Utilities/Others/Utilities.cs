@@ -1,18 +1,105 @@
-﻿using System;
-using System.Xml;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using System.Windows;
-using System.Runtime.CompilerServices;
-using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Xml;
 
 namespace AnhQuoc_WPF_C1_B1
 {
     class Utilities
     {
+        public static void FeatureNotDevelopNotify()
+        {
+            MessageBox.Show("This feature is currently under development, we apologize!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        public static void CopyProperties(object source, object target)
+        {
+            if (source == null || target == null) return;
+
+            var sourceType = source.GetType();
+            var targetType = target.GetType();
+
+            foreach (var sourceProp in sourceType.GetProperties())
+            {
+                // Find a matching property on the target type
+                var targetProp = targetType.GetProperty(sourceProp.Name);
+
+                // Ensure target property exists, can be written to, and types match
+                if (targetProp != null && targetProp.CanWrite &&
+                    targetProp.PropertyType.IsAssignableFrom(sourceProp.PropertyType))
+                {
+                    var value = sourceProp.GetValue(source, null);
+                    targetProp.SetValue(target, value, null);
+                }
+            }
+        }
+
+        public static ImageSource SelectImage(string folderName, ref string fileName)
+        {
+            ImageSource imageSource = null;
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*",
+                Title = "Select a new profile picture"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    string targetFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", folderName);
+                    Directory.CreateDirectory(targetFolder); // Ensure folder exists
+
+                    fileName = Path.GetFileName(openFileDialog.FileName);
+                    string destinationPath = Path.Combine(targetFolder, fileName);
+
+                    // Copy the file to your app directory
+                    File.Copy(openFileDialog.FileName, destinationPath, true);
+
+                    imageSource = Utilities.GetImageURL(fileName);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show($"Failed to load image: {ex.Message}", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                }
+            }
+            return imageSource;
+        }
+        public static ImageSource GetImageURL(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+            string targetFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "UserImages");
+            string destinationPath = Path.Combine(targetFolder, fileName);
+
+            // 2. Load the image into memory and release the file lock immediately
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(destinationPath, UriKind.Absolute);
+            // This line is crucial: it forces WPF to cache the image in memory and close the file stream
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            bitmap.Freeze(); // Optional: Makes it cross-thread accessible and improves performance
+
+            return bitmap;
+        }
+        public static string GetVideoURL(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+                return null;
+            string targetFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "MovieTrailers");
+            string destinationPath = Path.Combine(targetFolder, fileName);
+
+            return destinationPath;
+        }        
         private static int getIndexDirectory(string filePath)
         {
             if (!filePath.Contains(".xml"))
