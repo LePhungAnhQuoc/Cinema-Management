@@ -34,18 +34,6 @@ namespace AnhQuoc_WPF_C1_B1
 
 
         #region Properties
-        private ImageSource _ImageURL;
-        public ImageSource ImageURL
-        {
-            get { return _ImageURL; }
-            set
-            {
-                _ImageURL = value;
-                OnPropertyChanged();
-            }
-        }
-
-
         private Account _GetAccount;
 
         public Account GetAccount
@@ -88,11 +76,17 @@ namespace AnhQuoc_WPF_C1_B1
             if (getFeature() == "update")
             {
                 GetAccount = getUcUserTable().CurrentItem;
+
+                btnDeleteUser.Visibility = Visibility.Visible;
+                bdPassword.Visibility = Visibility.Collapsed;
             }
             else
             {
                 GetAccount = new Account();
                 GetAccount.Role = RoleTypes.Cashier;
+
+                btnDeleteUser.Visibility = Visibility.Collapsed;
+                bdPassword.Visibility = Visibility.Visible;
             }
             this.DataContext = this;
 
@@ -102,10 +96,6 @@ namespace AnhQuoc_WPF_C1_B1
             if (getFeature() == "update")
             {
                 txtUsername.IsEnabled = false;
-            }
-            if (GetAccount.Image != string.Empty)
-            {
-                ImageURL = Utilities.GetImageURL(GetAccount.Image);
             }
         }
 
@@ -135,9 +125,12 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete this user", "Warning", MessageBoxButton.OKCancel);
+            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete this user", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             if (messageBoxResult == MessageBoxResult.OK)
             {
+                ucUserTable ucUserTable = getUcUserTable();
+                ucUserTable.getSource.Remove(GetAccount);
+
                 getAccountRepo().Remove(GetAccount);
                 
                 // Save to database

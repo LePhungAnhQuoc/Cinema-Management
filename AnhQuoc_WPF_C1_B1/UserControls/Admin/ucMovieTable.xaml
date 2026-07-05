@@ -4,11 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+             xmlns:converter="clr-namespace:AnhQuoc_WPF_C1_B1.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:DateConverter x:Key="dateConverter" />
+        <converter:ImageConverter x:Key="imageConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -31,6 +33,36 @@
                 SelectedItem="{Binding CurrentItem}"
                     ScrollViewer.CanContentScroll="True">
             <DataGrid.Columns>
+                <DataGridTemplateColumn Width="auto" Header="Movie">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Width="50" Height="50" HorizontalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <ImageBrush>
+                                            <ImageBrush.ImageSource>
+                                                <Binding Path="UrlImage" Converter="{StaticResource imageConverter}" ConverterParameter="Movies">
+                                                    <!-- 3. Corrected resource paths -->
+                                                    <Binding.TargetNullValue>
+                                                        <BitmapImage UriSource="/Assets/unload_placeholder.png" />
+                                                    </Binding.TargetNullValue>
+                                                    <Binding.FallbackValue>
+                                                        <BitmapImage UriSource="/Assets/unload_placeholder.png" />
+                                                    </Binding.FallbackValue>
+                                                </Binding>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
                 <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
                 <DataGridTextColumn Binding="{Binding Rated.Id}" Header="Rated"/>

@@ -3,19 +3,99 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace AnhQuoc_WPF_C1_B1
 {
     class Utilities
     {
+        public static List<T> LoadDataFromXmlNode<T>(XmlNode root) where T : class, new()
+        {
+            List<T> result = new List<T>(); 
+            if (root != null)
+            {
+                foreach (XmlNode node in root.ChildNodes)
+                {
+                    if (node.Attributes == null) continue;
+
+                    // 4. Reconstruct the Seat object dynamically from its attributes
+                    T data = new T();
+
+                    // Fill all properties using reflection (matching how you saved it)
+                    PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                    foreach (PropertyInfo property in properties)
+                    {
+                        if (!property.CanWrite) continue;
+
+                        XmlAttribute attr = node.Attributes[property.Name];
+                        if (attr != null)
+                        {
+                            // Convert the string back to the correct property type (int, string, SeatType, etc.)
+                            object convertedValue;
+                            if (property.PropertyType.IsEnum)
+                            {
+                                convertedValue = Enum.Parse(property.PropertyType, attr.Value);
+                            }
+                            else
+                            {
+                                convertedValue = Convert.ChangeType(attr.Value, property.PropertyType);
+                            }
+
+                            property.SetValue(data, convertedValue);
+                        }
+                    }
+                    result.Add(data);
+                }
+            }
+            return result;
+        }
+
+        public static XmlNode CreateXmlNode(string nodeName, object data)
+        {
+            XmlNode newNode = DataProvider.Instance.createNode(nodeName);
+
+            // Get all public instance properties of the data object
+            PropertyInfo[] properties = data.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (PropertyInfo property in properties)
+            {
+                // Skip properties that cannot be read (just in case)
+                if (!property.CanRead) continue;
+
+                // Get the current value of the property from your data object
+                object value = property.GetValue(data);
+
+                // Only serialize if the value is not null
+                if (value != null)
+                {
+                    // 1. Create the XML Attribute using its C# property name (e.g., "Id", "Price", "Type")
+                    XmlAttribute newAttr = DataProvider.Instance.createAttr(property.Name);
+
+                    if (value is System.Collections.IEnumerable && !(value is string))
+                    {
+                        continue;
+                    }
+
+                    // 2. Assign the string representation of the value
+                    newAttr.Value = value.ToString();
+
+                    // 3. Append it to the node's attributes collection
+                    newNode.Attributes.Append(newAttr);
+                }
+            }
+            return newNode;
+        }
+
         public static void FeatureNotDevelopNotify()
         {
             MessageBox.Show("This feature is currently under development, we apologize!", "", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -64,7 +144,7 @@ namespace AnhQuoc_WPF_C1_B1
                     // Copy the file to your app directory
                     File.Copy(openFileDialog.FileName, destinationPath, true);
 
-                    imageSource = Utilities.GetImageURL(fileName);
+                    imageSource = Utilities.GetImageURL(fileName, folderName);
                 }
                 catch (Exception ex)
                 {
@@ -73,11 +153,11 @@ namespace AnhQuoc_WPF_C1_B1
             }
             return imageSource;
         }
-        public static ImageSource GetImageURL(string fileName)
+        public static ImageSource GetImageURL(string fileName, string folderName)
         {
             if (string.IsNullOrEmpty(fileName))
                 return null;
-            string targetFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "UserImages");
+            string targetFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", folderName);
             string destinationPath = Path.Combine(targetFolder, fileName);
 
             // 2. Load the image into memory and release the file lock immediately

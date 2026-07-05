@@ -15,7 +15,7 @@
         Height="700">
     <Window.Resources>
         <converter:CornerRadiusSideConverter x:Key="cornerRadiusSideConverter" />
-        <converter:FeatureToVisibilityConverter x:Key="featureToVisibilityConverter" />
+        <converter:ImageConverter x:Key="ImageConverter" />
     </Window.Resources>
     <Border BorderBrush="#CCCCCC"
             BorderThickness="1"
@@ -49,7 +49,7 @@
                                 BorderBrush="White" 
                                 BorderThickness="2">
                             <Border.Background>
-                                <ImageBrush ImageSource="{Binding ImageURL}" Stretch="UniformToFill"/>
+                                <ImageBrush ImageSource="{Binding GetAccount.Image, Converter={StaticResource ImageConverter}, ConverterParameter='UserImages'}" Stretch="UniformToFill"/>
                             </Border.Background>
                         </Border>
                         <Label FontSize="20"
@@ -98,11 +98,11 @@
                                          Text="{Binding GetAccount.Username}"></TextBox>
                             </Grid>
                         </Border>
-                        <Border BorderThickness="0 1 0 0"
-                            BorderBrush="#c2c1c0"
-                            Margin="10"
-                            Padding="10"
-                            Visibility="{Binding Feature, Converter={StaticResource featureToVisibilityConverter}}">
+                        <Border Name="bdPassword"
+                                BorderThickness="0 1 0 0"
+                                BorderBrush="#c2c1c0"
+                                Margin="10"
+                                Padding="10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100" />
@@ -204,7 +204,7 @@
                                         BorderBrush="#EAECF0" 
                                         BorderThickness="2">
                                         <Border.Background>
-                                            <ImageBrush ImageSource="{Binding ImageURL}" Stretch="UniformToFill"/>
+                                            <ImageBrush ImageSource="{Binding GetAccount.Image, Converter={StaticResource ImageConverter}, ConverterParameter='UserImages'}" Stretch="UniformToFill"/>
                                         </Border.Background>
                                     </Border>
                                     <Button x:Name="btnReplaceImage"
@@ -219,7 +219,7 @@
                 </ScrollViewer>
                 <Grid Grid.Row="2"
                       Margin="10">
-                    <Button Visibility="{Binding Feature, Converter={StaticResource featureToVisibilityConverter}, ConverterParameter='Collapse'}"
+                    <Button Name="btnDeleteUser"
                             HorizontalAlignment="Left"
                             Style="{StaticResource OutlineButtonStyle}"
                             Foreground="{StaticResource DeleteButtonColor}"

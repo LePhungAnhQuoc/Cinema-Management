@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace AnhQuoc_WPF_C1_B1.UserControls
 {
@@ -22,20 +24,135 @@ namespace AnhQuoc_WPF_C1_B1.UserControls
     /// </summary>
     public partial class ucDisplaySeats : UserControl
     {
-        public ObservableCollection<ObservableCollection<Seat>> Seats { get; set; } = new ObservableCollection<ObservableCollection<Seat>>();
+        public ObservableCollection<Seat> Seats { get; set; } = new ObservableCollection<Seat>();
+
         public ucDisplaySeats()
         {
             InitializeComponent();
-            GenerateLayout();
-
+            //GenerateLayout();
+            //SaveData();
+            LoadData();
             this.DataContext = this;
         }
 
-        private void GenerateLayout()
+        private void SaveData()
         {
-            // Clear out any old elements if resetting the board
+            DataProvider.Instance.pathData = Constants.fCinemas;
+            DataProvider.Instance.Open();
+
+            XmlNode root = DataProvider.Instance.nodeRoot;
+            XmlNode listSeatNode = root.FirstChild.SelectSingleNode($"Seats");
+
+            foreach (var seat in Seats)
+            {
+                if (seat == null)
+                    continue;
+                XmlNode newNode = DataProvider.Instance.createNode("Seat");
+
+                // Get all public instance properties of the seat object
+                PropertyInfo[] properties = seat.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+                foreach (PropertyInfo property in properties)
+                {
+                    // Skip properties that cannot be read (just in case)
+                    if (!property.CanRead) continue;
+
+                    // Get the current value of the property from your seat object
+                    object value = property.GetValue(seat);
+
+                    // Only serialize if the value is not null
+                    if (value != null)
+                    {
+                        // 1. Create the XML Attribute using its C# property name (e.g., "Id", "Price", "Type")
+                        XmlAttribute newAttr = DataProvider.Instance.createAttr(property.Name);
+
+                        // 2. Assign the string representation of the value
+                        newAttr.Value = value.ToString();
+
+                        // 3. Append it to the node's attributes collection
+                        newNode.Attributes.Append(newAttr);
+                    }
+                }
+                listSeatNode.AppendChild(newNode);
+
+            }
+            DataProvider.Instance.Close();
+        }
+
+        private void LoadData()
+        {
+            // 1. Initialize or clear your Seats collection
             Seats.Clear();
 
+            // 2. We need to pre-fill the Seats collection with nulls up to the total grid size 
+            // (9 rows * 18 columns = 162 total slots). This acts as our empty canvas.
+            int totalRows = 9;
+            int totalVisualColumns = 18;
+            int totalGridSize = totalRows * totalVisualColumns;
+
+            for (int i = 0; i < totalGridSize; i++)
+            {
+                Seats.Add(null);
+            }
+
+            // 3. Open the XML file
+            DataProvider.Instance.pathData = Constants.fCinemas;
+            DataProvider.Instance.Open();
+
+            XmlNode root = DataProvider.Instance.nodeRoot;
+            XmlNode listSeatNode = root.FirstChild.SelectSingleNode("Seats");
+
+            if (listSeatNode != null)
+            {
+                foreach (XmlNode node in listSeatNode.ChildNodes)
+                {
+                    if (node.Name != "Seat" || node.Attributes == null) continue;
+
+                    // 4. Reconstruct the Seat object dynamically from its attributes
+                    Seat seat = new Seat();
+
+                    // Extract critical layout indices
+                    int rowIndex = int.Parse(node.Attributes["RowIndex"]?.Value ?? "0");
+                    int columnIndex = int.Parse(node.Attributes["ColumnIndex"]?.Value ?? "0");
+
+                    // Fill all properties using reflection (matching how you saved it)
+                    PropertyInfo[] properties = typeof(Seat).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                    foreach (PropertyInfo property in properties)
+                    {
+                        if (!property.CanWrite) continue;
+
+                        XmlAttribute attr = node.Attributes[property.Name];
+                        if (attr != null)
+                        {
+                            // Convert the string back to the correct property type (int, string, SeatType, etc.)
+                            object convertedValue;
+                            if (property.PropertyType.IsEnum)
+                            {
+                                convertedValue = Enum.Parse(property.PropertyType, attr.Value);
+                            }
+                            else
+                            {
+                                convertedValue = Convert.ChangeType(attr.Value, property.PropertyType);
+                            }
+
+                            property.SetValue(seat, convertedValue);
+                        }
+                    }
+
+                    // 5. Calculate the exact 1D array index and overwrite the null placeholder
+                    int target1DIndex = (rowIndex * totalVisualColumns) + columnIndex;
+
+                    if (target1DIndex < Seats.Count)
+                    {
+                        Seats[target1DIndex] = seat;
+                    }
+                }
+            }
+
+            DataProvider.Instance.Close();
+        }
+        private void GenerateLayout()
+        {
             string[] rows = { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
 
             // The visual layout consists of 14 actual seat columns + 4 aisle spacing columns = 18 total grid indices.
@@ -43,14 +160,12 @@ namespace AnhQuoc_WPF_C1_B1.UserControls
 
             for (int r = 0; r < rows.Length; r++)
             {
-                var currentRow = new ObservableCollection<Seat>();
-
                 for (int c = 0; c < totalVisualColumns; c++)
                 {
                     // 1. Inject Pure Aisle Spacers (Visual columns: 2, 5, 10, 15)
                     if (c == 2 || c == 5 || c == 10 || c == 15)
                     {
-                        currentRow.Add(null);
+                        Seats.Add(null); // Added directly to the 1D collection
                         continue;
                     }
 
@@ -60,14 +175,14 @@ namespace AnhQuoc_WPF_C1_B1.UserControls
                     // 3. Skip seats 13 and 14 for rows A through G (the isolated bottom-right section)
                     if (r < 7 && (naturalSeatNumber == 13 || naturalSeatNumber == 14))
                     {
-                        currentRow.Add(null);
+                        Seats.Add(null);
                         continue;
                     }
 
                     // 4. Remove seat A12 (Top-right structural/architectural corner gap)
                     if (r == 0 && naturalSeatNumber == 12)
                     {
-                        currentRow.Add(null);
+                        Seats.Add(null);
                         continue;
                     }
 
@@ -87,18 +202,20 @@ namespace AnhQuoc_WPF_C1_B1.UserControls
                         sType = SeatType.Booked; // Gray color
                     }
 
-                    // 6. Append the verified seat node to our current structural row array
-                    currentRow.Add(new Seat
+                    // 6. Append the verified seat node directly to our 1D collection
+                    Seats.Add(new Seat
                     {
                         Name = $"{rows[r]}{naturalSeatNumber}",
-                        Type = sType
+                        Type = sType,
+                        RowIndex = r,
+                        ColumnIndex = c
                     });
-                }
 
-                // Add the completed row matrix into our primary 2D collection
-                Seats.Add(currentRow);
+                    //          0, 1, 3 (Không càn quá chính xác)
+                }
             }
         }
+
         private int GetNaturalSeatNumber(int visualGridIndex)
         {
             switch (visualGridIndex)

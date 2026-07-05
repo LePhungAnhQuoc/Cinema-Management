@@ -242,7 +242,7 @@
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 </Style>
                             </ListBox.ItemContainerStyle>
-                            
+
                             <ListBox.Style>
                                 <Style TargetType="ListBox">
                                     <Style.Triggers>
@@ -296,7 +296,7 @@
                                                                     <Button Click="btnAddNewDate_Click"
                                                                             Content="Add new date"
                                                                             Style="{StaticResource AddButtonStyle}"
-                                                                            Padding="10 5"/>                                                    
+                                                                            Padding="10 5"/>
                                                                     <DatePicker Style="{StaticResource datePicker}"
                                                                                 Padding="10 5"
                                                                                 SelectedDateChanged="DatePicker_SelectedDateChanged"
@@ -339,7 +339,7 @@
                                                                         </Grid>
 
                                                                         <!-- Horizontal wrap layout for Showtimes -->
-                                                                        <ItemsControl ItemsSource="{Binding TimeShedules}">
+                                                                        <ItemsControl ItemsSource="{Binding TimeSchedules}">
                                                                             <ItemsControl.ItemsPanel>
                                                                                 <ItemsPanelTemplate>
                                                                                     <!-- Automatically wraps time blocks horizontally -->
@@ -462,6 +462,19 @@
                                     Text="The movie trailer is not yet available."
                                     Visibility="Collapsed" />
                     </Grid>
+                </StackPanel>
+
+                <!-- Footer section -->
+                <StackPanel Orientation="Horizontal"
+                            Margin="0 30 0 0"
+                            HorizontalAlignment="Center">
+                    <Button x:Name="btnConfirm"
+                            Style="{StaticResource ConfirmButtonStyle}"
+                            Click="btnConfirm_Click"/>
+                    <Button x:Name="btnCancel"
+                            Style="{StaticResource CancelButtonStyle}"
+                            Click="btnCancel_Click"
+                            Margin="10 0 0 0"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

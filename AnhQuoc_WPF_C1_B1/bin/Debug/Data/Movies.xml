@@ -1,8 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Movies>
-  <Movie Id="MV1" Name="LITTLE EGGS: Part 4" Genres="G1 G3 G5 G7" ReleaseDate="14/06/2023" RunningTime="70" Rated="K" Description="In 2085, when Earth is plunged into eternal darkness due to a climate catastrophe, humanity is forced to live in underground cities illuminated by artificial energy. Kaelen, a brilliant mechanical engineer, stumbles upon an ancient device capable of reversing time to a point before the sun disappears. However, each time the device is activated, he must sacrifice the memories of those he loves most. Caught between saving humanity and being forgotten by his own family, Kaelen is forced to make a harsh choice on his solitary journey against fate." UrlImage="C:\Users\Admin\Pictures\Avatar\portrait-1.jpg" UrlTrailer="" />
-  <Movie Id="MV2" Name="Con chó và mèo" Genres="G5 G7" ReleaseDate="12/06/2026" RunningTime="60" Rated="P" Description="Phim siêu hay" UrlImage="portrait-2.jpg" UrlTrailer="" />
-  <Movie Id="MV3" Name="Con hổ và con cáo" Genres="G2 G7" ReleaseDate="28/06/2026" RunningTime="45" Rated="K" Description="Con hổ nó rình con cáo" UrlImage="AnhQuoc.jpg.jpg" UrlTrailer="" />
-  <Movie Id="MV4" Name="Con chó và mèo" Genres="G5 G7" ReleaseDate="12/06/2026" RunningTime="80" Rated="T13" Description="Phim rất hay!" UrlImage="portrait-7.jpg" UrlTrailer="" />
-  <Movie Id="MV5" Name="Hổ và 3 con báo" Genres="G5 G7" ReleaseDate="12/06/2027" RunningTime="70" Rated="K" Description="" UrlImage="portrait-5.jpg" UrlTrailer="" />
+  <Movie Id="MV2" Name="Movie 1" Genres="G1 G3" ReleaseDate="23/04/2025" RunningTime="80" Rated="K" Description="" UrlImage="Doraemon và Nobita.jpg" UrlTrailer="" />
 </Movies>

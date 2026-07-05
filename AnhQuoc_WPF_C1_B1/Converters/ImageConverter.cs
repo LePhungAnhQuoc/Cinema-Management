@@ -14,8 +14,9 @@ namespace AnhQuoc_WPF_C1_B1.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string imageStr = (string)value;
+            string folderName = (string)parameter;
 
-            return Utilities.GetImageURL(imageStr);
+            return Utilities.GetImageURL(imageStr, folderName);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

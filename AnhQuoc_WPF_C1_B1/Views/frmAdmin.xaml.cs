@@ -122,7 +122,7 @@ namespace AnhQuoc_WPF_C1_B1
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Account = getAccount();
-            AccountImage = Utilities.GetImageURL(Account.Image);
+            AccountImage = Utilities.GetImageURL(Account.Image, "UserImages");
             this.DataContext = this;
 
             ucMovieScheduleTable = new ucMovieScheduleTable();

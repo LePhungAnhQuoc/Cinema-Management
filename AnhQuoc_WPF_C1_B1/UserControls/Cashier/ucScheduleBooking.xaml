@@ -109,7 +109,7 @@
                              Padding="5"
                              VerticalContentAlignment="Center"
                              FontSize="12"
-                             ItemsSource="{Binding ElementName=lbDate, Path=SelectedItem.TimeShedules}">
+                             ItemsSource="{Binding ElementName=lbDate, Path=SelectedItem.TimeSchedules}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Time, StringFormat='{}{0:hh\\:mm}'}" />

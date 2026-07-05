@@ -121,7 +121,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <Image Source="/Assets/CinemaIcon.png" Width="60" Height="60" />
+                    <Image Source="/bin/Debug/Assets/Others/CinemaIcon.png" Width="60" Height="60" />
                     <StackPanel Grid.Column="1"
                                 Orientation="Vertical">
                         <Label Grid.Column="1"

@@ -28,11 +28,12 @@ namespace AnhQuoc_WPF_C1_B1
     {
         public Func<RepositoryBase<Account>> getAccountRepo { get; set; }
 
-        private ObservableCollection<Account> getSource;
         private AccountViewModel accountVM;
 
 
         #region Properties
+        public ObservableCollection<Account> getSource { get; set; }
+
         private ImageSource _ImageSource;
         public ImageSource ImageSource
         {

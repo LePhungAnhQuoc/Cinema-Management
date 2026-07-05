@@ -25,8 +25,6 @@ namespace AnhQuoc_WPF_C1_B1
         public static string fPorcelains = "Data/General/Products/Porcelains.xml";
         public static string fFoods = "Data/General/Products/Food.xml";
 
-        public static string fNoImage = "Assets/no-image.png";
-
 
         // Unit
         public static string unitElectricPower = "kWh";

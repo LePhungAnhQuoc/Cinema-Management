@@ -59,12 +59,33 @@ namespace AnhQuoc_WPF_C1_B1
 
             XmlNode root = DataProvider.Instance.nodeRoot; 
             XmlNode newNode = DataProvider.Instance.createNode("MovieSchedule");
+
             XmlAttribute newAttr = DataProvider.Instance.createAttr("Movie");
             newAttr.Value = item.Movie.Id;
             newNode.Attributes.Append(newAttr);
 
             XmlNode childNode = DataProvider.Instance.createNode("CinemaTypeSchedules");
-            newNode.AppendChild(childNode);
+
+            foreach (CinemaTypeSchedule cinemaTypeSchedule in item.CinemaTypeSchedules)
+            {
+                var newCinemaTypeScheduleNode = Utilities.CreateXmlNode("CinemaTypeSchedule", cinemaTypeSchedule);
+                foreach (CinemaSchedule cinemaSchedule in cinemaTypeSchedule.CinemaSchedules)
+                {
+                    var newCinemaScheduleNode = Utilities.CreateXmlNode(nameof(CinemaSchedule), cinemaSchedule);
+                    foreach (var dateSchedule in cinemaSchedule.DatesSchedule)
+                    {
+                        var newDateScheduleNode = Utilities.CreateXmlNode(nameof(DateSchedule), dateSchedule);
+                        foreach (var timeSchedule in dateSchedule.TimeSchedules)
+                        {
+                            var newTimeScheduleNode = Utilities.CreateXmlNode(nameof(TimeSchedule), timeSchedule);
+                            newDateScheduleNode.AppendChild(newTimeScheduleNode);
+                        }
+                        newCinemaScheduleNode.AppendChild(newDateScheduleNode);
+                    }
+                    newCinemaTypeScheduleNode.AppendChild(newCinemaScheduleNode);
+                }
+                newNode.AppendChild(newCinemaTypeScheduleNode);
+            }
 
             root.AppendChild(newNode);
             DataProvider.Instance.Close();
@@ -81,6 +102,12 @@ namespace AnhQuoc_WPF_C1_B1
             updateNode.Attributes["Movie"].Value = newMovie.Id;
 
             DataProvider.Instance.Close();
+        }
+
+        public void WriteUpdateData(MovieSchedule movieSchedule)
+        {
+            WriteRemoveData(movieSchedule);
+            WriteData(movieSchedule);
         }
 
         public void WriteRemoveData(MovieSchedule item)

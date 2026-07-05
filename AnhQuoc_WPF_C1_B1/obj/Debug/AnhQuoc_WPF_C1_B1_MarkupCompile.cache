@@ -12,7 +12,7 @@ DEBUG;TRACE
 D:\Coding\Cinema-Management\AnhQuoc_WPF_C1_B1\App.xaml
 35892441542
 
-103-208280458
+102-1340334830
 48-2007309727
 UserControls\Admin\ucMovieInformation.xaml;UserControls\Admin\ucUserTable.xaml;UserControls\Cashier\ucBooking.xaml;UserControls\Cashier\ucDisplayListPoster.xaml;UserControls\Cashier\ucMoviePoster.xaml;UserControls\Cashier\ucScheduleBooking.xaml;UserControls\Schedules\ucCinemaManage.xaml;UserControls\Schedules\ucCinemaTypeScheduleTable.xaml;UserControls\Schedules\ucCinemaScheduleTable.xaml;UserControls\Schedules\ucDateScheduleTable.xaml;UserControls\Schedules\ucMoviePickerTable.xaml;UserControls\Schedules\ucMovieScheduleTable.xaml;UserControls\Admin\ucMovieTable.xaml;UserControls\Cashier\ucSeatBooking.xaml;UserControls\Admin\ucStatistical.xaml;UserControls\Schedules\ucTimeScheduleTable.xaml;UserControls\Templates\ucDashboardCard.xaml;UserControls\ucDisplaySeats.xaml;Views\frmAddAccount.xaml;Views\frmAddTime.xaml;Views\frmAddDate.xaml;Views\frmAddCinema.xaml;Views\frmAddCinemaType.xaml;Views\frmAdmin.xaml;Views\frmCreateMovie.xaml;Views\frmCustomer.xaml;Views\frmDeleteMovie.xaml;Views\frmLockUserNotify.xaml;Views\frmLogin.xaml;Views\frmOrder.xaml;MainWindow.xaml;Views\frmCashier.xaml;UserControls\Cashier\ucViewTicketPrice.xaml;Views\frmSelectCinema.xaml;Views\frmSelectMovie.xaml;
 

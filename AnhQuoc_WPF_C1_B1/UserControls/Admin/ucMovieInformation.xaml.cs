@@ -157,7 +157,14 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
             {
                 CinemaTypeSchedulesCollection = new ObservableCollection<CinemaTypeSchedule>(MovieSchedule.CinemaTypeSchedules);
             }
+            else
+            {
+                CinemaTypeSchedulesCollection = new ObservableCollection<CinemaTypeSchedule>();
 
+                MovieSchedule = new MovieSchedule();
+                MovieSchedule.Movie = Movie;
+                MovieSchedule.CinemaTypeSchedules = CinemaTypeSchedulesCollection.ToList();
+            }
             if (Movie.UrlTrailer == string.Empty)
             {
                 txtNoMovieTrailer.Visibility = Visibility.Visible;
@@ -438,11 +445,11 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
                     {
                         newTimeSchedule.Time = (TimeSpan)newTime?.TimeOfDay;
 
-                        dateSchedule.TimeShedules.Add(newTimeSchedule);
+                        dateSchedule.TimeSchedules.Add(newTimeSchedule);
 
-                        var temporaryList = dateSchedule.TimeShedules;
-                        dateSchedule.TimeShedules = null; // Clear the binding reference
-                        dateSchedule.TimeShedules = new List<TimeSchedule>(temporaryList); // Re-assign
+                        var temporaryList = dateSchedule.TimeSchedules;
+                        dateSchedule.TimeSchedules = null; // Clear the binding reference
+                        dateSchedule.TimeSchedules = new List<TimeSchedule>(temporaryList); // Re-assign
                     }
                 }
             }
@@ -454,6 +461,21 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
             Window frmDisplaySeats = new Window();
             frmDisplaySeats.Content = ucDisplaySeats;
             frmDisplaySeats.Show();
+        }
+
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            MovieSchedule.CinemaTypeSchedules = CinemaTypeSchedulesCollection.ToList();
+
+            MovieScheduleViewModel movieScheduleViewModel = new MovieScheduleViewModel();
+            movieScheduleViewModel.MovieScheduleRepo = App.UnitOfWork.GetRepositoryMovieSchedule;
+
+            movieScheduleViewModel.WriteData(MovieSchedule);
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

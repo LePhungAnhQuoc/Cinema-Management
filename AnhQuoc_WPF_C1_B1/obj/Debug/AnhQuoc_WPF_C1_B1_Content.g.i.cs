@@ -8,9 +8,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/logout.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/movie-schedule.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/movie.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/statistical.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/userimages/anhquoc.jpg.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/userimages/portrait-1.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/userimages/portrait-2.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/userimages/portrait-3.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/userimages/portrait-4.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/userimages/portrait-5.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/userimages/portrait-6.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/assets/userimages/portrait-7.jpg")]
 
 

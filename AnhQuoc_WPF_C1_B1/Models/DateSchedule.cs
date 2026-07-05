@@ -21,13 +21,13 @@ namespace AnhQuoc_WPF_C1_B1
             }
         }
         
-        private List<TimeSchedule> _TimeShedules;
-        public List<TimeSchedule> TimeShedules
+        private List<TimeSchedule> _TimeSchedules;
+        public List<TimeSchedule> TimeSchedules
         {
-            get { return _TimeShedules; }
+            get { return _TimeSchedules; }
             set 
             { 
-                _TimeShedules = value;
+                _TimeSchedules = value;
                 OnPropertyChanged();
             }
         }
@@ -43,7 +43,7 @@ namespace AnhQuoc_WPF_C1_B1
 
         public DateSchedule()
         {
-            TimeShedules = new List<TimeSchedule>();
+            TimeSchedules = new List<TimeSchedule>();
         }
     }
 }

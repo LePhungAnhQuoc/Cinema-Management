@@ -49,7 +49,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Image Source="{Binding Image, Converter={StaticResource imageConverter}}" Width="200" Height="200" Stretch="Fill" />
+                <Image Source="{Binding Image, Converter={StaticResource imageConverter}, ConverterParameter='UserImages'}" Width="200" Height="200" Stretch="Fill" />
                 <Grid Grid.Column="1" Margin="20 0 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

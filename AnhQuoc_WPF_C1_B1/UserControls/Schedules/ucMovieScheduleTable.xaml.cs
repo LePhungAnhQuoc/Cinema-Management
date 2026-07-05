@@ -110,7 +110,6 @@ namespace AnhQuoc_WPF_C1_B1
             movieObs.Add(newItem.Movie);
             movieScheduleVM.MovieScheduleRepo.Add(newItem);
 
-            movieScheduleVM.WriteData(newItem);
             string fileSeat = movieScheduleVM.CreateFileSeatName(newItem, getFileSeat());
             Utilities.CreateDirectory(fileSeat);
         }

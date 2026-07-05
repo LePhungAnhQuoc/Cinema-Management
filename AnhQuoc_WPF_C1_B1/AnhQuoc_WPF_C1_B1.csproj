@@ -160,7 +160,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\CornerRadiusSideConverter.cs" />
-    <Compile Include="Converters\FeatureToVisibilityConverter.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Converters\IndexListViewItemConverter.cs" />
     <Compile Include="Converters\StatusToLockConverter.cs" />
@@ -506,31 +505,13 @@
     <Folder Include="bin\Debug\Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\no-image.png" />
+    <Resource Include="bin\Debug\Assets\Others\padlock.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\DORAEMON.jpg" />
+    <Resource Include="bin\Debug\Assets\Others\user 2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\HOON PAYON.jpg" />
-    <Resource Include="Assets\LITTLE EGGS.jpg" />
-    <Resource Include="Assets\ROUND UP.jpg" />
-    <Resource Include="Assets\THE LITTLE MERMAID.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\padlock.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\login.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\user 2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Hi.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\CinemaIcon.png" />
+    <Resource Include="bin\Debug\Assets\Others\CinemaIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="bin\Debug\Assets\account.png" />
@@ -540,6 +521,22 @@
     <Resource Include="bin\Debug\Assets\movie-schedule.png" />
     <Resource Include="bin\Debug\Assets\movie.png" />
     <Resource Include="bin\Debug\Assets\Statistical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\unload_placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\Movies\Doraemon và Nobita.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\UserImages\AnhQuoc.jpg.jpg" />
+    <Resource Include="bin\Debug\Assets\UserImages\portrait-1.jpg" />
+    <Resource Include="bin\Debug\Assets\UserImages\portrait-2.jpg" />
+    <Resource Include="bin\Debug\Assets\UserImages\portrait-3.jpg" />
+    <Resource Include="bin\Debug\Assets\UserImages\portrait-4.jpg" />
+    <Resource Include="bin\Debug\Assets\UserImages\portrait-5.jpg" />
+    <Resource Include="bin\Debug\Assets\UserImages\portrait-6.jpg" />
+    <Resource Include="bin\Debug\Assets\UserImages\portrait-7.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

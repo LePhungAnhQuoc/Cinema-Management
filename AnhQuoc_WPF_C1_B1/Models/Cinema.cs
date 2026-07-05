@@ -22,5 +22,10 @@ namespace AnhQuoc_WPF_C1_B1
             Seats = new List<List<Seat>>();
             Size = new Size();
         }
+
+        public override string ToString()
+        {
+            return Id;
+        }
     }
 }

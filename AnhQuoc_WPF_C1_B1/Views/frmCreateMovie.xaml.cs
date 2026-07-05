@@ -106,12 +106,14 @@ namespace AnhQuoc_WPF_C1_B1
             LoadRateds();
 
             stkGenres.Children.Clear();
-            List<CheckBox> checkBoxs = AddCheckBox(getGenres());
+            List<CheckBox> checkBoxes = AddCheckBox(getGenres());
 
             if (optionFrm() == "update")
             {
                 this.Title = "Update new movie";
                 lblHeader.Content = this.Title;
+
+                UpdateCheckBox(checkBoxes);
             }
             else
             {
@@ -120,6 +122,21 @@ namespace AnhQuoc_WPF_C1_B1
             }
         }
         
+        private void UpdateCheckBox(List<CheckBox> checkBoxes)
+        {
+            foreach (Genre genre in Movie.Genres)
+            {
+                foreach (CheckBox checkBox in checkBoxes)
+                {
+                    if (genre.Name == checkBox.Content.ToString())
+                    {
+                        checkBox.IsChecked = true;
+                        break;
+                    }
+                }
+            }
+        }
+
         private void LoadRateds()
         {
             ObservableCollection<Rated> _rateds = new ObservableCollection<Rated>(getRateds());
@@ -252,19 +269,20 @@ namespace AnhQuoc_WPF_C1_B1
             MovieViewModel movieViewModel = new MovieViewModel();
             movieViewModel.MovieRepo = getMovieRepo();
 
-            Movie movieFinded = movieViewModel.FindByName(Movie.Name);
-            if (movieFinded != null)
+            if (optionFrm() == "add")
             {
-                MessageBox.Show("This movie was already on the list.", "Warning", MessageBoxButton.OK);
-                return;
+                Movie movieFinded = movieViewModel.FindByName(Movie.Name);
+                if (movieFinded != null)
+                {
+                    MessageBox.Show("This movie was already on the list.", "Warning", MessageBoxButton.OK);
+                    return;
+                }
             }    
-
             List<Genre> genres = GetCheckedGenres();
 
             int length = getMovieRepo().Length();
-            MovieViewModel movieVM = new MovieViewModel();
 
-            Movie.Id = movieVM.GetId(length);
+            Movie.Id = movieViewModel.GetId(length);
             Movie.Genres = genres;
 
             frmReply = true;

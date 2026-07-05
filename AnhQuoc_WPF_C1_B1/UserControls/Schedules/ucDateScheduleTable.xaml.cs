@@ -116,7 +116,7 @@ namespace AnhQuoc_WPF_C1_B1
             DateSchedule newItem = new DateSchedule
             {
                 Date = data,
-                TimeShedules = new List<TimeSchedule>(),
+                TimeSchedules = new List<TimeSchedule>(),
             };
             dateScheduleVM.DateScheduleRepo.Items.Add(newItem);
             DateSchedules.Add(newItem);
@@ -197,7 +197,7 @@ namespace AnhQuoc_WPF_C1_B1
             ucTimeSchedule.getCinemaTypeSchedule = getCinemaTypeSchedule;
             ucTimeSchedule.getCinemaSchedule = getCinemaSchedule;
             ucTimeSchedule.getDateSchedule = () => dateSchedule;
-            ucTimeSchedule.getTimeSchedules = () => dateSchedule.TimeShedules;
+            ucTimeSchedule.getTimeSchedules = () => dateSchedule.TimeSchedules;
         }
     }
 }

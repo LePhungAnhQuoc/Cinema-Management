@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace AnhQuoc_WPF_C1_B1
 {
@@ -222,7 +223,7 @@ namespace AnhQuoc_WPF_C1_B1
             {
                 Order newOrder = new Order();
                 try
-                {   
+                {
                     newOrder.Id = node.Attributes["Id"].Value;
                     newOrder.Customer.Id = node.Attributes["CustomerId"].Value;
                     newOrder.MovieOrder.Cinema.Id = node.Attributes["Cinema"].Value;
@@ -309,83 +310,130 @@ namespace AnhQuoc_WPF_C1_B1
 
         public List<MovieSchedule> LoadMovieSchedules(RepositoryBase<Movie> movieRepo, RepositoryBase<Cinema> cinemaRepo)
         {
-            List<MovieSchedule> lstMovieSchedule = new List<MovieSchedule>();
+            MovieViewModel movieViewModel = new MovieViewModel();
+            movieViewModel.MovieRepo = movieRepo;
+            CinemaViewModel cinemaViewModel = new CinemaViewModel();
+            cinemaViewModel.CinemaRepo = cinemaRepo;
 
-            MovieViewModel movieVM = new MovieViewModel();
-            movieVM.getList(movieRepo);
-            CinemaViewModel cinemaVM = new CinemaViewModel();
-            cinemaVM.getList(cinemaRepo);
+            // Initialize the result list so we aren't returning null on success
+            List<MovieSchedule> result = new List<MovieSchedule>();
 
             DataProvider.Instance.pathData = Constants.fMovieSchedules;
             DataProvider.Instance.Open();
+            XmlNode root = DataProvider.Instance.nodeRoot;
 
-            XmlNodeList lstNodeMovie = DataProvider.Instance.nodeRoot.ChildNodes;
+            if (root == null) return result;
 
-            MovieScheduleViewModel movieScheduleVM2 = new MovieScheduleViewModel();
-            MovieViewModel movieVM2 = new MovieViewModel();
-            movieScheduleVM2.MovieScheduleRepo.Items = lstMovieSchedule;
-            foreach (XmlNode nodeMovie in lstNodeMovie)
+            foreach (XmlNode movieScheduleNode in root.ChildNodes)
             {
-                movieVM2.MovieRepo.Items = movieScheduleVM2.FillMovie();
-                string idMovie  = nodeMovie.Attributes["Movie"].Value;
-                Movie movieCheck = movieVM2.FindById(idMovie);
-                if (movieCheck != null)
+                // Safety check for comment nodes or whitespace text nodes
+                if (movieScheduleNode.NodeType != XmlNodeType.Element) continue;
+
+                MovieSchedule movieSchedule = new MovieSchedule();
+                XmlAttribute attr = movieScheduleNode.Attributes["Movie"];
+
+                if (attr == null) continue;
+
+                Movie movieFinded = movieViewModel.FindById(attr.Value);
+                if (movieFinded == null)
                 {
                     Utilities.HandleError();
+                    return null;
                 }
-                try
-                {
-                    MovieSchedule newMovieSchedule = new MovieSchedule();
-                    newMovieSchedule.Movie.Id = nodeMovie.Attributes["Movie"].Value;
-                    Movie movieFind = movieVM.FindById(newMovieSchedule.Movie.Id);
-                    newMovieSchedule.Movie = movieFind;
+                movieSchedule.Movie = movieFinded;
+                movieSchedule.CinemaTypeSchedules = new List<CinemaTypeSchedule>();
 
-                    XmlNodeList lstNodeCinemaType = nodeMovie.SelectSingleNode("CinemaTypeSchedules").ChildNodes;
-                    foreach (XmlNode nodeCinemaType in lstNodeCinemaType)
+                // 1. Parse <CinemaTypeSchedule>
+                foreach (XmlNode cinemaTypeNode in movieScheduleNode.ChildNodes)
+                {
+                    if (cinemaTypeNode.NodeType != XmlNodeType.Element) continue;
+
+                    CinemaTypeSchedule typeSchedule = new CinemaTypeSchedule();
+                    XmlAttribute typeAttr = cinemaTypeNode.Attributes["CinemaType"];
+
+                    if (typeAttr != null)
                     {
-                        CinemaTypeSchedule newCinemaTypeSchedule = new CinemaTypeSchedule();
-                        string strType = nodeCinemaType.Attributes["Type"].Value;
-                        newCinemaTypeSchedule.CinemaType = (CinemaType) Enum.Parse(typeof(CinemaType), strType);
-
-                        XmlNodeList lstNodeCinemaSchedule = nodeCinemaType.SelectSingleNode("CinemaSchedules").ChildNodes;
-                        foreach (XmlNode nodeCinemaSchedule in lstNodeCinemaSchedule)
+                        if (Enum.TryParse(typeAttr.Value, out CinemaType cinemaType))
                         {
-                            CinemaSchedule newCinemaSchedule = new CinemaSchedule();
-                            newCinemaSchedule.Cinema.Id = nodeCinemaSchedule.Attributes["Cinema"].Value;
-                            Cinema cinemaFind = cinemaVM.FindById(newCinemaSchedule.Cinema.Id);
-                            newCinemaSchedule.Cinema = cinemaFind;
-
-                            XmlNodeList lstNodeDate = nodeCinemaSchedule.SelectSingleNode("DateSchedules").ChildNodes;
-                            foreach (XmlNode nodeDate in lstNodeDate)
-                            {
-                                DateSchedule newDate = new DateSchedule();
-                                newDate.Date = Convert.ToDateTime(nodeDate.Attributes["Date"].Value);
-
-                                XmlNodeList lstNodeTime = nodeDate.SelectSingleNode("TimeSchedules").ChildNodes;
-                                foreach (XmlNode nodeTime in lstNodeTime)
-                                {
-                                    TimeSchedule timeSchedule = new TimeSchedule();
-                                    timeSchedule.Time = TimeSpan.Parse(nodeTime.Attributes["Time"].Value);
-
-                                    newDate.TimeShedules.Add(timeSchedule);
-                                }
-                                newCinemaSchedule.DatesSchedule.Add(newDate);
-                            }
-                            newCinemaTypeSchedule.CinemaSchedules.Add(newCinemaSchedule);
+                            typeSchedule.CinemaType = cinemaType;
                         }
-                        newMovieSchedule.CinemaTypeSchedules.Add(newCinemaTypeSchedule);
+                        else
+                        {
+                            Utilities.HandleError();
+                            return null;
+                        }
                     }
-                    lstMovieSchedule.Add(newMovieSchedule);
+                    typeSchedule.CinemaSchedules = new List<CinemaSchedule>();
+
+                    // 2. Parse <CinemaSchedule>
+                    foreach (XmlNode cinemaScheduleNode in cinemaTypeNode.ChildNodes)
+                    {
+                        if (cinemaScheduleNode.NodeType != XmlNodeType.Element) continue;
+
+                        CinemaSchedule cinemaSchedule = new CinemaSchedule();
+                        XmlAttribute cinemaAttr = cinemaScheduleNode.Attributes["Cinema"];
+
+                        if (cinemaAttr == null) continue;
+
+                        Cinema cinemaFinded = cinemaViewModel.FindById(cinemaAttr.Value);
+                        if (cinemaFinded == null)
+                        {
+                            Utilities.HandleError();
+                            return null;
+                        }
+                        cinemaSchedule.Cinema = cinemaFinded;
+                        cinemaSchedule.DatesSchedule = new List<DateSchedule>();
+
+                        // 3. Parse <DateSchedule>
+                        foreach (XmlNode dateScheduleNode in cinemaScheduleNode.ChildNodes)
+                        {
+                            if (dateScheduleNode.NodeType != XmlNodeType.Element) continue;
+
+                            DateSchedule dateSchedule = new DateSchedule();
+                            XmlAttribute dateAttr = dateScheduleNode.Attributes["Date"];
+
+                            if (dateAttr == null) continue;
+
+                            // Parse string "23/07/2026 12:00:00 SA" back to a DateTime object
+                            // "SA/CH" suggests Vietnamese locale (AM/PM equivalent)
+                            IFormatProvider culture = new System.Globalization.CultureInfo("vi-VN");
+                            if (DateTime.TryParse(dateAttr.Value, culture, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+                            {
+                                dateSchedule.Date = parsedDate;
+                            }
+                            else
+                            {
+                                // Fallback standard parse if culture parsing fails
+                                DateTime.TryParse(dateAttr.Value, out parsedDate);
+                                dateSchedule.Date = parsedDate;
+                            }
+
+                            dateSchedule.TimeSchedules = new List<TimeSchedule>();
+
+                            // 4. Parse <TimeSchedule>
+                            foreach (XmlNode timeScheduleNode in dateScheduleNode.ChildNodes)
+                            {
+                                if (timeScheduleNode.NodeType != XmlNodeType.Element) continue;
+
+                                TimeSchedule timeSchedule = new TimeSchedule();
+                                XmlAttribute timeAttr = timeScheduleNode.Attributes["Time"];
+
+                                if (timeAttr != null && TimeSpan.TryParse(timeAttr.Value, out TimeSpan parsedTime))
+                                {
+                                    timeSchedule.Time = parsedTime;
+                                    dateSchedule.TimeSchedules.Add(timeSchedule);
+                                }
+                            }
+                            cinemaSchedule.DatesSchedule.Add(dateSchedule);
+                        }
+                        typeSchedule.CinemaSchedules.Add(cinemaSchedule);
+                    }
+                    movieSchedule.CinemaTypeSchedules.Add(typeSchedule);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                result.Add(movieSchedule);
             }
             DataProvider.Instance.Close();
-
-            LoadSeatsSchedules(lstMovieSchedule);
-            return lstMovieSchedule;
+            return result;
         }
 
         public void LoadSeatsSchedules(List<MovieSchedule> lstMovieSchedule)
@@ -402,7 +450,7 @@ namespace AnhQuoc_WPF_C1_B1
                         List<DateSchedule> dateSchedules = cinema.DatesSchedule;
                         foreach (var date in dateSchedules)
                         {
-                            List<TimeSchedule> timeSchedules = date.TimeShedules;
+                            List<TimeSchedule> timeSchedules = date.TimeSchedules;
                             foreach (var time in timeSchedules)
                             {
                                 string filePath = Environment.CurrentDirectory + "\\Data\\MovieSchedules";

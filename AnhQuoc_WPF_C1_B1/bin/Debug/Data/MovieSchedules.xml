@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MovieSchedules>
-  <MovieSchedule Movie="MV1">
-    <CinemaTypeSchedules />
+  <MovieSchedule Movie="MV2">
+    <CinemaTypeSchedule CinemaType="Standard">
+      <CinemaSchedule Cinema="S2">
+        <DateSchedule Date="23/07/2026 12:00:00 SA">
+          <TimeSchedule Time="13:37:30" />
+          <TimeSchedule Time="14:37:30" />
+          <TimeSchedule Time="16:37:30" />
+        </DateSchedule>
+      </CinemaSchedule>
+      <CinemaSchedule Cinema="S1" />
+    </CinemaTypeSchedule>
   </MovieSchedule>
 </MovieSchedules>

@@ -22,7 +22,7 @@
         <Image  Name="img"
                 Grid.Column="0"
                 Height="80" Width="80"
-                Source="{Binding movie.UrlImage, Converter={StaticResource imageConverter}}" />
+                Source="{Binding movie.UrlImage, Converter={StaticResource imageConverter}, ConverterParameter='Movies'}" />
         <StackPanel Grid.Column="1"
                     Name="stkContainer">
             <Grid Margin="10 5">

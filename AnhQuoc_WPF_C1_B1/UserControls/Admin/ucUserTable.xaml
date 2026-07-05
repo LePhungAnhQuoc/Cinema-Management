@@ -39,7 +39,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Ellipse Width="50" Height="50" HorizontalAlignment="Center">
                                     <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding Image, Converter={StaticResource imageConverter}}" Stretch="UniformToFill"/>
+                                        <ImageBrush ImageSource="{Binding Image, Converter={StaticResource imageConverter}, ConverterParameter='UserImages'}" Stretch="UniformToFill"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <Label Grid.Column="1" Content="{Binding Username}" 

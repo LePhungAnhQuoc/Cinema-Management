@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -68,7 +69,7 @@ namespace AnhQuoc_WPF_C1_B1
             UrlImage = movie.UrlImage;
             if (UrlImage == string.Empty)
             {
-                UrlImage = Environment.CurrentDirectory + "\\" + Constants.fNoImage;
+                //UrlImage = Environment.CurrentDirectory + "\\" + Constants.fNoImage;
             }
             else
             {
