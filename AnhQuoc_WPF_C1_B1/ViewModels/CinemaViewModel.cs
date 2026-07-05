@@ -46,25 +46,20 @@ namespace AnhQuoc_WPF_C1_B1
             return result;
         }
 
-        public List<Cinema> FillByList(List<Cinema> lst)
+        /// <summary>
+        /// Removes all elements from the source list that exist in the collection to exclude.
+        /// </summary>
+        public List<T> ExcludeItems<T>(List<T> source, IEnumerable<T> itemsToExclude)
         {
-            List<Cinema> result = new List<Cinema>();
-            foreach (Cinema parent in CinemaRepo.Gets())
-            {
-                bool flag = true;
-                foreach (Cinema child in lst)
-                {
-                    if (parent.Id == child.Id)
-                    {
-                        flag = false;
-                    }
-                }
-                if (flag == true)
-                {
-                    result.Add(parent);
-                }
-            }
-            return result;
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (itemsToExclude == null) return source; // Nothing to remove
+
+            // Convert to HashSet for fast O(1) lookups instead of O(N) linear scans
+            var excludeSet = new HashSet<T>(itemsToExclude);
+
+            // Remove in-place efficiently
+            source.RemoveAll(item => excludeSet.Contains(item));
+            return source;
         }
     }
 }

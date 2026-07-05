@@ -329,22 +329,40 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
                 parentExpander.IsExpanded = true;
             }
 
-            frmSelectCinema frmSelectCinema = new frmSelectCinema();
-            frmSelectCinema.ShowDialog();
+            List<Cinema> cinemas = null;
+            CinemaViewModel cinemaViewModel = new CinemaViewModel();
+            cinemaViewModel.CinemaRepo = App.UnitOfWork.GetRepositoryCinema;
 
-            if (frmSelectCinema.SelectedItems != null)
+            cinemas = cinemaViewModel.FillByType(CurrentItem.CinemaType);
+
+            // Get list of currently available movie theaters
+            IEnumerable<Cinema> tempList = CurrentItem.CinemaSchedules.Select(item => item.Cinema);
+            cinemas = cinemaViewModel.ExcludeItems(cinemas, tempList);
+
+            if (cinemas.Count == 0)
             {
-                foreach (var cinemaItem in frmSelectCinema.SelectedItems)
-                {
-                    CinemaSchedule newCinemaSchedule = new CinemaSchedule();
-                    newCinemaSchedule.Cinema = cinemaItem;
-
-                    CurrentItem.CinemaSchedules.Add(newCinemaSchedule);
-                }
-                var temporaryList = CurrentItem.CinemaSchedules;
-                CurrentItem.CinemaSchedules = null; // Clear the binding reference
-                CurrentItem.CinemaSchedules = new List<CinemaSchedule>(temporaryList); // Re-assign
+                MessageBox.Show("All the cinemas already have schedules.", "", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            else
+            {
+                frmSelectCinema frmSelectCinema = new frmSelectCinema();
+                frmSelectCinema.GetCinemaSource = () => cinemas;
+                frmSelectCinema.ShowDialog();
+
+                if (frmSelectCinema.SelectedItems != null)
+                {
+                    foreach (var cinemaItem in frmSelectCinema.SelectedItems)
+                    {
+                        CinemaSchedule newCinemaSchedule = new CinemaSchedule();
+                        newCinemaSchedule.Cinema = cinemaItem;
+
+                        CurrentItem.CinemaSchedules.Add(newCinemaSchedule);
+                    }
+                    var temporaryList = CurrentItem.CinemaSchedules;
+                    CurrentItem.CinemaSchedules = null; // Clear the binding reference
+                    CurrentItem.CinemaSchedules = new List<CinemaSchedule>(temporaryList); // Re-assign
+                }
+            }    
         }
 
         private void btnAddNewDate_Click(object sender, RoutedEventArgs e)
@@ -408,51 +426,8 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
 
             addNewTimeBtn.Visibility = Visibility.Collapsed;
 
-            // 2. Get the parent container (Grid, StackPanel, etc.)
-            DependencyObject parent = VisualTreeHelper.GetParent(addNewTimeBtn);
-
-            // 3. Find the DatePicker among the parent's children
-            if (parent != null)
-            {
-                int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-                for (int i = 0; i < childrenCount; i++)
-                {
-                    var child = VisualTreeHelper.GetChild(parent, i);
-                    if (child is SfTimePicker timePicker)
-                    {
-                        // 4. Show the DatePicker (assuming its default was Collapsed or Hidden)
-                        timePicker.Visibility = Visibility.Visible;
-                        break;
-                    }
-                }
-            }
-        }
-
-        private void selectTime_ValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is Syncfusion.Windows.Controls.Input.SfTimePicker timePicker)
-            {
-                timePicker.Visibility = Visibility.Collapsed;
-                addNewTimeBtn.Visibility = Visibility.Visible;
-                
-                // Your logic here:
-                if (addNewTimeBtn.DataContext is DateSchedule dateSchedule)
-                {
-                    TimeSchedule newTimeSchedule = new TimeSchedule();
-                    // Extracting your old and new times safely
-                    DateTime? newTime = e.NewValue as DateTime?;
-                    if (newTime.HasValue)
-                    {
-                        newTimeSchedule.Time = (TimeSpan)newTime?.TimeOfDay;
-
-                        dateSchedule.TimeSchedules.Add(newTimeSchedule);
-
-                        var temporaryList = dateSchedule.TimeSchedules;
-                        dateSchedule.TimeSchedules = null; // Clear the binding reference
-                        dateSchedule.TimeSchedules = new List<TimeSchedule>(temporaryList); // Re-assign
-                    }
-                }
-            }
+            var timePicker = Utilities.FindNeighboringControl<Xceed.Wpf.Toolkit.TimePicker>(addNewTimeBtn);
+            timePicker.Visibility = Visibility.Visible;
         }
 
         private void btnTimeSchedule_Click(object sender, RoutedEventArgs e)
@@ -476,6 +451,33 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void TimePicker_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (sender is Xceed.Wpf.Toolkit.TimePicker timePicker)
+            {
+                timePicker.Visibility = Visibility.Collapsed;
+                addNewTimeBtn.Visibility = Visibility.Visible;
+
+                // Your logic here:
+                if (addNewTimeBtn.DataContext is DateSchedule dateSchedule)
+                {
+                    TimeSchedule newTimeSchedule = new TimeSchedule();
+                    // Extracting your old and new times safely
+                    DateTime? newTime = e.NewValue as DateTime?;
+                    if (newTime.HasValue)
+                    {
+                        newTimeSchedule.Time = (TimeSpan)newTime?.TimeOfDay;
+
+                        dateSchedule.TimeSchedules.Add(newTimeSchedule);
+
+                        var temporaryList = dateSchedule.TimeSchedules;
+                        dateSchedule.TimeSchedules = null; // Clear the binding reference
+                        dateSchedule.TimeSchedules = new List<TimeSchedule>(temporaryList); // Re-assign
+                    }
+                }
+            }
         }
     }
 }

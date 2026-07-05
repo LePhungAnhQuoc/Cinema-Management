@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls.Admin"
              xmlns:converter="clr-namespace:AnhQuoc_WPF_C1_B1.Converters"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             xmlns:tool="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -236,7 +236,8 @@
                     <Grid Margin="0 0 0 20">
                         <ListBox x:Name="lstMovieScheduleControl"
                                  ItemsSource="{Binding CinemaTypeSchedulesCollection}"
-                                 SelectedItem="{Binding CurrentItem, Mode=TwoWay}">
+                                 SelectedItem="{Binding CurrentItem, Mode=TwoWay}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -310,7 +311,11 @@
                                                         <ItemsControl ItemsSource="{Binding DatesSchedule}">
                                                             <ItemsControl.ItemTemplate>
                                                                 <DataTemplate>
-                                                                    <StackPanel Margin="0,20,0,15">
+                                                                    <Grid Margin="0,20,0,15">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition Height="*" />
+                                                                            <RowDefinition Height="*" />
+                                                                        </Grid.RowDefinitions>
                                                                         <!-- Modern Date Header -->
                                                                         <Grid Margin="0,0,0,8">
                                                                             <Grid.ColumnDefinitions>
@@ -328,22 +333,23 @@
                                                                                         Content="Add new time"
                                                                                         Style="{StaticResource AddButtonStyle}"
                                                                                         Padding="10 5"/>
-                                                                                <syncfusion:SfTimePicker HorizontalContentAlignment="Center"
-                                                                                                         Padding="10 5"
-                                                                                                         Visibility="Collapsed"
-                                                                                                         FormatString="HH\:mm"
-                                                                                                         SelectorFormatString="HH\:mm"
-                                                                                                         ValueChanged="selectTime_ValueChanged"/>
+                                                                                <tool:TimePicker HorizontalContentAlignment="Center"
+                                                                                                 Padding="10 5"
+                                                                                                 Visibility="Collapsed"
+                                                                                                 FormatString="HH\:mm"
+                                                                                                 ValueChanged="TimePicker_ValueChanged"/>
                                                                             </Grid>
 
                                                                         </Grid>
 
                                                                         <!-- Horizontal wrap layout for Showtimes -->
-                                                                        <ItemsControl ItemsSource="{Binding TimeSchedules}">
+                                                                        <ItemsControl Grid.Row="1"
+                                                                                      ItemsSource="{Binding TimeSchedules}"
+                                                                                      Margin="0 20 0 0">
                                                                             <ItemsControl.ItemsPanel>
                                                                                 <ItemsPanelTemplate>
                                                                                     <!-- Automatically wraps time blocks horizontally -->
-                                                                                    <WrapPanel Orientation="Horizontal" />
+                                                                                    <UniformGrid Columns="3"/>
                                                                                 </ItemsPanelTemplate>
                                                                             </ItemsControl.ItemsPanel>
                                                                             <ItemsControl.ItemTemplate>
@@ -354,11 +360,12 @@
                                                                                             Padding="14,8,14,8"
                                                                                             Cursor="Hand"
                                                                                             Style="{StaticResource TimeScheduleButton}"
+                                                                                            HorizontalAlignment="Stretch"
                                                                                             Click="btnTimeSchedule_Click"/>
                                                                                 </DataTemplate>
                                                                             </ItemsControl.ItemTemplate>
                                                                         </ItemsControl>
-                                                                    </StackPanel>
+                                                                    </Grid>
                                                                 </DataTemplate>
                                                             </ItemsControl.ItemTemplate>
                                                         </ItemsControl>

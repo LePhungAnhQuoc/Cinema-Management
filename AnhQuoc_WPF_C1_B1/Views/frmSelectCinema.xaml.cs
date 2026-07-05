@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -21,6 +22,11 @@ namespace AnhQuoc_WPF_C1_B1.Views
     /// </summary>
     public partial class frmSelectCinema : Window, INotifyPropertyChanged
     {
+        public Func<List<Cinema>> GetCinemaSource { get; set; }
+
+
+        public ObservableCollection<Cinema> Cinemas { get; set; }
+
         private IList<Cinema> _SelectedItems;
         public IList<Cinema> SelectedItems
         {
@@ -48,7 +54,8 @@ namespace AnhQuoc_WPF_C1_B1.Views
 
         private void FrmSelectCinema_Loaded(object sender, RoutedEventArgs e)
         {
-            ucCinemaScheduleTable.getCinemaRepo = () => App.UnitOfWork.GetRepositoryCinema;
+            RepositoryBase<Cinema> repo = new RepositoryBase<Cinema>(GetCinemaSource());
+            ucCinemaScheduleTable.getCinemaRepo = () => repo;
         }
 
         private void btnSelect_Click(object sender, RoutedEventArgs e)

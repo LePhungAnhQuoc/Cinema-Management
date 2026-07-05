@@ -60,6 +60,30 @@ namespace AnhQuoc_WPF_C1_B1
             return result;
         }
 
+        public static T FindNeighboringControl<T>(FrameworkElement sourceControl) where T : FrameworkElement
+        {
+            if (sourceControl == null) return null;
+
+            // 1. Get the parent container (Grid, StackPanel, etc.)
+            DependencyObject parent = VisualTreeHelper.GetParent(sourceControl);
+
+            // 2. Find the target control among the parent's children
+            if (parent != null)
+            {
+                int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+                for (int i = 0; i < childrenCount; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(parent, i);
+
+                    // Check if the child matches the requested type T
+                    if (child is T targetControl)
+                    {
+                        return (T)targetControl;
+                    }
+                }
+            }
+            return null;
+        }
         public static XmlNode CreateXmlNode(string nodeName, object data)
         {
             XmlNode newNode = DataProvider.Instance.createNode(nodeName);

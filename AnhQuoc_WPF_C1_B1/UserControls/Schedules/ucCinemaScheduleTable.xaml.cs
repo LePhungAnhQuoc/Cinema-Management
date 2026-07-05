@@ -131,7 +131,7 @@ namespace AnhQuoc_WPF_C1_B1
 
             CinemaViewModel cinemaVM = new CinemaViewModel();
             cinemaVM.CinemaRepo = getCinemaRepo();
-            List<Cinema> filledCinemas = cinemaVM.FillByList(cinemas);
+            List<Cinema> filledCinemas = cinemaVM.ExcludeItems(cinemaVM.CinemaRepo.Gets(), cinemas);
             
             frmAddCinema frmAddCinema = new frmAddCinema();
             frmAddCinema.getCinemaRepo = () => new RepositoryBase<Cinema>(filledCinemas);

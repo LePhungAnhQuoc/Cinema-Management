@@ -41,22 +41,8 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Ellipse Width="50" Height="50" HorizontalAlignment="Center">
-                                    <Ellipse.Fill>
-                                        <ImageBrush>
-                                            <ImageBrush.ImageSource>
-                                                <Binding Path="UrlImage" Converter="{StaticResource imageConverter}" ConverterParameter="Movies">
-                                                    <!-- 3. Corrected resource paths -->
-                                                    <Binding.TargetNullValue>
-                                                        <BitmapImage UriSource="/Assets/unload_placeholder.png" />
-                                                    </Binding.TargetNullValue>
-                                                    <Binding.FallbackValue>
-                                                        <BitmapImage UriSource="/Assets/unload_placeholder.png" />
-                                                    </Binding.FallbackValue>
-                                                </Binding>
-                                            </ImageBrush.ImageSource>
-                                        </ImageBrush>
-                                    </Ellipse.Fill>
+                                <Ellipse Width="50" Height="50" HorizontalAlignment="Center"
+                                         Fill="{StaticResource imagebrushStyle}">
                                 </Ellipse>
                             </Grid>
                         </DataTemplate>
