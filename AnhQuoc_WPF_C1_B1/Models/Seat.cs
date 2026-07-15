@@ -15,7 +15,6 @@ namespace AnhQuoc_WPF_C1_B1
         public double Price { get; set; }
 
         private SeatType _type;
-        public string Name { get; set; }
         public int RowIndex { get; set; }
         public int ColumnIndex { get; set; }
 

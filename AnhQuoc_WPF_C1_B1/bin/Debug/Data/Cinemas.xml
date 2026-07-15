@@ -2,204 +2,236 @@
 <Cinemas>
   <Cinema Id="S1" Name="Cinema S1" Type="Standard" PriceCenter="60000" DecreasePrice="10000" Size="4 5">
     <Seats>
-      <Seat Price="0" Name="A1" RowIndex="0" ColumnIndex="0" Type="Standard" />
-      <Seat Price="0" Name="A2" RowIndex="0" ColumnIndex="1" Type="Standard" />
-      <Seat Price="0" Name="A3" RowIndex="0" ColumnIndex="3" Type="Standard" />
-      <Seat Price="0" Name="A4" RowIndex="0" ColumnIndex="4" Type="Standard" />
-      <Seat Price="0" Name="A5" RowIndex="0" ColumnIndex="6" Type="Standard" />
-      <Seat Price="0" Name="A6" RowIndex="0" ColumnIndex="7" Type="Standard" />
-      <Seat Price="0" Name="A7" RowIndex="0" ColumnIndex="8" Type="Standard" />
-      <Seat Price="0" Name="A8" RowIndex="0" ColumnIndex="9" Type="Standard" />
-      <Seat Price="0" Name="A9" RowIndex="0" ColumnIndex="11" Type="Standard" />
-      <Seat Price="0" Name="A10" RowIndex="0" ColumnIndex="12" Type="Standard" />
-      <Seat Price="0" Name="A11" RowIndex="0" ColumnIndex="13" Type="Standard" />
-      <Seat Price="0" Name="B1" RowIndex="1" ColumnIndex="0" Type="Standard" />
-      <Seat Price="0" Name="B2" RowIndex="1" ColumnIndex="1" Type="Standard" />
-      <Seat Price="0" Name="B3" RowIndex="1" ColumnIndex="3" Type="Standard" />
-      <Seat Price="0" Name="B4" RowIndex="1" ColumnIndex="4" Type="Standard" />
-      <Seat Price="0" Name="B5" RowIndex="1" ColumnIndex="6" Type="Standard" />
-      <Seat Price="0" Name="B6" RowIndex="1" ColumnIndex="7" Type="Standard" />
-      <Seat Price="0" Name="B7" RowIndex="1" ColumnIndex="8" Type="Standard" />
-      <Seat Price="0" Name="B8" RowIndex="1" ColumnIndex="9" Type="Standard" />
-      <Seat Price="0" Name="B9" RowIndex="1" ColumnIndex="11" Type="Standard" />
-      <Seat Price="0" Name="B10" RowIndex="1" ColumnIndex="12" Type="Standard" />
-      <Seat Price="0" Name="B11" RowIndex="1" ColumnIndex="13" Type="Standard" />
-      <Seat Price="0" Name="B12" RowIndex="1" ColumnIndex="14" Type="Standard" />
-      <Seat Price="0" Name="C1" RowIndex="2" ColumnIndex="0" Type="Standard" />
-      <Seat Price="0" Name="C2" RowIndex="2" ColumnIndex="1" Type="Standard" />
-      <Seat Price="0" Name="C3" RowIndex="2" ColumnIndex="3" Type="Standard" />
-      <Seat Price="0" Name="C4" RowIndex="2" ColumnIndex="4" Type="Standard" />
-      <Seat Price="0" Name="C5" RowIndex="2" ColumnIndex="6" Type="Standard" />
-      <Seat Price="0" Name="C6" RowIndex="2" ColumnIndex="7" Type="Standard" />
-      <Seat Price="0" Name="C7" RowIndex="2" ColumnIndex="8" Type="Standard" />
-      <Seat Price="0" Name="C8" RowIndex="2" ColumnIndex="9" Type="Standard" />
-      <Seat Price="0" Name="C9" RowIndex="2" ColumnIndex="11" Type="Standard" />
-      <Seat Price="0" Name="C10" RowIndex="2" ColumnIndex="12" Type="Standard" />
-      <Seat Price="0" Name="C11" RowIndex="2" ColumnIndex="13" Type="Standard" />
-      <Seat Price="0" Name="C12" RowIndex="2" ColumnIndex="14" Type="Standard" />
-      <Seat Price="0" Name="D1" RowIndex="3" ColumnIndex="0" Type="Standard" />
-      <Seat Price="0" Name="D2" RowIndex="3" ColumnIndex="1" Type="Standard" />
-      <Seat Price="0" Name="D3" RowIndex="3" ColumnIndex="3" Type="VIP" />
-      <Seat Price="0" Name="D4" RowIndex="3" ColumnIndex="4" Type="VIP" />
-      <Seat Price="0" Name="D5" RowIndex="3" ColumnIndex="6" Type="VIP" />
-      <Seat Price="0" Name="D6" RowIndex="3" ColumnIndex="7" Type="VIP" />
-      <Seat Price="0" Name="D7" RowIndex="3" ColumnIndex="8" Type="VIP" />
-      <Seat Price="0" Name="D8" RowIndex="3" ColumnIndex="9" Type="VIP" />
-      <Seat Price="0" Name="D9" RowIndex="3" ColumnIndex="11" Type="VIP" />
-      <Seat Price="0" Name="D10" RowIndex="3" ColumnIndex="12" Type="VIP" />
-      <Seat Price="0" Name="D11" RowIndex="3" ColumnIndex="13" Type="VIP" />
-      <Seat Price="0" Name="D12" RowIndex="3" ColumnIndex="14" Type="VIP" />
-      <Seat Price="0" Name="E1" RowIndex="4" ColumnIndex="0" Type="Standard" />
-      <Seat Price="0" Name="E2" RowIndex="4" ColumnIndex="1" Type="Standard" />
-      <Seat Price="0" Name="E3" RowIndex="4" ColumnIndex="3" Type="VIP" />
-      <Seat Price="0" Name="E4" RowIndex="4" ColumnIndex="4" Type="VIP" />
-      <Seat Price="0" Name="E5" RowIndex="4" ColumnIndex="6" Type="VIP" />
-      <Seat Price="0" Name="E6" RowIndex="4" ColumnIndex="7" Type="VIP" />
-      <Seat Price="0" Name="E7" RowIndex="4" ColumnIndex="8" Type="VIP" />
-      <Seat Price="0" Name="E8" RowIndex="4" ColumnIndex="9" Type="VIP" />
-      <Seat Price="0" Name="E9" RowIndex="4" ColumnIndex="11" Type="VIP" />
-      <Seat Price="0" Name="E10" RowIndex="4" ColumnIndex="12" Type="VIP" />
-      <Seat Price="0" Name="E11" RowIndex="4" ColumnIndex="13" Type="VIP" />
-      <Seat Price="0" Name="E12" RowIndex="4" ColumnIndex="14" Type="VIP" />
-      <Seat Price="0" Name="F1" RowIndex="5" ColumnIndex="0" Type="Standard" />
-      <Seat Price="0" Name="F2" RowIndex="5" ColumnIndex="1" Type="Standard" />
-      <Seat Price="0" Name="F3" RowIndex="5" ColumnIndex="3" Type="VIP" />
-      <Seat Price="0" Name="F4" RowIndex="5" ColumnIndex="4" Type="VIP" />
-      <Seat Price="0" Name="F5" RowIndex="5" ColumnIndex="6" Type="VIP" />
-      <Seat Price="0" Name="F6" RowIndex="5" ColumnIndex="7" Type="VIP" />
-      <Seat Price="0" Name="F7" RowIndex="5" ColumnIndex="8" Type="VIP" />
-      <Seat Price="0" Name="F8" RowIndex="5" ColumnIndex="9" Type="VIP" />
-      <Seat Price="0" Name="F9" RowIndex="5" ColumnIndex="11" Type="VIP" />
-      <Seat Price="0" Name="F10" RowIndex="5" ColumnIndex="12" Type="VIP" />
-      <Seat Price="0" Name="F11" RowIndex="5" ColumnIndex="13" Type="VIP" />
-      <Seat Price="0" Name="F12" RowIndex="5" ColumnIndex="14" Type="VIP" />
-      <Seat Price="0" Name="G1" RowIndex="6" ColumnIndex="0" Type="Standard" />
-      <Seat Price="0" Name="G2" RowIndex="6" ColumnIndex="1" Type="Standard" />
-      <Seat Price="0" Name="G3" RowIndex="6" ColumnIndex="3" Type="VIP" />
-      <Seat Price="0" Name="G4" RowIndex="6" ColumnIndex="4" Type="VIP" />
-      <Seat Price="0" Name="G5" RowIndex="6" ColumnIndex="6" Type="VIP" />
-      <Seat Price="0" Name="G6" RowIndex="6" ColumnIndex="7" Type="VIP" />
-      <Seat Price="0" Name="G7" RowIndex="6" ColumnIndex="8" Type="VIP" />
-      <Seat Price="0" Name="G8" RowIndex="6" ColumnIndex="9" Type="VIP" />
-      <Seat Price="0" Name="G9" RowIndex="6" ColumnIndex="11" Type="VIP" />
-      <Seat Price="0" Name="G10" RowIndex="6" ColumnIndex="12" Type="VIP" />
-      <Seat Price="0" Name="G11" RowIndex="6" ColumnIndex="13" Type="VIP" />
-      <Seat Price="0" Name="G12" RowIndex="6" ColumnIndex="14" Type="VIP" />
-      <Seat Price="0" Name="H1" RowIndex="7" ColumnIndex="0" Type="VIP" />
-      <Seat Price="0" Name="H2" RowIndex="7" ColumnIndex="1" Type="VIP" />
-      <Seat Price="0" Name="H3" RowIndex="7" ColumnIndex="3" Type="VIP" />
-      <Seat Price="0" Name="H4" RowIndex="7" ColumnIndex="4" Type="VIP" />
-      <Seat Price="0" Name="H5" RowIndex="7" ColumnIndex="6" Type="VIP" />
-      <Seat Price="0" Name="H6" RowIndex="7" ColumnIndex="7" Type="VIP" />
-      <Seat Price="0" Name="H7" RowIndex="7" ColumnIndex="8" Type="Booked" />
-      <Seat Price="0" Name="H8" RowIndex="7" ColumnIndex="9" Type="Booked" />
-      <Seat Price="0" Name="H9" RowIndex="7" ColumnIndex="11" Type="VIP" />
-      <Seat Price="0" Name="H10" RowIndex="7" ColumnIndex="12" Type="VIP" />
-      <Seat Price="0" Name="H11" RowIndex="7" ColumnIndex="13" Type="VIP" />
-      <Seat Price="0" Name="H12" RowIndex="7" ColumnIndex="14" Type="VIP" />
-      <Seat Price="0" Name="H13" RowIndex="7" ColumnIndex="16" Type="Standard" />
-      <Seat Price="0" Name="H14" RowIndex="7" ColumnIndex="17" Type="Standard" />
-      <Seat Price="0" Name="I1" RowIndex="8" ColumnIndex="0" Type="Standard" />
-      <Seat Price="0" Name="I2" RowIndex="8" ColumnIndex="1" Type="Standard" />
-      <Seat Price="0" Name="I3" RowIndex="8" ColumnIndex="3" Type="Standard" />
-      <Seat Price="0" Name="I4" RowIndex="8" ColumnIndex="4" Type="Standard" />
-      <Seat Price="0" Name="I5" RowIndex="8" ColumnIndex="6" Type="Standard" />
-      <Seat Price="0" Name="I6" RowIndex="8" ColumnIndex="7" Type="Standard" />
-      <Seat Price="0" Name="I7" RowIndex="8" ColumnIndex="8" Type="Standard" />
-      <Seat Price="0" Name="I8" RowIndex="8" ColumnIndex="9" Type="Standard" />
-      <Seat Price="0" Name="I9" RowIndex="8" ColumnIndex="11" Type="Standard" />
-      <Seat Price="0" Name="I10" RowIndex="8" ColumnIndex="12" Type="Standard" />
-      <Seat Price="0" Name="I11" RowIndex="8" ColumnIndex="13" Type="Standard" />
-      <Seat Price="0" Name="I12" RowIndex="8" ColumnIndex="14" Type="Standard" />
-      <Seat Price="0" Name="I13" RowIndex="8" ColumnIndex="16" Type="Standard" />
-      <Seat Price="0" Name="I14" RowIndex="8" ColumnIndex="17" Type="Standard" />
+      <Seat Id="A1" Price="10000" RowIndex="0" ColumnIndex="0" Type="Standard" />
+      <Seat Id="A2" Price="10000" RowIndex="0" ColumnIndex="1" Type="Standard" />
+      <Seat Id="A3" Price="10000" RowIndex="0" ColumnIndex="3" Type="Standard" />
+      <Seat Id="A4" Price="10000" RowIndex="0" ColumnIndex="4" Type="Standard" />
+      <Seat Id="A5" Price="10000" RowIndex="0" ColumnIndex="6" Type="Standard" />
+      <Seat Id="A6" Price="10000" RowIndex="0" ColumnIndex="7" Type="Standard" />
+      <Seat Id="A7" Price="10000" RowIndex="0" ColumnIndex="8" Type="Standard" />
+      <Seat Id="A8" Price="10000" RowIndex="0" ColumnIndex="9" Type="Standard" />
+      <Seat Id="A9" Price="10000" RowIndex="0" ColumnIndex="11" Type="Standard" />
+      <Seat Id="A10" Price="10000" RowIndex="0" ColumnIndex="12" Type="Standard" />
+      <Seat Id="A11" Price="10000" RowIndex="0" ColumnIndex="13" Type="Standard" />
+      <Seat Id="B1" Price="10000" RowIndex="1" ColumnIndex="0" Type="Standard" />
+      <Seat Id="B2" Price="10000" RowIndex="1" ColumnIndex="1" Type="Standard" />
+      <Seat Id="B3" Price="10000" RowIndex="1" ColumnIndex="3" Type="Standard" />
+      <Seat Id="B4" Price="10000" RowIndex="1" ColumnIndex="4" Type="Standard" />
+      <Seat Id="B5" Price="10000" RowIndex="1" ColumnIndex="6" Type="Standard" />
+      <Seat Id="B6" Price="10000" RowIndex="1" ColumnIndex="7" Type="Standard" />
+      <Seat Id="B7" Price="10000" RowIndex="1" ColumnIndex="8" Type="Standard" />
+      <Seat Id="B8" Price="10000" RowIndex="1" ColumnIndex="9" Type="Standard" />
+      <Seat Id="B9" Price="10000" RowIndex="1" ColumnIndex="11" Type="Standard" />
+      <Seat Id="B10" Price="10000" RowIndex="1" ColumnIndex="12" Type="Standard" />
+      <Seat Id="B11" Price="10000" RowIndex="1" ColumnIndex="13" Type="Standard" />
+      <Seat Id="B12" Price="10000" RowIndex="1" ColumnIndex="14" Type="Standard" />
+      <Seat Id="C1" Price="10000" RowIndex="2" ColumnIndex="0" Type="Standard" />
+      <Seat Id="C2" Price="10000" RowIndex="2" ColumnIndex="1" Type="Standard" />
+      <Seat Id="C3" Price="10000" RowIndex="2" ColumnIndex="3" Type="Standard" />
+      <Seat Id="C4" Price="10000" RowIndex="2" ColumnIndex="4" Type="Standard" />
+      <Seat Id="C5" Price="10000" RowIndex="2" ColumnIndex="6" Type="Standard" />
+      <Seat Id="C6" Price="10000" RowIndex="2" ColumnIndex="7" Type="Standard" />
+      <Seat Id="C7" Price="10000" RowIndex="2" ColumnIndex="8" Type="Standard" />
+      <Seat Id="C8" Price="10000" RowIndex="2" ColumnIndex="9" Type="Standard" />
+      <Seat Id="C9" Price="10000" RowIndex="2" ColumnIndex="11" Type="Standard" />
+      <Seat Id="C10" Price="10000" RowIndex="2" ColumnIndex="12" Type="Standard" />
+      <Seat Id="C11" Price="10000" RowIndex="2" ColumnIndex="13" Type="Standard" />
+      <Seat Id="C12" Price="10000" RowIndex="2" ColumnIndex="14" Type="Standard" />
+      <Seat Id="D1" Price="10000" RowIndex="3" ColumnIndex="0" Type="Standard" />
+      <Seat Id="D2" Price="10000" RowIndex="3" ColumnIndex="1" Type="Standard" />
+      <Seat Id="D3" Price="20000" RowIndex="3" ColumnIndex="3" Type="VIP" />
+      <Seat Id="D4" Price="20000" RowIndex="3" ColumnIndex="4" Type="VIP" />
+      <Seat Id="D5" Price="20000" RowIndex="3" ColumnIndex="6" Type="VIP" />
+      <Seat Id="D6" Price="20000" RowIndex="3" ColumnIndex="7" Type="VIP" />
+      <Seat Id="D7" Price="20000" RowIndex="3" ColumnIndex="8" Type="VIP" />
+      <Seat Id="D8" Price="20000" RowIndex="3" ColumnIndex="9" Type="VIP" />
+      <Seat Id="D9" Price="20000" RowIndex="3" ColumnIndex="11" Type="VIP" />
+      <Seat Id="D10" Price="20000" RowIndex="3" ColumnIndex="12" Type="VIP" />
+      <Seat Id="D11" Price="20000" RowIndex="3" ColumnIndex="13" Type="VIP" />
+      <Seat Id="D12" Price="20000" RowIndex="3" ColumnIndex="14" Type="VIP" />
+      <Seat Id="E1" Price="10000" RowIndex="4" ColumnIndex="0" Type="Standard" />
+      <Seat Id="E2" Price="10000" RowIndex="4" ColumnIndex="1" Type="Standard" />
+      <Seat Id="E3" Price="20000" RowIndex="4" ColumnIndex="3" Type="VIP" />
+      <Seat Id="E4" Price="20000" RowIndex="4" ColumnIndex="4" Type="VIP" />
+      <Seat Id="E5" Price="20000" RowIndex="4" ColumnIndex="6" Type="VIP" />
+      <Seat Id="E6" Price="20000" RowIndex="4" ColumnIndex="7" Type="VIP" />
+      <Seat Id="E7" Price="20000" RowIndex="4" ColumnIndex="8" Type="VIP" />
+      <Seat Id="E8" Price="20000" RowIndex="4" ColumnIndex="9" Type="VIP" />
+      <Seat Id="E9" Price="20000" RowIndex="4" ColumnIndex="11" Type="VIP" />
+      <Seat Id="E10" Price="20000" RowIndex="4" ColumnIndex="12" Type="VIP" />
+      <Seat Id="E11" Price="20000" RowIndex="4" ColumnIndex="13" Type="VIP" />
+      <Seat Id="E12" Price="20000" RowIndex="4" ColumnIndex="14" Type="VIP" />
+      <Seat Id="F1" Price="10000" RowIndex="5" ColumnIndex="0" Type="Standard" />
+      <Seat Id="F2" Price="10000" RowIndex="5" ColumnIndex="1" Type="Standard" />
+      <Seat Id="F3" Price="20000" RowIndex="5" ColumnIndex="3" Type="VIP" />
+      <Seat Id="F4" Price="20000" RowIndex="5" ColumnIndex="4" Type="VIP" />
+      <Seat Id="F5" Price="20000" RowIndex="5" ColumnIndex="6" Type="VIP" />
+      <Seat Id="F6" Price="20000" RowIndex="5" ColumnIndex="7" Type="VIP" />
+      <Seat Id="F7" Price="20000" RowIndex="5" ColumnIndex="8" Type="VIP" />
+      <Seat Id="F8" Price="20000" RowIndex="5" ColumnIndex="9" Type="VIP" />
+      <Seat Id="F9" Price="20000" RowIndex="5" ColumnIndex="11" Type="VIP" />
+      <Seat Id="F10" Price="20000" RowIndex="5" ColumnIndex="12" Type="VIP" />
+      <Seat Id="F11" Price="20000" RowIndex="5" ColumnIndex="13" Type="VIP" />
+      <Seat Id="F12" Price="20000" RowIndex="5" ColumnIndex="14" Type="VIP" />
+      <Seat Id="G1" Price="10000" RowIndex="6" ColumnIndex="0" Type="Standard" />
+      <Seat Id="G2" Price="10000" RowIndex="6" ColumnIndex="1" Type="Standard" />
+      <Seat Id="G3" Price="20000" RowIndex="6" ColumnIndex="3" Type="VIP" />
+      <Seat Id="G4" Price="20000" RowIndex="6" ColumnIndex="4" Type="VIP" />
+      <Seat Id="G5" Price="20000" RowIndex="6" ColumnIndex="6" Type="VIP" />
+      <Seat Id="G6" Price="20000" RowIndex="6" ColumnIndex="7" Type="VIP" />
+      <Seat Id="G7" Price="20000" RowIndex="6" ColumnIndex="8" Type="VIP" />
+      <Seat Id="G8" Price="20000" RowIndex="6" ColumnIndex="9" Type="VIP" />
+      <Seat Id="G9" Price="20000" RowIndex="6" ColumnIndex="11" Type="VIP" />
+      <Seat Id="G10" Price="20000" RowIndex="6" ColumnIndex="12" Type="VIP" />
+      <Seat Id="G11" Price="20000" RowIndex="6" ColumnIndex="13" Type="VIP" />
+      <Seat Id="G12" Price="20000" RowIndex="6" ColumnIndex="14" Type="VIP" />
+      <Seat Id="H1" Price="20000" RowIndex="7" ColumnIndex="0" Type="VIP" />
+      <Seat Id="H2" Price="20000" RowIndex="7" ColumnIndex="1" Type="VIP" />
+      <Seat Id="H3" Price="20000" RowIndex="7" ColumnIndex="3" Type="VIP" />
+      <Seat Id="H4" Price="20000" RowIndex="7" ColumnIndex="4" Type="VIP" />
+      <Seat Id="H5" Price="20000" RowIndex="7" ColumnIndex="6" Type="VIP" />
+      <Seat Id="H6" Price="20000" RowIndex="7" ColumnIndex="7" Type="VIP" />
+      <Seat Id="H7" Price="20000" RowIndex="7" ColumnIndex="8" Type="Booked" />
+      <Seat Id="H8" Price="20000" RowIndex="7" ColumnIndex="9" Type="Booked" />
+      <Seat Id="H9" Price="20000" RowIndex="7" ColumnIndex="11" Type="VIP" />
+      <Seat Id="H10" Price="20000" RowIndex="7" ColumnIndex="12" Type="VIP" />
+      <Seat Id="H11" Price="20000" RowIndex="7" ColumnIndex="13" Type="VIP" />
+      <Seat Id="H12" Price="20000" RowIndex="7" ColumnIndex="14" Type="VIP" />
+      <Seat Id="H13" Price="10000" RowIndex="7" ColumnIndex="16" Type="Standard" />
+      <Seat Id="H14" Price="10000" RowIndex="7" ColumnIndex="17" Type="Standard" />
+      <Seat Id="I1" Price="10000" RowIndex="8" ColumnIndex="0" Type="Standard" />
+      <Seat Id="I2" Price="10000" RowIndex="8" ColumnIndex="1" Type="Standard" />
+      <Seat Id="I3" Price="10000" RowIndex="8" ColumnIndex="3" Type="Standard" />
+      <Seat Id="I4" Price="10000" RowIndex="8" ColumnIndex="4" Type="Standard" />
+      <Seat Id="I5" Price="10000" RowIndex="8" ColumnIndex="6" Type="Standard" />
+      <Seat Id="I6" Price="10000" RowIndex="8" ColumnIndex="7" Type="Standard" />
+      <Seat Id="I7" Price="10000" RowIndex="8" ColumnIndex="8" Type="Standard" />
+      <Seat Id="I8" Price="10000" RowIndex="8" ColumnIndex="9" Type="Standard" />
+      <Seat Id="I9" Price="10000" RowIndex="8" ColumnIndex="11" Type="Standard" />
+      <Seat Id="I10" Price="10000" RowIndex="8" ColumnIndex="12" Type="Standard" />
+      <Seat Id="I11" Price="10000" RowIndex="8" ColumnIndex="13" Type="Standard" />
+      <Seat Id="I12" Price="10000" RowIndex="8" ColumnIndex="14" Type="Standard" />
+      <Seat Id="I13" Price="10000" RowIndex="8" ColumnIndex="16" Type="Standard" />
+      <Seat Id="I14" Price="10000" RowIndex="8" ColumnIndex="17" Type="Standard" />
     </Seats>
   </Cinema>
   <Cinema Id="S2" Name="Cinema S2" Type="Standard" PriceCenter="60000" DecreasePrice="10000" Size="4 5">
     <Seats>
-      <Seat Id="S1A" IsBooked="0" />
-      <Seat Id="S2A" IsBooked="0" />
-      <Seat Id="S3A" IsBooked="0" />
-      <Seat Id="S4A" IsBooked="0" />
-      <Seat Id="S5A" IsBooked="0" />
-      <Seat Id="S1B" IsBooked="0" />
-      <Seat Id="S2B" IsBooked="0" />
-      <Seat Id="S3B" IsBooked="0" />
-      <Seat Id="S4B" IsBooked="0" />
-      <Seat Id="S5B" IsBooked="0" />
-      <Seat Id="S1C" IsBooked="0" />
-      <Seat Id="S2C" IsBooked="0" />
-      <Seat Id="S3C" IsBooked="0" />
-      <Seat Id="S4C" IsBooked="0" />
-      <Seat Id="S5C" IsBooked="0" />
-      <Seat Id="S1D" IsBooked="0" />
-      <Seat Id="S2D" IsBooked="0" />
-      <Seat Id="S3D" IsBooked="0" />
-      <Seat Id="S4D" IsBooked="0" />
-      <Seat Id="S5D" IsBooked="0" />
-      <Seat Id="S1E" IsBooked="0" />
-      <Seat Id="S2E" IsBooked="0" />
-      <Seat Id="S3E" IsBooked="0" />
-      <Seat Id="S4E" IsBooked="0" />
-      <Seat Id="S5E" IsBooked="0" />
+      <Seat Id="A1" Price="10000" RowIndex="0" ColumnIndex="0" Type="Standard" />
+      <Seat Id="A2" Price="10000" RowIndex="0" ColumnIndex="1" Type="Standard" />
+      <Seat Id="A3" Price="10000" RowIndex="0" ColumnIndex="3" Type="Standard" />
+      <Seat Id="A4" Price="10000" RowIndex="0" ColumnIndex="4" Type="Standard" />
+      <Seat Id="A5" Price="10000" RowIndex="0" ColumnIndex="6" Type="Standard" />
+      <Seat Id="A6" Price="10000" RowIndex="0" ColumnIndex="7" Type="Standard" />
+      <Seat Id="A7" Price="10000" RowIndex="0" ColumnIndex="8" Type="Standard" />
+      <Seat Id="A8" Price="10000" RowIndex="0" ColumnIndex="9" Type="Standard" />
+      <Seat Id="A9" Price="10000" RowIndex="0" ColumnIndex="11" Type="Standard" />
+      <Seat Id="A10" Price="10000" RowIndex="0" ColumnIndex="12" Type="Standard" />
+      <Seat Id="A11" Price="10000" RowIndex="0" ColumnIndex="13" Type="Standard" />
+      <Seat Id="B1" Price="10000" RowIndex="1" ColumnIndex="0" Type="Standard" />
+      <Seat Id="B2" Price="10000" RowIndex="1" ColumnIndex="1" Type="Standard" />
+      <Seat Id="B3" Price="10000" RowIndex="1" ColumnIndex="3" Type="Standard" />
+      <Seat Id="B4" Price="10000" RowIndex="1" ColumnIndex="4" Type="Standard" />
+      <Seat Id="B5" Price="10000" RowIndex="1" ColumnIndex="6" Type="Standard" />
+      <Seat Id="B6" Price="10000" RowIndex="1" ColumnIndex="7" Type="Standard" />
+      <Seat Id="B7" Price="10000" RowIndex="1" ColumnIndex="8" Type="Standard" />
+      <Seat Id="B8" Price="10000" RowIndex="1" ColumnIndex="9" Type="Standard" />
+      <Seat Id="B9" Price="10000" RowIndex="1" ColumnIndex="11" Type="Standard" />
+      <Seat Id="B10" Price="10000" RowIndex="1" ColumnIndex="12" Type="Standard" />
+      <Seat Id="B11" Price="10000" RowIndex="1" ColumnIndex="13" Type="Standard" />
+      <Seat Id="B12" Price="10000" RowIndex="1" ColumnIndex="14" Type="Standard" />
+      <Seat Id="C1" Price="10000" RowIndex="2" ColumnIndex="0" Type="Standard" />
+      <Seat Id="C2" Price="10000" RowIndex="2" ColumnIndex="1" Type="Standard" />
+      <Seat Id="C3" Price="10000" RowIndex="2" ColumnIndex="3" Type="Standard" />
+      <Seat Id="C4" Price="10000" RowIndex="2" ColumnIndex="4" Type="Standard" />
+      <Seat Id="C5" Price="10000" RowIndex="2" ColumnIndex="6" Type="Standard" />
+      <Seat Id="C6" Price="10000" RowIndex="2" ColumnIndex="7" Type="Standard" />
+      <Seat Id="C7" Price="10000" RowIndex="2" ColumnIndex="8" Type="Standard" />
+      <Seat Id="C8" Price="10000" RowIndex="2" ColumnIndex="9" Type="Standard" />
+      <Seat Id="C9" Price="10000" RowIndex="2" ColumnIndex="11" Type="Standard" />
+      <Seat Id="C10" Price="10000" RowIndex="2" ColumnIndex="12" Type="Standard" />
+      <Seat Id="C11" Price="10000" RowIndex="2" ColumnIndex="13" Type="Standard" />
+      <Seat Id="C12" Price="10000" RowIndex="2" ColumnIndex="14" Type="Standard" />
+      <Seat Id="D1" Price="10000" RowIndex="3" ColumnIndex="0" Type="Standard" />
+      <Seat Id="D2" Price="10000" RowIndex="3" ColumnIndex="1" Type="Standard" />
+      <Seat Id="D3" Price="20000" RowIndex="3" ColumnIndex="3" Type="VIP" />
+      <Seat Id="D4" Price="20000" RowIndex="3" ColumnIndex="4" Type="VIP" />
+      <Seat Id="D5" Price="20000" RowIndex="3" ColumnIndex="6" Type="VIP" />
+      <Seat Id="D6" Price="20000" RowIndex="3" ColumnIndex="7" Type="VIP" />
+      <Seat Id="D7" Price="20000" RowIndex="3" ColumnIndex="8" Type="VIP" />
+      <Seat Id="D8" Price="20000" RowIndex="3" ColumnIndex="9" Type="VIP" />
+      <Seat Id="D9" Price="20000" RowIndex="3" ColumnIndex="11" Type="VIP" />
+      <Seat Id="D10" Price="20000" RowIndex="3" ColumnIndex="12" Type="VIP" />
+      <Seat Id="D11" Price="20000" RowIndex="3" ColumnIndex="13" Type="VIP" />
+      <Seat Id="D12" Price="20000" RowIndex="3" ColumnIndex="14" Type="VIP" />
+      <Seat Id="E1" Price="10000" RowIndex="4" ColumnIndex="0" Type="Standard" />
+      <Seat Id="E2" Price="10000" RowIndex="4" ColumnIndex="1" Type="Standard" />
+      <Seat Id="E3" Price="20000" RowIndex="4" ColumnIndex="3" Type="VIP" />
+      <Seat Id="E4" Price="20000" RowIndex="4" ColumnIndex="4" Type="VIP" />
+      <Seat Id="E5" Price="20000" RowIndex="4" ColumnIndex="6" Type="VIP" />
+      <Seat Id="E6" Price="20000" RowIndex="4" ColumnIndex="7" Type="VIP" />
+      <Seat Id="E7" Price="20000" RowIndex="4" ColumnIndex="8" Type="VIP" />
+      <Seat Id="E8" Price="20000" RowIndex="4" ColumnIndex="9" Type="VIP" />
+      <Seat Id="E9" Price="20000" RowIndex="4" ColumnIndex="11" Type="VIP" />
+      <Seat Id="E10" Price="20000" RowIndex="4" ColumnIndex="12" Type="VIP" />
+      <Seat Id="E11" Price="20000" RowIndex="4" ColumnIndex="13" Type="VIP" />
+      <Seat Id="E12" Price="20000" RowIndex="4" ColumnIndex="14" Type="VIP" />
+      <Seat Id="F1" Price="10000" RowIndex="5" ColumnIndex="0" Type="Standard" />
+      <Seat Id="F2" Price="10000" RowIndex="5" ColumnIndex="1" Type="Standard" />
+      <Seat Id="F3" Price="20000" RowIndex="5" ColumnIndex="3" Type="VIP" />
+      <Seat Id="F4" Price="20000" RowIndex="5" ColumnIndex="4" Type="VIP" />
+      <Seat Id="F5" Price="20000" RowIndex="5" ColumnIndex="6" Type="VIP" />
+      <Seat Id="F6" Price="20000" RowIndex="5" ColumnIndex="7" Type="VIP" />
+      <Seat Id="F7" Price="20000" RowIndex="5" ColumnIndex="8" Type="VIP" />
+      <Seat Id="F8" Price="20000" RowIndex="5" ColumnIndex="9" Type="VIP" />
+      <Seat Id="F9" Price="20000" RowIndex="5" ColumnIndex="11" Type="VIP" />
+      <Seat Id="F10" Price="20000" RowIndex="5" ColumnIndex="12" Type="VIP" />
+      <Seat Id="F11" Price="20000" RowIndex="5" ColumnIndex="13" Type="VIP" />
+      <Seat Id="F12" Price="20000" RowIndex="5" ColumnIndex="14" Type="VIP" />
+      <Seat Id="G1" Price="10000" RowIndex="6" ColumnIndex="0" Type="Standard" />
+      <Seat Id="G2" Price="10000" RowIndex="6" ColumnIndex="1" Type="Standard" />
+      <Seat Id="G3" Price="20000" RowIndex="6" ColumnIndex="3" Type="VIP" />
+      <Seat Id="G4" Price="20000" RowIndex="6" ColumnIndex="4" Type="VIP" />
+      <Seat Id="G5" Price="20000" RowIndex="6" ColumnIndex="6" Type="VIP" />
+      <Seat Id="G6" Price="20000" RowIndex="6" ColumnIndex="7" Type="VIP" />
+      <Seat Id="G7" Price="20000" RowIndex="6" ColumnIndex="8" Type="VIP" />
+      <Seat Id="G8" Price="20000" RowIndex="6" ColumnIndex="9" Type="VIP" />
+      <Seat Id="G9" Price="20000" RowIndex="6" ColumnIndex="11" Type="VIP" />
+      <Seat Id="G10" Price="20000" RowIndex="6" ColumnIndex="12" Type="VIP" />
+      <Seat Id="G11" Price="20000" RowIndex="6" ColumnIndex="13" Type="VIP" />
+      <Seat Id="G12" Price="20000" RowIndex="6" ColumnIndex="14" Type="VIP" />
+      <Seat Id="H1" Price="20000" RowIndex="7" ColumnIndex="0" Type="VIP" />
+      <Seat Id="H2" Price="20000" RowIndex="7" ColumnIndex="1" Type="VIP" />
+      <Seat Id="H3" Price="20000" RowIndex="7" ColumnIndex="3" Type="VIP" />
+      <Seat Id="H4" Price="20000" RowIndex="7" ColumnIndex="4" Type="VIP" />
+      <Seat Id="H5" Price="20000" RowIndex="7" ColumnIndex="6" Type="VIP" />
+      <Seat Id="H6" Price="20000" RowIndex="7" ColumnIndex="7" Type="VIP" />
+      <Seat Id="H7" Price="20000" RowIndex="7" ColumnIndex="8" Type="Booked" />
+      <Seat Id="H8" Price="20000" RowIndex="7" ColumnIndex="9" Type="Booked" />
+      <Seat Id="H9" Price="20000" RowIndex="7" ColumnIndex="11" Type="VIP" />
+      <Seat Id="H10" Price="20000" RowIndex="7" ColumnIndex="12" Type="VIP" />
+      <Seat Id="H11" Price="20000" RowIndex="7" ColumnIndex="13" Type="VIP" />
+      <Seat Id="H12" Price="20000" RowIndex="7" ColumnIndex="14" Type="VIP" />
+      <Seat Id="H13" Price="10000" RowIndex="7" ColumnIndex="16" Type="Standard" />
+      <Seat Id="H14" Price="10000" RowIndex="7" ColumnIndex="17" Type="Standard" />
+      <Seat Id="I1" Price="10000" RowIndex="8" ColumnIndex="0" Type="Standard" />
+      <Seat Id="I2" Price="10000" RowIndex="8" ColumnIndex="1" Type="Standard" />
+      <Seat Id="I3" Price="10000" RowIndex="8" ColumnIndex="3" Type="Standard" />
+      <Seat Id="I4" Price="10000" RowIndex="8" ColumnIndex="4" Type="Standard" />
+      <Seat Id="I5" Price="10000" RowIndex="8" ColumnIndex="6" Type="Standard" />
+      <Seat Id="I6" Price="10000" RowIndex="8" ColumnIndex="7" Type="Standard" />
+      <Seat Id="I7" Price="10000" RowIndex="8" ColumnIndex="8" Type="Standard" />
+      <Seat Id="I8" Price="10000" RowIndex="8" ColumnIndex="9" Type="Standard" />
+      <Seat Id="I9" Price="10000" RowIndex="8" ColumnIndex="11" Type="Standard" />
+      <Seat Id="I10" Price="10000" RowIndex="8" ColumnIndex="12" Type="Standard" />
+      <Seat Id="I11" Price="10000" RowIndex="8" ColumnIndex="13" Type="Standard" />
+      <Seat Id="I12" Price="10000" RowIndex="8" ColumnIndex="14" Type="Standard" />
+      <Seat Id="I13" Price="10000" RowIndex="8" ColumnIndex="16" Type="Standard" />
+      <Seat Id="I14" Price="10000" RowIndex="8" ColumnIndex="17" Type="Standard" />
     </Seats>
   </Cinema>
   <Cinema Id="V1" Name="Cinama V1" Type="VIP" PriceCenter="100000" DecreasePrice="5000" Size="4 5">
-    <Seats>
-      <Seat Id="V1A" IsBooked="0" />
-      <Seat Id="V2A" IsBooked="0" />
-      <Seat Id="V3A" IsBooked="0" />
-      <Seat Id="V4A" IsBooked="0" />
-      <Seat Id="V5A" IsBooked="0" />
-      <Seat Id="V1B" IsBooked="0" />
-      <Seat Id="V2B" IsBooked="0" />
-      <Seat Id="V3B" IsBooked="0" />
-      <Seat Id="V4B" IsBooked="0" />
-      <Seat Id="V5B" IsBooked="0" />
-      <Seat Id="V1C" IsBooked="0" />
-      <Seat Id="V2C" IsBooked="0" />
-      <Seat Id="V3C" IsBooked="0" />
-      <Seat Id="V4C" IsBooked="0" />
-      <Seat Id="V5C" IsBooked="0" />
-      <Seat Id="V1D" IsBooked="0" />
-      <Seat Id="V2D" IsBooked="0" />
-      <Seat Id="V3D" IsBooked="0" />
-      <Seat Id="V4D" IsBooked="0" />
-      <Seat Id="V5D" IsBooked="0" />
-      <Seat Id="V1E" IsBooked="0" />
-      <Seat Id="V2E" IsBooked="0" />
-      <Seat Id="V3E" IsBooked="0" />
-      <Seat Id="V4E" IsBooked="0" />
-      <Seat Id="V5E" IsBooked="0" />
-    </Seats>
   </Cinema>
   <Cinema Id="V2" Name="Cinama V2" Type="VIP" PriceCenter="100000" DecreasePrice="5000" Size="4 5">
-    <Seats>
-      <Seat Id="V1A" IsBooked="0" />
-      <Seat Id="V2A" IsBooked="0" />
-      <Seat Id="V3A" IsBooked="0" />
-      <Seat Id="V4A" IsBooked="0" />
-      <Seat Id="V5A" IsBooked="0" />
-      <Seat Id="V1B" IsBooked="0" />
-      <Seat Id="V2B" IsBooked="0" />
-      <Seat Id="V3B" IsBooked="0" />
-      <Seat Id="V4B" IsBooked="0" />
-      <Seat Id="V5B" IsBooked="0" />
-      <Seat Id="V1C" IsBooked="0" />
-      <Seat Id="V2C" IsBooked="0" />
-      <Seat Id="V3C" IsBooked="0" />
-      <Seat Id="V4C" IsBooked="0" />
-      <Seat Id="V5C" IsBooked="0" />
-      <Seat Id="V1D" IsBooked="0" />
-      <Seat Id="V2D" IsBooked="0" />
-      <Seat Id="V3D" IsBooked="0" />
-      <Seat Id="V4D" IsBooked="0" />
-      <Seat Id="V5D" IsBooked="0" />
-      <Seat Id="V1E" IsBooked="0" />
-      <Seat Id="V2E" IsBooked="0" />
-      <Seat Id="V3E" IsBooked="0" />
-      <Seat Id="V4E" IsBooked="0" />
-      <Seat Id="V5E" IsBooked="0" />
-    </Seats>
   </Cinema>
 </Cinemas>

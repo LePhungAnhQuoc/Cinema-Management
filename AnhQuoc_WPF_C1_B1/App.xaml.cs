@@ -16,6 +16,16 @@ namespace AnhQuoc_WPF_C1_B1
         // Public static property holding the single instance
         public static UnitOfWork UnitOfWork { get; private set; }
 
+        public App()
+        {
+            // Force WPF to use the system's current culture settings for bindings
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    System.Windows.Markup.XmlLanguage.GetLanguage(
+                        System.Globalization.CultureInfo.CurrentCulture.IetfLanguageTag)));
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

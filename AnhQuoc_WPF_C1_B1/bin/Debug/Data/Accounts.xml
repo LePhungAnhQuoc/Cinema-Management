@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Accounts>
-  <Account Username="Nhat Minh" Password="$argon2id$m=65536,t=4,p=2$UiYI9r4KjslRZS95iqrx+w==$d6wg7Utvmc4Hs/dKL/2CzTuDxmykkf+0jf1xliMeRXk=" Email="nhatminh@gmail.com" Phone="123-456-7890" Address="123 Main St" Role="Admin" Status="1" Image="portrait-2.jpg" />
-  <Account Username="hungvuong" Password="$argon2id$m=65536,t=4,p=2$z4heCblLWOYXjZWqV+hUww==$DIibOUDGocUHDvkoXLdv9NobvR62cfz9Nl4nA37kEfk=" Role="Cashier" Status="1" Image="portrait-4.jpg" Email="hung@gmail.com" Phone="0922111222" Address="Ly Tu Trong" />
+  <Account Id="00000000-0000-0000-0000-000000000000" FullName="Nguyễn Nhật Minh" Image="portrait-1.jpg" Username="NhatMinh" PasswordHash="$argon2id$m=65536,t=4,p=2$g6vLHBXXdabzF4NhKZQURQ==$iTo1tkk8NCFAVrdYrcoh1VNXKE5WwKvsbTTX0Y24SlU=" Role="Admin" Email="nhatminh@gmail.com" Phone="0912944222" Address="Lư Giang Street" Status="1" CreatedAt="14/07/2026 3:06:13 CH" UpdatedAt="14/07/2026 3:06:13 CH" />
+  <Account Id="00000000-0000-0000-0000-000000000001" FullName="Bảo Thư" Image="portrait-2.jpg" Username="BaoThu" PasswordHash="$argon2id$m=65536,t=4,p=2$g6vLHBXXdabzF4NhKZQURQ==$iTo1tkk8NCFAVrdYrcoh1VNXKE5WwKvsbTTX0Y24SlU=" Role="Cashier" Email="baothu@gmail.com" Phone="0912944222" Address="Lư Giang Street" Status="1" CreatedAt="14/07/2026 3:06:13 CH" UpdatedAt="14/07/2026 3:06:13 CH" />
 </Accounts>

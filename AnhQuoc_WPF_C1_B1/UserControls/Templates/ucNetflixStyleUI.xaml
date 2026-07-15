@@ -1,0 +1,195 @@
+﻿<UserControl x:Class="AnhQuoc_WPF_C1_B1.UserControls.Templates.ucNetflixStyleUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="NetflixScrollButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="Opacity" Value="0.0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Gray"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="6" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#E6141414"/>
+                                <Setter Property="BorderBrush" Value="#4CA3FF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF000000"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95" CenterX="20" CenterY="40"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Grid.Row="1"
+          Margin="30,20,30,20">
+        <ScrollViewer Name="MoviesScrollViewer"
+                      HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                      PreviewMouseWheel="MoviesScrollViewer_PreviewMouseWheel">
+            <!-- Using a StackPanel to align items horizontally -->
+            <ItemsControl ItemsSource="{Binding GetMovies, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="200" Height="260" Margin="0,0,0,0">
+                            <Grid x:Name="CardContainer" Background="Transparent" RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                </Grid.RenderTransform>
+
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Panel.ZIndex" Value="999"/>
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                     To="1.2" Duration="0:0:0.2" DecelerationRatio="0.2"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                     To="1.2" Duration="0:0:0.2" DecelerationRatio="0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                     To="1" Duration="0:0:0.15" AccelerationRatio="0.2"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                     To="1" Duration="0:0:0.15" AccelerationRatio="0.2"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+
+                                <Grid Width="150" HorizontalAlignment="Right">
+                                    <Border CornerRadius="8" ClipToBounds="True"
+                                            MouseDown="MoviePoster_MouseDown"
+                                            Tag="{Binding Name}">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding UrlImage, Converter={StaticResource ImageConverter}, ConverterParameter='Movies'}" Stretch="UniformToFill" />
+                                        </Border.Background>
+                                    </Border>
+
+                                    <Border x:Name="GlowBorder" BorderBrush="#4CA3FF" BorderThickness="1.5" CornerRadius="8" Opacity="0">
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="18" Color="#4CA3FF" Opacity="0.7" ShadowDepth="0"/>
+                                        </Border.Effect>
+
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=CardContainer}" Value="True">
+                                                        <DataTrigger.EnterActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </DataTrigger.EnterActions>
+                                                        <DataTrigger.ExitActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.15"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </DataTrigger.ExitActions>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+
+                                    <Grid HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-20,0,0,-25">
+
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}, Converter={StaticResource IndexConverter}}" 
+               Foreground="#141414" FontSize="110" FontWeight="Black">
+                                            <TextBlock.Effect>
+                                                <DropShadowEffect BlurRadius="0" Color="White" ShadowDepth="2" Direction="135" Opacity="1"/>
+                                            </TextBlock.Effect>
+                                        </TextBlock>
+
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}, Converter={StaticResource IndexConverter}}" 
+               Foreground="#141414" FontSize="110" FontWeight="Black">
+                                            <TextBlock.Effect>
+                                                <DropShadowEffect BlurRadius="0" Color="White" ShadowDepth="2" Direction="45" Opacity="1"/>
+                                            </TextBlock.Effect>
+                                        </TextBlock>
+
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}, Converter={StaticResource IndexConverter}}" 
+               Foreground="#141414" FontSize="110" FontWeight="Black">
+                                            <TextBlock.Effect>
+                                                <DropShadowEffect BlurRadius="0" Color="White" ShadowDepth="2" Direction="225" Opacity="1"/>
+                                            </TextBlock.Effect>
+                                        </TextBlock>
+
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}, Converter={StaticResource IndexConverter}}" 
+               Foreground="#141414" FontSize="110" FontWeight="Black">
+                                            <TextBlock.Effect>
+                                                <DropShadowEffect BlurRadius="0" Color="White" ShadowDepth="2" Direction="315" Opacity="1"/>
+                                            </TextBlock.Effect>
+                                        </TextBlock>
+
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}, Converter={StaticResource IndexConverter}}" 
+               Foreground="#141414" FontSize="110" FontWeight="Black"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Optional Floating Right Navigation Arrow seen on the right edge of image_c3af9b.png -->
+        <Button Style="{StaticResource NetflixScrollButtonStyle}"
+                    HorizontalAlignment="Right"
+                    Click="ScrollRight_Click"
+                    VerticalAlignment="Center" Width="25" Height="65" Margin="0,0,-15,0" Opacity="0.6">
+            <Button.Content>
+                <Path Data="M 2,5 L 7,10 L 2,15" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Button.Content>
+        </Button>
+        <!-- Floating Left Navigation Arrow -->
+        <Button Style="{StaticResource NetflixScrollButtonStyle}"
+                Click="ScrollLeft_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="65" Margin="-15,0,0,0" Opacity="0.6" Canvas.ZIndex="99">
+            <Button.Content>
+                <!-- Data flipped to point to the left: M 7,5 L 2,10 L 7,15 -->
+                <Path Data="M 7,5 L 2,10 L 7,15" Stroke="White" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Button.Content>
+        </Button>
+    </Grid>
+</UserControl>

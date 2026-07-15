@@ -113,7 +113,7 @@
                                      TabIndex="0"
                                      Grid.Column="2"
                                      Style="{StaticResource RoundedTextBox}"
-                                         Text="{Binding GetAccount.Password}"></TextBox>
+                                         Text="{Binding GetAccount.PasswordHash}"></TextBox>
                             </Grid>
                         </Border>
                         <Border BorderThickness="0 1 0 0"

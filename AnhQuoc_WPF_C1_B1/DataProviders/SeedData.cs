@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,36 +18,52 @@ namespace AnhQuoc_WPF_C1_B1
 
         public List<Account> LoadAccounts()
         {
-            List<Account> lstAccount = new List<Account>();
+            List<Account> accounts = new List<Account>();
+            // 3. Open the XML file
             DataProvider.Instance.pathData = Constants.fAccounts;
             DataProvider.Instance.Open();
-            XmlNodeList lstNode = DataProvider.Instance.nodeRoot.ChildNodes;
 
-            foreach (XmlNode node in lstNode)
+            XmlNode root = DataProvider.Instance.nodeRoot;
+
+            if (root != null)
             {
-                Account newAccount = null;
-                try
+                foreach (XmlNode node in root.ChildNodes)
                 {
-                    newAccount = new Account();
+                    if (node.Name != nameof(Account) || node.Attributes == null) continue;
 
-                    newAccount.Image = node.Attributes["Image"].Value;
-                    newAccount.Username = node.Attributes["Username"].Value;
-                    newAccount.Password = node.Attributes["Password"].Value;
-                    newAccount.Email = node.Attributes["Email"].Value;
-                    newAccount.Phone = node.Attributes["Phone"].Value;
-                    newAccount.Address = node.Attributes["Address"].Value;
-                    newAccount.Role = (RoleTypes)Enum.Parse(typeof(RoleTypes), node.Attributes["Role"].Value);
-                    newAccount.Status = Convert.ToInt32(node.Attributes["Status"].Value);
+                    Account account = new Account();
 
+                    // Fill all properties using reflection (matching how you saved it)
+                    PropertyInfo[] properties = typeof(Account).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                    foreach (PropertyInfo property in properties)
+                    {
+                        if (!property.CanWrite) continue;
+
+                        XmlAttribute attr = node.Attributes[property.Name];
+                        if (attr != null)
+                        {
+                            try
+                            {
+                                // Get the appropriate converter for the property's target type
+                                var converter = System.ComponentModel.TypeDescriptor.GetConverter(property.PropertyType);
+
+                                // This converts strings to Guid, Enum, Int, DateTime, etc. automatically
+                                object convertedValue = converter.ConvertFromString(attr.Value);
+
+                                property.SetValue(account, convertedValue);
+                            }
+                            catch (Exception ex)
+                            {
+                                // Useful for debugging if a specific attribute has invalid data format in XML
+                                System.Diagnostics.Debug.WriteLine($"Failed to convert {attr.Value} to {property.PropertyType.Name}: {ex.Message}");
+                            }
+                        }
+                    }
+                    accounts.Add(account);
                 }
-                catch
-                {
-                    Utilities.HandleError();
-                }
-                lstAccount.Add(newAccount);
             }
             DataProvider.Instance.Close();
-            return lstAccount;
+            return accounts;
         }
 
         public List<Cinema> LoadCinemas()

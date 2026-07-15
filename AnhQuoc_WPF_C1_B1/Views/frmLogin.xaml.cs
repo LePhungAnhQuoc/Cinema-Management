@@ -1,6 +1,8 @@
 ﻿using AnhQuoc_WPF_C1_B1.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,20 +13,32 @@ namespace AnhQuoc_WPF_C1_B1
     /// <summary>
     /// Interaction logic for frmLogin.xaml
     /// </summary>
-    public partial class frmLogin : Window
+    public partial class frmLogin : Window, INotifyPropertyChanged
     {
-        public Func<RepositoryBase<MovieSchedule>> getMovieScheduleRepo { get; set; }
-        public Func<RepositoryBase<Movie>> getMovieRepo { get; set; }
-        public Func<RepositoryBase<Genre>> getGenreRepo { get; set; }
-        public Func<RepositoryBase<Rated>> getRatedRepo { get; set; }
-        public Func<RepositoryBase<Order>> getOrderRepo { get; set; }
-        public Func<RepositoryBase<OrderDetail>> getOrderDetailRepo { get; set; }
-        public Func<RepositoryBase<Account>> getAccountRepo { get; set; }
-        public Func<RepositoryBase<Cinema>> getCinemaRepo { get; set; }
-        public Func<RepositoryBase<Customer>> getCustomerRepo { get; set; }
+        #region Properties
+        private Account _Account;
 
+        public Account Account
+        {
+            get { return _Account; }
+            set { 
+                _Account = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
 
         private AccountViewModel AccountVM;
+
+        #region INotifyPropertyChanged Implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
         public frmLogin()
         {
             InitializeComponent();
@@ -33,7 +47,7 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            AccountVM.AccountRepo = getAccountRepo();
+            AccountVM.AccountRepo = App.UnitOfWork.GetRepositoryAccount;
             txtUsername.Focus();
         }
 
@@ -53,11 +67,10 @@ namespace AnhQuoc_WPF_C1_B1
         {
             Account inputedAccount = new Account();
             inputedAccount.Username = txtUsername.Text;
-            inputedAccount.Password = boxPassword.Password;
+            inputedAccount.PasswordHash = boxPassword.Password;
             inputedAccount.Username = inputedAccount.Username.Trim();
-            inputedAccount.Password = inputedAccount.Password.Trim();
+            inputedAccount.PasswordHash = inputedAccount.PasswordHash.Trim();
 
-            // hashing password
             Account findedAccount = AccountVM.Find(inputedAccount, 1);
 
             // Checking account
@@ -69,33 +82,7 @@ namespace AnhQuoc_WPF_C1_B1
             else
             {
                 this.Hide();
-                frmAdmin frmAdmin = new frmAdmin();
-                frmAdmin.getFrmLogin = () => this;
-                frmAdmin.getAccount = () => findedAccount;
-                frmCashier frmCashier = new frmCashier();
-                frmCashier.getFrmLogin = () => this;
-                switch (findedAccount.Role)
-                {
-                    case RoleTypes.Admin:
-                        frmAdmin.getMovieScheduleRepo = getMovieScheduleRepo;
-                        frmAdmin.getMovieRepo = getMovieRepo;
-                        frmAdmin.getGenreRepo = getGenreRepo;
-                        frmAdmin.getRatedRepo = getRatedRepo;
-                        frmAdmin.getOrderRepo = getOrderRepo;
-                        frmAdmin.getOrderDetailRepo = getOrderDetailRepo;
-                        frmAdmin.getCinemaRepo = getCinemaRepo;
-                        frmAdmin.getAccountRepo = getAccountRepo;
-                        frmAdmin.Show();
-                        break;
-                    case RoleTypes.Cashier:
-                        frmCashier.getMovieRepo = getMovieRepo;
-                        frmCashier.getOrderRepo = getOrderRepo;
-                        frmCashier.getCinemaRepo = getCinemaRepo;
-                        frmCashier.getCustomerRepo = getCustomerRepo;
-                        frmCashier.getMovieScheduleRepo = getMovieScheduleRepo;
-                        frmCashier.Show();
-                        break;
-                }
+                Account = findedAccount;
             }
         }
 
@@ -123,6 +110,28 @@ namespace AnhQuoc_WPF_C1_B1
             {
                 boxPassword.Focus();
             }
+        }
+
+        public void RoleNavigation()
+        {
+            switch (Account.Role)
+            {
+                case RoleTypes.Admin:
+                    frmAdmin frmAdmin = new frmAdmin();
+                    frmAdmin.getFrmLogin = () => this;
+                    frmAdmin.getAccount = () => Account;
+                    frmAdmin.getMovieScheduleRepo = () => App.UnitOfWork.GetRepositoryMovieSchedule;
+                    frmAdmin.getMovieRepo = () => App.UnitOfWork.GetRepositoryMovie;
+                    frmAdmin.getGenreRepo = () => App.UnitOfWork.GetRepositoryGenre;
+                    frmAdmin.getRatedRepo = () => App.UnitOfWork.GetRepositoryRated;
+                    frmAdmin.getOrderRepo = () => App.UnitOfWork.GetRepositoryOrder;
+                    frmAdmin.getOrderDetailRepo = () => App.UnitOfWork.GetRepositoryOrderDetail;
+                    frmAdmin.getCinemaRepo = () => App.UnitOfWork.GetRepositoryCinema;
+                    frmAdmin.getAccountRepo = () => App.UnitOfWork.GetRepositoryAccount;
+                    frmAdmin.Show();
+                    break;
+            }
+            SessionManager.Instance.Login(Account);
         }
     }
 }

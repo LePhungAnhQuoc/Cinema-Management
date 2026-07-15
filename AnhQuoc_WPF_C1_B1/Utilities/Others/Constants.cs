@@ -8,6 +8,10 @@ namespace AnhQuoc_WPF_C1_B1
 {
     class Constants
     {
+        // Seat price
+        public static double StandardSeatPrice = 10000;
+        public static double VIPSeatPrice = 20000;
+
         // Main files
         public static string fAccounts = "Data/Accounts.xml";
         public static string fGenres = "Data/Genres.xml";

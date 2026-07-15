@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="AnhQuoc_WPF_C1_B1.UserControls.ucTicketSummary"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls"
+             mc:Ignorable="d" 
+             d:DesignWidth="1200" d:DesignHeight="100">
+
+    <Border Height="90" 
+            Background="White" 
+            CornerRadius="20" 
+            BorderBrush="#FFEFEBE9" 
+            BorderThickness="1" 
+            Padding="20,10"
+            Margin="10">
+
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" 
+                              Color="#000000" 
+                              Opacity="0.06" 
+                              ShadowDepth="4" 
+                              Direction="270"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1.2*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="0,0,15,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,4">
+                    <TextBlock Text="GHẾ CỦA BẠN" FontWeight="Bold" FontSize="13" Foreground="#B71C1C"/>
+                    <TextBlock Text="{Binding SelectedSeats.Count, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat=' · {0}'}" 
+                               FontWeight="Bold" FontSize="13" Foreground="#B71C1C"/>
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" FontSize="12">
+                        <Hyperlink Click="HyperlinkRemoveAll_Click" Foreground="#7D7471" TextDecorations="Underline">Xoá hết</Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" BorderThickness="0">
+                    <ItemsControl ItemsSource="{Binding SelectedSeats, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#FDF1F0" BorderBrush="#F9DEDC" BorderThickness="1" CornerRadius="12" Padding="8,3,5,3" Margin="0,2,6,2">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Ellipse Width="5" Height="5" Fill="#C59B27" Margin="0,0,5,0"/>
+                                        <TextBlock Text="{Binding Id}" Foreground="#7A1C1C" FontWeight="SemiBold" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <Button Width="14" Height="14" Background="#F2B8B5" BorderThickness="0" Cursor="Hand" Click="BtnRemoveSeat_Click">
+                                            <Button.Resources>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                                                                    <TextBlock Text="×" Foreground="#7A1C1C" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-2,0,0"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+
+            <Line Grid.Column="1" 
+                  Y1="0" Y2="1" 
+                  Stroke="#E0D9D7" 
+                  StrokeThickness="1" 
+                  StrokeDashArray="4 4" 
+                  Stretch="Fill" 
+                  Margin="10,4,20,4"/>
+
+            <Grid Grid.Column="2" VerticalAlignment="Center" Margin="0,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="{Binding SelectedSeats.Count, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat='Tạm tính ({0} vé)'}" 
+                           Foreground="#7D7471" FontSize="13"/>
+                <TextBlock Grid.Row="1" Text="{Binding EstimatedPrice, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat='{}{0}đ'}" 
+                           Foreground="#B71C1C" FontSize="26" FontWeight="Bold"/>
+            </Grid>
+
+            <Button Grid.Column="3" Height="50" Background="#C42E3B" BorderThickness="0" Cursor="Hand" VerticalAlignment="Center"
+                    Click="btnNext_Click">
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="12">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#A5222E"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Tiếp tục" Foreground="White" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <TextBlock Text=" →" Foreground="White" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="4,0,0,2"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>

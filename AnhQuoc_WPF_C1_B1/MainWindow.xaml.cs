@@ -1,11 +1,14 @@
-﻿using System;
+﻿using AnhQuoc_WPF_C1_B1.UserControls.Templates;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Windows;
 using System.Windows.Controls;
-using AnhQuoc_WPF_C1_B1.UserControls;
 
 namespace AnhQuoc_WPF_C1_B1
 {
@@ -57,20 +60,12 @@ namespace AnhQuoc_WPF_C1_B1
             MovieScheduleVM.getList(unitOfWork.GetRepositoryMovieSchedule);
             this.Hide();
 
-            frmLogin frmLogin = new frmLogin();
-            frmLogin.getMovieScheduleRepo = () => MovieScheduleVM.MovieScheduleRepo;
-            frmLogin.getMovieRepo = () => MovieVM.MovieRepo;
-            frmLogin.getGenreRepo = () => GenreVM.GenreRepo;
-            frmLogin.getRatedRepo = () => RatedVM.RatedRepo;
-            frmLogin.getOrderRepo = () => OrderVM.OrderRepo;
-            frmLogin.getOrderDetailRepo = () => OrderDetailVM.OrderDetailRepo;
-            frmLogin.getCinemaRepo = () => CinemaVM.CinemaRepo;
-            frmLogin.getAccountRepo = () => AccountVM.AccountRepo;
-            frmLogin.getCustomerRepo = () => CustomerVM.CustomerRepo;
-
-            frmLogin.Show();
+            frmCashier frmCashier = new frmCashier();
+            frmCashier.GetMainWindowForm = () => this;
+            frmCashier.getMovieRepo = () => App.UnitOfWork.GetRepositoryMovie;
+            frmCashier.Show();
         }
-        
+                
         private void Window_Closed(object sender, EventArgs e)
         {
             Environment.Exit(0);
@@ -117,6 +112,16 @@ namespace AnhQuoc_WPF_C1_B1
         public static string FeatureNotDevelop()
         {
             return "This feature is not develop";
+        }
+
+        public static void LogOut(Window form, frmLogin frmLogin)
+        {
+            form.Hide();
+            frmLogin.ClearLogin();
+            frmLogin.txtUsername.Focus();
+            frmLogin.ShowDialog();
+
+            SessionManager.Instance.Logout();
         }
     }
 }

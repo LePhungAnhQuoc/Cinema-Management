@@ -8,14 +8,20 @@
              d:DesignHeight="300" d:DesignWidth="500"
              Loaded="UserControl_Loaded"
              Name="ucContainer">
-    <ListBox Name="lbMovies" 
+    <Border CornerRadius="10"
+            BorderThickness="1"
+            BorderBrush="Black">
+        <ListBox Name="lbMovies" 
              HorizontalContentAlignment="Stretch"
              SelectionChanged="lbMovies_SelectionChanged"
-             ScrollViewer.CanContentScroll="True">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-        </Grid>
-    </ListBox>
+             ScrollViewer.CanContentScroll="True"
+                 BorderThickness="0"
+                 Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </ListBox>
+    </Border>
 </UserControl>

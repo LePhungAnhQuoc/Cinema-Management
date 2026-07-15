@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -28,9 +29,9 @@ namespace AnhQuoc_WPF_C1_B1
                 {
                     if (value.Username == item.Username)
                     {
-                        bool isMatch = Argon2idHasher.VerifyPassword(value.Password, item.Password);
+                        bool isMatch = Argon2idHasher.VerifyPassword(value.PasswordHash, item.PasswordHash);
 
-                        if (item.Password != null && isMatch)
+                        if (item.PasswordHash != null && isMatch)
                         {
                             return item;
                         }
@@ -56,43 +57,37 @@ namespace AnhQuoc_WPF_C1_B1
         {
             DataProvider.Instance.pathData = Constants.fAccounts;
             DataProvider.Instance.Open();
-            XmlAttribute newAttr = null;
 
             XmlNode root = DataProvider.Instance.nodeRoot;
-            XmlNode newNode = DataProvider.Instance.createNode("Account");
 
-            newAttr = DataProvider.Instance.createAttr("Username");
-            newAttr.Value = item.Username;
-            newNode.Attributes.Append(newAttr);
+            if (item == null)
+                return;
+            XmlNode newNode = DataProvider.Instance.createNode(nameof(Account));
 
-            newAttr = DataProvider.Instance.createAttr("Password");
-            newAttr.Value = item.Password;
-            newNode.Attributes.Append(newAttr);
+            // Get all public instance properties of the seat object
+            PropertyInfo[] properties = item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-            newAttr = DataProvider.Instance.createAttr("Role");
-            newAttr.Value = item.Role.ToString();
-            newNode.Attributes.Append(newAttr);
+            foreach (PropertyInfo property in properties)
+            {
+                // Skip properties that cannot be read (just in case)
+                if (!property.CanRead) continue;
 
-            newAttr = DataProvider.Instance.createAttr("Status");
-            newAttr.Value = item.Status.ToString();
-            newNode.Attributes.Append(newAttr);
+                // Get the current value of the property from your seat object
+                object value = property.GetValue(item);
 
-            newAttr = DataProvider.Instance.createAttr("Image");
-            newAttr.Value = item.Image.ToString();
-            newNode.Attributes.Append(newAttr);
+                // Only serialize if the value is not null
+                if (value != null)
+                {
+                    // 1. Create the XML Attribute using its C# property name (e.g., "Id", "Price", "Type")
+                    XmlAttribute newAttr = DataProvider.Instance.createAttr(property.Name);
 
-            newAttr = DataProvider.Instance.createAttr("Email");
-            newAttr.Value = item.Email.ToString();
-            newNode.Attributes.Append(newAttr);
+                    // 2. Assign the string representation of the value
+                    newAttr.Value = value.ToString();
 
-            newAttr = DataProvider.Instance.createAttr("Phone");
-            newAttr.Value = item.Phone.ToString();
-            newNode.Attributes.Append(newAttr);
-
-            newAttr = DataProvider.Instance.createAttr("Address");
-            newAttr.Value = item.Address.ToString();
-            newNode.Attributes.Append(newAttr);
-
+                    // 3. Append it to the node's attributes collection
+                    newNode.Attributes.Append(newAttr);
+                }
+            }
             root.AppendChild(newNode);
             DataProvider.Instance.Close();
         }
@@ -105,7 +100,7 @@ namespace AnhQuoc_WPF_C1_B1
             XmlNode root = DataProvider.Instance.nodeRoot;
             XmlNode updateNode = root.SelectSingleNode($"Account[@Username='{newItem.Username}']");
 
-            updateNode.Attributes["Password"].Value = newItem.Password;
+            updateNode.Attributes["Password"].Value = newItem.PasswordHash;
             updateNode.Attributes["Role"].Value = newItem.Role.ToString();
             updateNode.Attributes["Status"].Value = newItem.Status.ToString();
             updateNode.Attributes["Image"].Value = newItem.Image;

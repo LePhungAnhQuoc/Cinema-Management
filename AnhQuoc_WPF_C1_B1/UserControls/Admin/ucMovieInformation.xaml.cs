@@ -31,13 +31,26 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
         #region Fields
         private Button addNewDateBtn;
         private Button addNewTimeBtn;
-
+        private DispatcherTimer timer;
+        private bool isUserDraggingSlider = false; // Kiểm tra xem người dùng có đang giữ kéo slider không
+        private bool isPlaying = false;
         #endregion
 
         #region Dependency Property
 
 
-        public bool IsReadonly
+        public RoleTypes GetRole
+        {
+            get { return (RoleTypes)GetValue(GetRoleProperty); }
+            set { SetValue(GetRoleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for GetRole.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty GetRoleProperty =
+            DependencyProperty.Register(nameof(GetRole), typeof(RoleTypes), typeof(ucMovieInformation), new PropertyMetadata(RoleTypes.Admin));
+
+
+        public bool IsReadOnly
         {
             get { return (bool)GetValue(IsReadonlyProperty); }
             set { SetValue(IsReadonlyProperty, value); }
@@ -45,7 +58,7 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
 
         // Using a DependencyProperty as the backing store for IsReadonly.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsReadonlyProperty =
-            DependencyProperty.Register(nameof(IsReadonly), typeof(bool), typeof(ucMovieInformation), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(IsReadOnly), typeof(bool), typeof(ucMovieInformation), new PropertyMetadata(false));
 
 
 
@@ -62,16 +75,10 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
 
         #endregion
 
-        private DispatcherTimer timer;
-        private bool isUserDraggingSlider = false; // Kiểm tra xem người dùng có đang giữ kéo slider không
-        private bool isPlaying = false;
-
-        public Func<RepositoryBase<MovieSchedule>> getMovieScheduleRepo { get; set; }
-        private ObservableCollection<CinemaTypeSchedule> _CinemaTypeSchedulesCollection;
-
-        public ObservableCollection<CinemaTypeSchedule> CinemaTypeSchedulesCollection { get; set; }
 
         #region Properties
+        public ObservableCollection<CinemaTypeSchedule> CinemaTypeSchedulesCollection { get; set; }
+
         private CinemaTypeSchedule _CurrentItem;
         public CinemaTypeSchedule CurrentItem
         {
@@ -120,6 +127,42 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
                 OnPropertyChanged();
             }
         }
+
+        private DateSchedule _SelectedDateSchedule;
+        public DateSchedule SelectedDateSchedule
+        {
+            get { return _SelectedDateSchedule; }
+            set 
+            { 
+                _SelectedDateSchedule = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private CinemaSchedule _SelectedCinemaSchedule;
+        public CinemaSchedule SelectedCinemaSchedule
+        {
+            get { return _SelectedCinemaSchedule; }
+            set 
+            {
+                _SelectedCinemaSchedule = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TimeSchedule _SelectedTimeSchedule;
+
+        public TimeSchedule SelectedTimeSchedule
+        {
+            get { return _SelectedTimeSchedule; }
+            set 
+            { 
+                _SelectedTimeSchedule = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         #endregion
 
         #region PropertyChanged
@@ -432,10 +475,29 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
 
         private void btnTimeSchedule_Click(object sender, RoutedEventArgs e)
         {
-            ucDisplaySeats ucDisplaySeats = new ucDisplaySeats();
-            Window frmDisplaySeats = new Window();
-            frmDisplaySeats.Content = ucDisplaySeats;
-            frmDisplaySeats.Show();
+            if (sender is Button button)
+            {
+                if (button.DataContext is TimeSchedule timeSchedule)
+                {
+                    SelectedTimeSchedule = timeSchedule;
+                }
+            }
+
+            frmBookingTicket frmBookingTicket = new frmBookingTicket();
+            frmBookingTicket.Cinema = SelectedCinemaSchedule.Cinema;
+            frmBookingTicket.Movie = GetMovie;
+            frmBookingTicket.DateSchedule = SelectedDateSchedule;
+            frmBookingTicket.TimeSchedule = SelectedTimeSchedule;
+            //frmBookingTicket.SelectedSeats = 
+
+            if (Application.Current.TryFindResource("BaseWindowStyle") is Style windowStyle)
+            {
+                frmBookingTicket.Style = windowStyle;
+            }
+
+            frmBookingTicket.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            frmBookingTicket.WindowState = WindowState.Maximized;
+            frmBookingTicket.Show();
         }
 
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
@@ -476,6 +538,27 @@ namespace AnhQuoc_WPF_C1_B1.UserControls.Admin
                         dateSchedule.TimeSchedules = null; // Clear the binding reference
                         dateSchedule.TimeSchedules = new List<TimeSchedule>(temporaryList); // Re-assign
                     }
+                }
+            }
+        }
+
+        private void CinemaExpander_Expanded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Expander expander)
+            {
+                if (expander.DataContext is CinemaSchedule cinemaSchedule)
+                {
+                    SelectedCinemaSchedule = cinemaSchedule;
+                }
+            }
+        }
+
+        private void DateSchedule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listBox)
+            {
+                if (listBox.SelectedItem is DateSchedule dateSchedule) {
+                    SelectedDateSchedule = dateSchedule;
                 }
             }
         }

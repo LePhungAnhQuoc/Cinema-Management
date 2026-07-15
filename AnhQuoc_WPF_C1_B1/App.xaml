@@ -4,11 +4,17 @@
              xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
              xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              xmlns:converter="clr-namespace:AnhQuoc_WPF_C1_B1.Converters"
+             xmlns:SystemWindows="clr-namespace:System.Windows;assembly=PresentationFramework"
              StartupUri="MainWindow.xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:syncfusion="http://schemas.syncfusion.com/wpf">
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             ShutdownMode="OnLastWindowClose">
     <Application.Resources>
         <converter:ImageConverter x:Key="ImageConverter" />
+        <converter:TreeViewMarginConverter x:Key="TreeViewMarginConverter" />
+        <converter:ItemIndexConverter x:Key="IndexConverter" />
+        <converter:NullToBoolConverter x:Key="NullToBoolConverter" />
+        <syncfusion:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
         <SolidColorBrush x:Key="accountStatusTrue" Color="Green" />
         <SolidColorBrush x:Key="accountStatusFalse" Color="Red" />
@@ -18,19 +24,152 @@
         <SolidColorBrush x:Key="BackgroundLight" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="PrimaryAccent" Color="#FF007ACC"/>
 
-        <ImageBrush x:Key="imagebrushStyle">
-            <ImageBrush.ImageSource>
-                <Binding Path="UrlImage" Converter="{StaticResource ImageConverter}" ConverterParameter="Movies">
-                    <!-- 3. Corrected resource paths -->
-                    <Binding.TargetNullValue>
-                        <BitmapImage UriSource="/bin/Debug/Assets/unload_placeholder.png" />
-                    </Binding.TargetNullValue>
-                    <Binding.FallbackValue>
-                        <BitmapImage UriSource="/bin/Debug/Assets/unload_placeholder.png" />
-                    </Binding.FallbackValue>
-                </Binding>
-            </ImageBrush.ImageSource>
-        </ImageBrush>
+        <Style x:Key="placeholderStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" 
+                                CornerRadius="12" 
+                                Background="White">
+                            <Grid>
+                                <TextBlock x:Name="PlaceholderText"
+                                           Text="{TemplateBinding Tag}" 
+                                           Foreground="#C0B9B7" 
+                                           FontSize="{TemplateBinding FontSize}"
+                                           Padding="{TemplateBinding Padding}"
+                                           VerticalAlignment="Center"
+                                           IsHitTestVisible="False"
+                                           Visibility="Collapsed"/>
+
+                                <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BaseWindowStyle" TargetType="{x:Type SystemWindows:Window}">
+            <Setter Property="SizeToContent" Value="Height" />
+        </Style>
+        
+        <!-- Custom Style for the Circular Equals Button -->
+        <Style x:Key="CircleEqualsButtonStyle" TargetType="ToggleButton">
+            <!-- Force equal dimensions to guarantee a perfect circle -->
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <!-- CornerRadius must be exactly half of the Width/Height to make it a circle -->
+                        <Border x:Name="border" 
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="30" 
+                            BorderBrush="#E5E5E5" 
+                            BorderThickness="1">
+
+                            <!-- Drop shadow effect matching the soft look in image_a5ba3f.png -->
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="8" 
+                                      ShadowDepth="2" 
+                                      Direction="270" 
+                                      Opacity="0.1"/>
+                            </Border.Effect>
+
+                            <!-- The Equals Icon Content -->
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <!-- Top Blue Line -->
+                                <Rectangle Width="22" Height="3" Fill="#1E67D6" RadiusX="1.5" RadiusY="1.5"/>
+                                <!-- Gap between lines -->
+                                <Border Height="6"/>
+                                <!-- Bottom Blue Line -->
+                                <Rectangle Width="22" Height="3" Fill="#1E67D6" RadiusX="1.5" RadiusY="1.5"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Hover and Click Animations -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F7F9FC"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#EEF2F8"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.96" ScaleY="0.96" CenterX="30" CenterY="30"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Custom Style for the Back Arrow Navigation Button -->
+        <Style x:Key="CircleBackNavigationButtonStyle" TargetType="Button">
+            <!-- Exact circular proportions -->
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <!-- The outer ring container matching image_b34322.png -->
+                        <Border x:Name="outerCircle" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="#000000" 
+                                BorderThickness="4" 
+                                CornerRadius="32"
+                                SnapsToDevicePixels="True">
+
+                            <!-- Precise path markup representing the sharp arrow geometry -->
+                            <Path x:Name="arrowIcon"
+                                  Data="M 36,16 L 16,30 L 36,44 L 36,35 L 48,35 L 48,25 L 36,25 Z" 
+                                  Fill="#000000" 
+                                  HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"
+                                  Stretch="Uniform"
+                                  Margin="4"/>
+                        </Border>
+
+                        <!-- Interactive Hover & Click States -->
+                        <ControlTemplate.Triggers>
+                            <!-- Invert colors on hover for a modern dynamic feel -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="outerCircle" Property="Background" Value="#000000"/>
+                                <Setter TargetName="arrowIcon" Property="Fill" Value="#FFFFFF"/>
+                            </Trigger>
+                            <!-- Slight press feedback effect -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="outerCircle" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.94" ScaleY="0.94" CenterX="32" CenterY="32"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <!-- 1. Style for the Internal Spinner Columns inside the Dropdown -->
         <Style x:Key="CustomTimeSelectorStyle" TargetType="syncfusion:SfTimeSelector">
@@ -361,7 +500,24 @@ c3 17 -3 26 -22 33 -32 12 -843 12 -873 0z"/>
             <PathGeometry Figures="M872 65 c-11 -12 -10 -15 3 -15 8 0 15 7 15 15 0 18 -2 18 -18 0z"/>
             <PathGeometry Figures="M1017 59 c7 -7 15 -10 18 -7 3 3 -2 9 -12 12 -14 6 -15 5 -6 -5z"/>
         </GeometryGroup>
+        <GeometryGroup FillRule="NonZero" x:Key="movieTicket">
+            <!-- Main structural framing, background outline bounds, and outer panels -->
+            <PathGeometry Figures="M 318.9,18.9 C 316,17.3 237.4,91.5 129.7,193.8 L 108.9,213.6 71.6,213.6 34.3,213.6 28.8,216.3 C 25.3,218.2 22.4,220.6 20.4,223.4 L 17.4,227.8 17.1,267 C 16.8,312.6 16,309.2 27.7,310.6 C 41.8,312.4 53,319.1 60,329.9 C 65.6,338.5 67.2,344.9 66.7,356 C 66.4,363.6 65.8,366.2 63.2,371.9 C 56.5,386 44.5,394.7 28.3,397.1 C 22.1,398 19.2,398.9 18.2,400.2 C 17.2,401.6 16.9,409.9 16.9,438.5 C 16.9,478.9 17.1,479.7 23.5,485.8 C 30.2,492 12.3,491.6 250.9,491.6 C 494.5,491.6 476.6,492 483.3,485.8 C 489.7,479.7 489.9,478.9 489.9,438.5 C 489.9,409.9 489.6,401.6 488.6,400.2 C 487.3,398.9 484.4,398 478.2,397.1 C 454.9,393.7 439.5,376.6 439.5,354.2 C 439.5,344.1 441.3,337.8 446.4,329.9 C 453.4,319.1 464.6,312.4 478.7,310.6 C 490.4,309.2 489.6,312.6 489.3,267 L 489,227.8 486,223.4 C 484,220.6 481.1,218.2 477.6,216.3 C 472.9,214 471,213.6 463.3,213.6 L 454.5,213.6 465.6,202.9 C 471.7,197 477.5,190.5 478.6,188.4 C 480.8,184 481.1,176.9 480.9,172.2 C 479.7,169.4 442.7,129 437.5,124.8 C 434.9,122.8 430.3,123.4 427.1,126.2 C 412.1,138.8 390,137.6 376.9,123.6 C 363.6,109.4 363.1,89.8 374.3,79.1 C 379.6,73.8 382.7,70.7 380.7,67.6 C 378.3,64.1 338.2,22.1 335.2,20.2 C 331.4,17.7 321.3,17.5 316.9,17.9 Z M 338.3,40.2 C 363.7,66.9 367,70.7 365.7,71.9 C 363.7,73.5 358.9,83.7 357.4,89.5 C 355.6,96 355.7,213.4 332,187.6 C 310.2,161 293.9,138.9 293.9,103.2 C 293.9,94.9 295.6,87.9 299.5,79.9 L 306.5,76.4 314,68.4 C 336.4,44.6 342,38.2 342,39.6 C 342,41.5 339.1,61 323,222.1 L 309.6,234.7 292.8,234.7 276.1,234.7 266.7,225.2 C 256.7,214.9 253.8,213.7 249.8,217.7 C 246.4,221.1 247.2,225.5 252,230.4 L 256.2,234.7 128.3,234.7 C 58,234.7 -0.3,234.9 -0.1,235 C 0.7,235.7 122.5,351.9 128,357.3 L 133.8,362.8 138.1,358.6 C 143,353.8 147.4,353 150.8,356.4 C 154,359.6 153.3,363.5 148.8,368.6 L 144.8,373.2 162.1,389.6 C 193.2,419.2 195.7,421.4 197.5,421.4 C 198.5,421.4 203.3,417.3 208.1,412.2 Z M 379.2,239.6 C 379.5,233.1 379.9,231.7 381.9,230.1 C 385.1,227.5 388.6,227.7 391.5,230.7 C 393.7,232.8 394,263.9 394,328 L 394,335 435.4,335 476.9,335 478.9,332.4 C 480.9,329.8 481,328.6 481,298.6 L 481,267.4 475.1,266.2 C 465.3,264.2 455.4,258.6 447.5,250.6 C 432.4,235.5 426.8,215.7 431.9,195.7 C 434.3,186.7 436.8,181.4 442.6,173.9 C 450.1,164.1 461.8,156.6 474.4,153.4 L 481,151.8 481,122.4 C 481,91.4 480.7,89.1 476.3,87.1 C 474.7,86.4 461.1,86 434,86 L 394,86 394,92.4 C 394,100.4 391.7,104 386.5,104 C 381.3,104 379,100.4 379,92.4 L 379,86 208.5,86 C 85.8,86 37.4,86.3 35.7,87.1 C 31.3,89.1 31,91.4 31,122.4 L 31,151.8 37.6,153.4 C 62,159.5 79.5,180.2 81.7,205.5 C 84,233.1 63.7,260.6 36.9,266.2 L 31,267.4 31,298.6 C 31,328.6 31.1,329.8 33.1,332.4 L 35.1,335 207,335 378.8,335 379.2,327.4 Z" />
 
+            <!-- Left side detailing accents -->
+            <PathGeometry Figures="M 290.6,106.1 C 286.4,102.8 287.1,99.1 293.2,92.4 C 308.3,75.9 314.5,70.2 317.2,70.2 C 355.2,77 348.4,77 352.6,70.2 C 355.6,68.6 357.6,57 369.6,56.1 C 384.1,54.7 384.8,49.9 381.1,54.7 Z" />
+            <PathGeometry Figures="M 334.5,153.5 C 329.8,148.9 330.7,147.2 346.6,130.6 C 359.8,116.8 361.8,115.7 366.5,120.5 C 413.9,167.9 401.3,167.7 391.1,153.5 Z" />
+
+            <!-- Center Icon Core Element (Central emblem mechanism) -->
+            <PathGeometry Figures="M 220,260.9 C 210.6,258 207.9,254.9 197.1,233.2 C 191.7,222.3 187.1,214.4 185.8,213.5 C 184.5,212.7 174.3,210.7 163,209 C 145.5,206.3 141.8,205.5 138,203.1 C 129.1,197.6 125,186.1 128,175.1 C 129.2,171 131.5,168.2 145,154.4 C 153.6,145.6 161,137.6 161.3,136.6 C 161.7,135.6 160.8,125.6 158.9,114.3 C 155.9,96.7 155.6,93.3 156.5,88.9 C 158,82 162.7,76 169.4,72.6 C 174.2,70.1 175.7,69.8 181.4,70.2 C 187.4,70.6 189.6,71.4 205.3,79.8 C 214.9,84.9 223.9,89.2 225.4,89.5 C 227.5,90 232.5,87.8 247.7,80 C 268.8,69.1 271.5,68.4 280.8,71.1 C 286.3,72.7 294.6,81 296.2,86.5 C 297.9,92.4 297.8,94.6 294.4,114.1 C 292.8,123.6 291.4,133 291.4,134.9 C 291.4,138.1 292.7,139.7 302.8,153 C 311.4,164.3 313.7,167.8 313.6,177.3 C 313.5,184.9 311.2,190.4 305.9,195 C 300.8,199.5 295.7,201 275.7,203.8 C 263.2,205.5 256.9,206.9 255.2,208.1 C 253.7,209.2 248.8,217.5 243,228.8 C 236.3,241.9 232.3,248.5 231.7,250.4 C 226.1,255.1 216.4,257.2 209.9,255.3 Z M 231.8,245.2 C 233.1,244.3 238.2,235.3 243.5,224.9 C 253.1,205.6 255.8,202.1 262.7,199.2 C 264.4,198.4 273.7,196.7 283.2,195.3 C 292.7,193.9 302.1,192.4 304.1,191.8 C 308.6,179.2 299,183.1 289.4,183.1 C 285.9,182 284.5,167.7 270.1,174.6 C 261.5,166 253.9,157.6 253,155.9 C 247.2,150.1 247.3,145.6 250.9,125.1 C 254.2,105.9 254.3,105 252.7,101.6 C 251.5,99.2 249.8,97.7 247.3,96.7 C 243.1,95.2 243,95.2 216.5,109.1 C 205,115.1 203.5,115.6 197.7,115.6 C 191.8,115.6 190.6,115.1 172,105.5 C 155.8,97.2 151.9,95.6 149.5,96.1 C 145.8,96.9 141.5,101.9 141.5,105.4 C 141.5,106.9 142.9,115.7 144.5,125.1 C 146.2,134.4 147.5,144.1 147.5,146.6 C 147.5,154.7 143.8,160.2 128.6,174.8 C 121,182.1 115,189.2 115,190.5 C 115,193.6 116.1,198.8 119,201.5 C 121,203.4 124.5,204.2 143.6,206.7 C 164.5,209.5 167.1,210.1 170.2,213.3 C 173.3,216.4 175.4,220.5 181.2,231.5 C 182.2,233 187.1,242.3 192,252.2 C 197,262.1 201.8,270.7 202.8,271.3 C 205.5,272.9 211.4,272.6 213.9,270.5 Z" />
+
+            <!-- Vertical right-side layout nodes (Stacked connection ports/indicators) -->
+            <PathGeometry Figures="M 381.1,271.6 C 379.2,269.1 379,267.6 379,251.2 C 379,234.8 379.2,233.3 381.1,230.8 C 383.9,227.1 386.4,227.1 389.2,230.8 C 391.1,233.3 391.3,234.8 391.3,251.2 C 391.3,267.6 391.1,269.1 389.2,271.6 C 387.7,273.5 386.2,274.2 383.8,274.2 C 381.4,274.2 379.9,273.5 381.1,271.6 Z" />
+            <PathGeometry Figures="M 383.2,334 C 379.5,332.5 378.9,328.8 379.2,309.7 C 379.5,292.3 379.6,291.8 381.9,289.9 C 385.1,287.2 388.6,287.4 391.5,290.4 C 393.9,292.8 394,293 394,311.4 C 394,329.8 393.8,330 391.3,332.5 C 388.7,335.1 386.8,335.5 383.2,334 Z" />
+            <PathGeometry Figures="M 381.1,400.6 C 379.2,398.1 379,396.6 379,380.2 C 379,363.8 379.2,362.3 381.1,359.8 C 383.9,356.1 386.4,356.1 389.2,359.8 C 391.1,362.3 391.3,363.8 391.3,380.2 C 391.3,396.6 391.1,398.1 389.2,400.6 C 387.7,402.5 386.2,403.2 383.8,403.2 C 381.4,403.2 379.9,402.5 381.1,400.6 Z" />
+        </GeometryGroup>
+        
+        
         <SolidColorBrush x:Key="DeleteButtonColor" Color="#a83240" />
         <SolidColorBrush x:Key="ModernBlueBrush" Color="#1976D2" />
         <SolidColorBrush x:Key="BorderGrayBrush" Color="#E0E0E0" />
@@ -375,6 +531,54 @@ c3 17 -3 26 -22 33 -32 12 -843 12 -873 0z"/>
         <SolidColorBrush x:Key="CellTextSelectedColor" Color="#ffffff"/>
         <SolidColorBrush x:Key="BorderColor" Color="#F1F5F9"/>
 
+        <Style TargetType="TreeViewItem" x:Key="TreeViewItemStyle">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TreeViewItem">
+                        <Grid>
+                            <Border Name="Bd" 
+                                Background="Transparent" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Padding="{TemplateBinding Padding}" 
+                                SnapsToDevicePixels="true">
+                                <Grid>
+                                    <ContentPresenter x:Name="PART_Header" 
+                                                        ContentSource="Header" 
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=(local:TreeViewExtensions.IconSource)}" 
+                                          Width="20" Height="20" 
+                                          Margin="10,0,5,0" 
+                                          HorizontalAlignment="Right" 
+                                          IsHitTestVisible="False"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- Thuộc tính thay đổi Background khi mục được chọn -->
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Bd" Property="Background" Value="#f2f0f0"/>
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="20" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <!-- Thuộc tính cho trạng thái con trỏ di chuột qua (tùy chọn) -->
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Bd" Property="Background" Value="AliceBlue"/>
+                                <Setter TargetName="Bd" Property="CornerRadius" Value="20" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="WarningStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#D97706"/>
             <!-- Warm Amber/Orange -->

@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MovieDetails>
   <MovieDetail Id="MV2" Description="" UrlImage="Doraemon và Nobita.jpg" UrlTrailer="" />
+  <MovieDetail Id="MV3" Description="" UrlImage="poster1.png" UrlTrailer="" />
+  <MovieDetail Id="MV7" Description="" UrlImage="poster2.png" UrlTrailer="" />
+  <MovieDetail Id="MV4" Description="" UrlImage="poster3.png" UrlTrailer="" />
+  <MovieDetail Id="MV5" Description="" UrlImage="poster4.png" UrlTrailer="" />
+  <MovieDetail Id="MV6" Description="" UrlImage="poster5.png" UrlTrailer="" />
 </MovieDetails>

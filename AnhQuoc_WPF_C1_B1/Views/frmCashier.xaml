@@ -4,36 +4,414 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1"
+        xmlns:templates="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls.Templates"
         mc:Ignorable="d"
-        Title="Cashier window view"
+        Title="Anh Quoc Cinema" Height="650" Width="1200"
+        Background="Black" WindowStartupLocation="CenterScreen"
         Closed="Window_Closed">
-    <Grid Name="gdData">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="170" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Window.Resources>
+        <Style x:Key="baseStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
 
-        <TreeView Background="#4e73de"
-                  Grid.RowSpan="2">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                    <Setter Property="FontWeight" Value="Normal" />
-                    <Setter Property="Padding" Value="0 15" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="FontWeight" Value="Bold" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TreeView.ItemContainerStyle>
-            <TreeViewItem Visibility="Collapsed" Name="tvViewTicketPrice" Header="View Ticket price" MouseLeftButtonUp="tvViewTicketPrice_MouseLeftButtonUp"/>
-            <TreeViewItem Name="tvBooking" Header="Booking" MouseLeftButtonUp="tvBooking_MouseLeftButtonUp"/>
-            <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp"/>
-        </TreeView>
-        <Grid Grid.Column="1"
-              Name="gdView"/>
-    </Grid>
+        <!-- Animation to Open the Menu and Shrink Content -->
+        <Storyboard x:Key="OpenMenuStoryboard">
+            <!-- Smoothly expands the TreeView Panel width, forcing the content column to miniaturize -->
+            <DoubleAnimation Storyboard.TargetName="TreeViewPanel"
+                         Storyboard.TargetProperty="Width"
+                         To="250" Duration="0:0:0.3" DecelerationRatio="0.5"/>
+
+            <!-- Moves the Toggle Button to match the expanding width -->
+            <DoubleAnimation Storyboard.TargetName="MenuButton"
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                         To="250" Duration="0:0:0.3" DecelerationRatio="0.5"/>
+        </Storyboard>
+
+        <!-- Animation to Close the Menu and Restore Content Width -->
+        <Storyboard x:Key="CloseMenuStoryboard">
+            <!-- Smoothly collapses the TreeView Panel width back to 0 -->
+            <DoubleAnimation Storyboard.TargetName="TreeViewPanel"
+                         Storyboard.TargetProperty="Width"
+                         To="0" Duration="0:0:0.25" AccelerationRatio="0.5"/>
+
+            <!-- Moves the Toggle Button back to its original position -->
+            <DoubleAnimation Storyboard.TargetName="MenuButton"
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                         To="0" Duration="0:0:0.25" AccelerationRatio="0.5"/>
+        </Storyboard>
+    </Window.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch">
+            <Grid>
+                <Grid>
+                    <!-- Background images -->
+                    <Grid Opacity="0.25" 
+                          RenderTransformOrigin="0.5,0.5" 
+                          HorizontalAlignment="Center" 
+                          VerticalAlignment="Center">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <SkewTransform AngleX="-8" AngleY="0"/>
+                                <RotateTransform Angle="-5"/>
+                                <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+
+                        <UniformGrid Columns="6" Rows="3" Width="1400" Height="600">
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <Border Margin="6" Background="#222" CornerRadius="4">
+                                <Image Source="/bin/Debug/Assets/Movies/poster1.png" Stretch="UniformToFill"/>
+                            </Border>
+                        </UniformGrid>
+                    </Grid>
+
+                    <Border>
+                        <Border.Background>
+                            <RadialGradientBrush Center="0.5,0.5" RadiusX="0.7" RadiusY="0.7">
+                                <GradientStop Color="#00000000" Offset="0.2"/>
+                                <GradientStop Color="#BC000000" Offset="0.8"/>
+                                <GradientStop Color="#FF000000" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+
+                <Grid Margin="60,25,60,25">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="ANH QUOC" Foreground="#E50914" FontSize="40" FontFamily="Impact" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Border BorderBrush="#66FFFFFF" BorderThickness="1" CornerRadius="4" Background="#AA000000" Padding="12,5" Margin="0,0,15,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="A Tiếng Việt" Foreground="White" FontSize="14" VerticalAlignment="Center"/>
+                                    <Path Data="M 2,4 L 5,8 L 8,4" Stroke="White" StrokeThickness="1.5" Margin="6,2,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            <Grid>
+                                <Button x:Name="btnLogIn"
+                                        Click="btnLogIn_Click"
+                                        Content="Đăng nhập" Background="#E50914" Foreground="White" FontSize="14" FontWeight="SemiBold" Padding="16,7" BorderThickness="0">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="4"/>
+                                        </Style>
+                                    </Button.Resources>
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsUserLoggedIn}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsUserLoggedIn}" Value="False">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Name="btnLogOut"
+                                        Click="btnLogOut_Click"
+                                        Content="Đăng xuất" Background="#E50914" Foreground="White" FontSize="14" FontWeight="SemiBold" Padding="16,7" BorderThickness="0">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="4"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsUserLoggedIn}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsUserLoggedIn}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Name="stkMainContent"
+                                Grid.Row="1" 
+                                MaxWidth="850"
+                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Grid Width="650" 
+                              Margin="0 50 0 0"
+                              Height="56" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <!-- The input box takes up the majority of the space -->
+                                <ColumnDefinition Width="*" />
+                                <!-- Small gap between the input and button -->
+                                <ColumnDefinition Width="8" />
+                                <!-- The button auto-sizes to its text/padding -->
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- 1. Search movie TextBox -->
+                            <TextBox Name="txtSearchMovie"
+                                     VerticalContentAlignment="Center"
+                                     Padding="16,0" 
+                                     FontSize="16"
+                                     Foreground="White"
+                                     CaretBrush="White"
+                                     KeyDown="txtSearchMovie_KeyDown">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Background" Value="#1A000000" />
+                                        <Setter Property="BorderBrush" Value="#808080" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                        <Style.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Style.Resources>
+
+                                        <Style.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush" Value="#FFFFFF" />
+                                                <Setter Property="Background" Value="#2B000000" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            
+                            <!-- Place holder for TextBox -->
+                            <TextBlock Name="txtPlaceHolder"
+                                       Text="Tìm kiếm phim"
+                                       FontSize="{Binding FontSize, ElementName=txtSearchMovie}"
+                                       Padding="{Binding Padding, ElementName=txtSearchMovie}"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource baseStyle}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtSearchMovie}" Value="">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding Text.IsEmpty, ElementName=txtSearchMovie}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <!-- 2. "Bắt đầu" Button -->
+                            <Button Grid.Column="2" 
+                                    Name="btnSearchMovie"
+                                    Background="#E50914" 
+                                    BorderThickness="0" 
+                                    Padding="32,0" 
+                                    Cursor="Hand"
+                                    Click="btnSearchMovie_Click">
+                                <Button.Resources>
+                                    <!-- Smooth corner radius for the button background -->
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="4"/>
+                                    </Style>
+                                </Button.Resources>
+
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="Bắt đầu" 
+                       Foreground="White" 
+                       FontSize="22" 
+                       FontWeight="Bold" 
+                       VerticalAlignment="Center"/>
+
+                                    <!-- Clean vector chevron arrow (>) -->
+                                    <Path Data="M 2,4 L 8,10 L 2,16" 
+                  Stroke="White" 
+                  StrokeThickness="3" 
+                  StrokeStartLineCap="Round" 
+                  StrokeEndLineCap="Round" 
+                  Margin="14,1,0,0" 
+                  VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                        
+                        <!-- Introduction -->
+                        <Grid HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              Margin="0 50 0 0">
+                            <StackPanel VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Name="stkIntroduction">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsLogIn}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+
+                                <TextBlock Text="Phim, series không giới hạn và nhiều nội dung khác" Foreground="White" FontSize="44" FontWeight="Black" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,12"/>
+                                <TextBlock Text="Giá từ 74.000 đ. Hủy bất kỳ lúc nào." Foreground="White" FontSize="20" FontWeight="Normal" TextAlignment="Center" Margin="0,0,0,24"/>
+
+                                <TextBlock Text="Bạn đã sẵn sàng xem chưa? Đăng nhập ngay và luôn nhé!" Foreground="White" FontSize="18" TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,20"/>
+                                <Grid Width="650" HorizontalAlignment="Center">
+                                    <Button HorizontalAlignment="Center" Background="#E50914" BorderThickness="0" Height="56" Padding="30,0" Click="btnLogIn_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Bắt đầu" Foreground="White" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            <Path Data="M 2,4 L 8,10 L 2,16" Stroke="White" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Margin="12,2,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Popular moives -->
+                        <StackPanel Margin="0 100 0 0">
+                            <TextBlock FontSize="30"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Left"
+                                       Margin="0 0 0 10"
+                                       Style="{StaticResource baseStyle}">Hiện đang thịnh hành</TextBlock>
+                            <templates:ucNetflixStyleUI x:Name="ucNetflixStyleUI" GetMovies="{Binding Movies}"
+                                                        GetFrmCashier="{Binding}">
+                            </templates:ucNetflixStyleUI>
+                        </StackPanel>
+
+                        <StackPanel Margin="0 100 0 0">
+                            <TextBlock FontSize="30"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Left"
+                                       Style="{StaticResource baseStyle}"
+                                       Margin="0 0 0 30">Danh sách các bộ phim</TextBlock>
+                            <ItemsControl ItemsSource="{Binding Movies}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="4" VerticalAlignment="Top"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="180" Height="260" Margin="10">
+
+                                            <Grid x:Name="CardContainer" Background="Transparent" RenderTransformOrigin="0.5,0.5">
+                                                <Grid.RenderTransform>
+                                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                </Grid.RenderTransform>
+
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Panel.ZIndex" Value="999"/>
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                                 To="1.1" Duration="0:0:0.15"/>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                                 To="1.1" Duration="0:0:0.15"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+                                                                <Trigger.ExitActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                                 To="1" Duration="0:0:0.12"/>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                                 To="1" Duration="0:0:0.12"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.ExitActions>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+
+
+                                                <Border Tag="{Binding Name}"
+                                                        CornerRadius="6" BorderThickness="0"
+                                                        MouseDown="MoviePoster_MouseDown">
+                                                    <Border.Background>
+                                                        <ImageBrush ImageSource="{Binding UrlImage, Converter={StaticResource ImageConverter}, ConverterParameter='Movies'}" 
+Stretch="UniformToFill"/>
+                                                    </Border.Background>
+                                                </Border>
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </Window>

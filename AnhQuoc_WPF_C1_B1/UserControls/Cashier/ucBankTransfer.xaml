@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="AnhQuoc_WPF_C1_B1.UserControls.Cashier.ucBankTransfer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnhQuoc_WPF_C1_B1.UserControls.Cashier"
+             mc:Ignorable="d" 
+             d:DesignHeight="1050" d:DesignWidth="800">
+    <!-- BANK TRANSFER / QR DESIGN -->
+    <ScrollViewer>
+        <Border Background="#FFF8F7" CornerRadius="14" Padding="18" Margin="0,0,0,20" BorderBrush="#F2D9D9" BorderThickness="1"
+            Width="700">
+            <StackPanel>
+                <!-- Header + Timer -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Chuyển khoản / Quét mã QR" FontSize="18" FontWeight="Bold" Foreground="#111" />
+                </Grid>
+
+                <Separator Margin="0,12,0,12" Background="#F0EDED" Height="1"/>
+
+                <!-- Bank row -->
+                <Grid Margin="0,6" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="NGÂN HÀNG" Foreground="#7D7471" FontSize="12" FontWeight="Bold"/>
+                        <TextBlock Text="Ngân hàng TMCP Quân Đội (MB)" FontSize="16" FontWeight="Bold" Foreground="#111"/>
+                    </StackPanel>
+                </Grid>
+
+                <Separator Margin="0,12,0,12" Background="#F0EDED" Height="1"/>
+
+                <!-- Account number row -->
+                <Grid Margin="0,6" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="tbAccountNumber" Text="SỐ TÀI KHOẢN" Foreground="#7D7471" FontSize="12" FontWeight="Bold"/>
+                        <TextBlock x:Name="tbAccountNumberValue" Text="86870029" FontSize="18" FontWeight="Bold" Foreground="#111"/>
+                    </StackPanel>
+
+                    <Button Click="BtnCopy_Click"
+                            Style="{StaticResource RoundedButtonStyle}"
+                        Grid.Column="1" Content="Sao chép" Margin="12,0,0,0" Padding="12,6" VerticalAlignment="Center" Cursor="Hand"
+                       Background="Transparent" BorderBrush="#F2D9D9" BorderThickness="1" Foreground="#C82333"
+                       Tag="{Binding Text, ElementName=tbAccountNumberValue}">
+                    </Button>
+                </Grid>
+
+                <Separator Margin="0,12,0,12" Background="#F0EDED" Height="1"/>
+
+                <!-- Account owner -->
+                <StackPanel Margin="0,6">
+                    <TextBlock Text="CHỦ TÀI KHOẢN" Foreground="#7D7471" FontSize="12" FontWeight="Bold"/>
+                    <TextBlock Text="CONG TY TNHH MONET" FontSize="16" FontWeight="Bold" Foreground="#111"/>
+                </StackPanel>
+
+                <Separator Margin="0,12,0,12" Background="#F0EDED" Height="1"/>
+
+                <!-- Transfer note -->
+                <Grid Margin="0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="NỘI DUNG CHUYỂN KHOẢN" Foreground="#7D7471" FontSize="12" FontWeight="Bold"/>
+                        <TextBlock Name="txtTransferDetails" Text="MV1271552" FontSize="16" FontWeight="Bold" Foreground="#111"/>
+                        <TextBlock Text="Nhập chính xác nội dung để được xuất vé tự động." Foreground="#C82333" FontSize="13" Margin="0,6,0,0"/>
+                    </StackPanel>
+                    <Button Click="BtnCopy_Click"  
+                            Tag="{Binding Text, ElementName=txtTransferDetails}"
+                            Grid.Column="1" Content="Sao chép" Margin="12,0,0,0" Padding="12,6" VerticalAlignment="Center" Cursor="Hand"
+                       Background="Transparent" BorderBrush="#F2D9D9" BorderThickness="1" Foreground="#C82333">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource Self}}" />
+                                <Setter Property="BorderBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource Self}}" />
+                                <Setter Property="BorderThickness" Value="{Binding BorderThickness, RelativeSource={RelativeSource Self}}" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+
+                <Separator Margin="0,12,0,12" Background="#F0EDED" Height="1"/>
+
+                <!-- Amount -->
+                <StackPanel Margin="0,6">
+                    <TextBlock Text="SỐ TIỀN" Foreground="#7D7471" FontSize="12" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding TotalPrice, StringFormat='{}{0:N0} đ'}" FontSize="20" FontWeight="Bold" Foreground="#111"/>
+                </StackPanel>
+
+                <!-- QR CODE SECTION -->
+                <StackPanel HorizontalAlignment="Center" Margin="0,18,0,0">
+                    <Border Background="White" CornerRadius="12" Padding="16" BorderBrush="#F2D9D9" BorderThickness="1" Width="280">
+                        <StackPanel HorizontalAlignment="Center">
+                            <!-- QR square -->
+                            <Border BorderBrush="#2B5BA8" BorderThickness="2" Width="200" Height="200" Background="White" HorizontalAlignment="Center">
+                                <Image Source="/bin/Debug/Assets/Others/QR_Code.png" Stretch="UniformToFill"/>
+                            </Border>
+                            <TextBlock Text="Chụp màn hình để quét mã QR" Foreground="#7D7471" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>

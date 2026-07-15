@@ -157,10 +157,7 @@ namespace AnhQuoc_WPF_C1_B1
 
         private void tvLogOut_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.Hide();
-            getFrmLogin().ClearLogin();
-            getFrmLogin().Show();
-            getFrmLogin().txtUsername.Focus();
+            MainWindow.LogOut(this, getFrmLogin());
         }
         
         private void tvMovie_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

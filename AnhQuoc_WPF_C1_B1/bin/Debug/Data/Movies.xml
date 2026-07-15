@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Movies>
-  <Movie Id="MV2" Name="Movie 1" Genres="G1 G3" ReleaseDate="23/04/2025" RunningTime="80" Rated="K" Description="" UrlImage="Doraemon và Nobita.jpg" UrlTrailer="" />
+  <Movie Id="MV2" Name="Doraemon và Nobita" Genres="G1 G3" ReleaseDate="23/04/2025" RunningTime="80" Rated="K" Description="" UrlImage="Doraemon và Nobita.jpg" UrlTrailer="" />
+  <Movie Id="MV3" Name="Bài học đáng đời" Genres="G1 G3" ReleaseDate="12/03/2026" RunningTime="80" Rated="T13" Description="" UrlImage="poster1.png" UrlTrailer="" />
+  <Movie Id="MV7" Name="Thỏ ơi" Genres="G3 G5" ReleaseDate="13/05/2026" RunningTime="70" Rated="T13" Description="" UrlImage="poster2.png" UrlTrailer="" />
+  <Movie Id="MV4" Name="Đặc vụ kim tái khởi động" Genres="G1 G3" ReleaseDate="15/07/2026" RunningTime="60" Rated="T13" Description="" UrlImage="poster3.png" UrlTrailer="" />
+  <Movie Id="MV5" Name="Thế thần Ngự Kí Sư" Genres="G1 G2 G3 G4 G5 G6 G7" ReleaseDate="22/11/2026" RunningTime="60" Rated="T13" Description="" UrlImage="poster4.png" UrlTrailer="" />
+  <Movie Id="MV6" Name="Truy tìm Long Diên Hương" Genres="G1 G3" ReleaseDate="11/01/2026" RunningTime="78" Rated="T13" Description="" UrlImage="poster5.png" UrlTrailer="" />
 </Movies>

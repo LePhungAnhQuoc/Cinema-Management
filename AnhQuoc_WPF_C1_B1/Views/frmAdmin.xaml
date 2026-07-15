@@ -9,56 +9,6 @@
         Loaded="Window_Loaded"
         Title="Admin view" Height="600" Width="1300"
         Closed="Window_Closed">
-    <Window.Resources>
-        <Style TargetType="TreeViewItem" x:Key="TreeViewItemStyle">
-            <Setter Property="HeaderTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <ContentPresenter Content="{Binding}" />
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TreeViewItem">
-                        <Grid>
-                            <Border Name="Bd" 
-                                Background="Transparent" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" 
-                                Padding="{TemplateBinding Padding}" 
-                                SnapsToDevicePixels="true">
-                                <Grid>
-                                    <ContentPresenter x:Name="PART_Header" 
-                                                        ContentSource="Header" 
-                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
-                                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=(local:TreeViewExtensions.IconSource)}" 
-                                          Width="20" Height="20" 
-                                          Margin="10,0,5,0" 
-                                          HorizontalAlignment="Right" 
-                                          IsHitTestVisible="False"/>
-                                </Grid>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <!-- Thuộc tính thay đổi Background khi mục được chọn -->
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="Bd" Property="Background" Value="#f2f0f0"/>
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="20" />
-                                <Setter Property="Foreground" Value="Black"/>
-                            </Trigger>
-                            <!-- Thuộc tính cho trạng thái con trỏ di chuột qua (tùy chọn) -->
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="Bd" Property="Background" Value="AliceBlue"/>
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="20" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-
     <Grid Name="gdAdmin">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
@@ -86,9 +36,9 @@
                            Foreground="Black"></Label>
             </StackPanel>
             <TreeView Background="White"
-                  Grid.RowSpan="2"
-                  BorderThickness="0"
-                  Width="250">
+                      Grid.RowSpan="2"
+                      BorderThickness="0"
+                      Width="250">
                 <TreeView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource TreeViewItemStyle}" TargetType="{x:Type TreeViewItem}">
                         <Setter Property="FontWeight" Value="Normal" />
@@ -106,7 +56,7 @@
                 <TreeViewItem Name="tvMovie" Header="Movie" MouseLeftButtonUp="tvMovie_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/movie.png"/>
                 <TreeViewItem Name="tvMovieSchedule" Header="Movie Schedule" MouseLeftButtonUp="tvMovieSchedule_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/movie-schedule.png"/>
                 <TreeViewItem Name="tvStatistical" Header="Statistical" MouseLeftButtonUp="tvStatistical_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/Statistical.png"/>
-                <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/logout.png"/>
+                <TreeViewItem Name="tvLogOut" Header="Log out" MouseLeftButtonUp="tvLogOut_MouseLeftButtonUp" local:TreeViewExtensions.IconSource="/bin/Debug/Assets/Others/logout.png"/>
             </TreeView>
         </StackPanel>
 

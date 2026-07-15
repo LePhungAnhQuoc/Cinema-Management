@@ -149,7 +149,7 @@
 
         <!-- Movie Poster with modern rounded corners -->
         <Border Width="300" Grid.Column="0" CornerRadius="8" Effect="{StaticResource DropShadowStyle1}" Margin="0,0,24,0">
-            <Image Source="{Binding Movie.UrlImage}" Stretch="Uniform"/>
+            <Image Source="{Binding Movie.UrlImage, Converter={StaticResource ImageConverter}, ConverterParameter='Movies'}" Stretch="Uniform"/>
         </Border>
 
 
@@ -216,181 +216,236 @@
                             FontSize="16" FontWeight="SemiBold"/>
                     <TextBlock Text="{Binding Movie.Description}" TextWrapping="Wrap" LineHeight="20" Foreground="#333333"/>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Movie schedules" 
-                                   Margin="0 10 0 15"
-                                   FontSize="16" FontWeight="SemiBold"/>
-                        <Button Name="btnAddNewSchedule"
-                                Grid.Column="1"
-                                Padding="10"
-                                VerticalAlignment="Center"
-                                Click="btnAddNewSchedule_Click"
-                                Content="Add new schedule"
-                                Style="{StaticResource AddButtonStyle}"/>
+                    <Grid Name="MovieSchedulePart">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0"
+                              Margin="0 0 0 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Movie schedules" 
+               Margin="0 10 0 15"
+               FontSize="16" FontWeight="SemiBold"/>
+                            <Button Name="btnAddNewSchedule"
+                                    Grid.Column="1"
+                                    Padding="10"
+                                    VerticalAlignment="Center"
+                                    Click="btnAddNewSchedule_Click"
+                                    Content="Add new schedule">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource AddButtonStyle}">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
-                    </Grid>
-                    <Grid Margin="0 0 0 20">
-                        <ListBox x:Name="lstMovieScheduleControl"
-                                 ItemsSource="{Binding CinemaTypeSchedulesCollection}"
-                                 SelectedItem="{Binding CurrentItem, Mode=TwoWay}"
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                </Style>
-                            </ListBox.ItemContainerStyle>
+                        </Grid>
+                        <Grid Margin="0 0 0 20"
+                              Grid.Row="1">
+                            <ListBox x:Name="lstMovieScheduleControl"
+             ItemsSource="{Binding CinemaTypeSchedulesCollection}"
+             SelectedItem="{Binding CurrentItem, Mode=TwoWay}"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
 
-                            <ListBox.Style>
-                                <Style TargetType="ListBox">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CinemaTypeSchedulesCollection.Count}" Value="0">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListBox.Style>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Expander Expanded="Expander_Expanded"
-                                              Style="{StaticResource CustomExpanderStyle}">
-                                        <Expander.Header>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{Binding CinemaType}"
-                                                           VerticalAlignment="Center"
-                                                           FontSize="18" FontWeight="Bold" Foreground="Black"/>
-                                                <Button Name="btnAddNewCinema"
-                                                        Grid.Column="1"
-                                                        Click="btnAddNewCinema_Click"
-                                                        Content="Add new cinema"
-                                                        Style="{StaticResource AddButtonStyle}"
-                                                        Padding="10 5"
-                                                        VerticalAlignment="Stretch"
-                                                        Margin="0 0 10 0"/>
-                                            </Grid>
-                                        </Expander.Header>
-                                        <Expander.Tag>
-                                            <TextBlock Text="01" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextPurple}"/>
-                                        </Expander.Tag>
+                                <ListBox.Style>
+                                    <Style TargetType="ListBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CinemaTypeSchedulesCollection.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListBox.Style>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander Expanded="Expander_Expanded"
+                          Style="{StaticResource CustomExpanderStyle}">
+                                            <Expander.Header>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding CinemaType}"
+                                       VerticalAlignment="Center"
+                                       FontSize="18" FontWeight="Bold" Foreground="Black"/>
+                                                    <Button Name="btnAddNewCinema"
+                                                            Grid.Column="1"
+                                                            Click="btnAddNewCinema_Click"
+                                                            Content="Add new cinema"
+                                                            Padding="10 5"
+                                                            VerticalAlignment="Stretch"
+                                                            Margin="0 0 10 0">
+                                                        <Button.Style>
+                                                            <Style TargetType="Button" BasedOn="{StaticResource AddButtonStyle}">
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Button.Style>
+                                                    </Button>
+                                                </Grid>
+                                            </Expander.Header>
+                                            <Expander.Tag>
+                                                <TextBlock Text="01" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextPurple}"/>
+                                            </Expander.Tag>
 
-                                        <ItemsControl ItemsSource="{Binding CinemaSchedules}">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Expander Style="{StaticResource CustomExpanderStyle}">
-                                                        <Expander.Header>
-                                                            <Grid>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*" />
-                                                                    <ColumnDefinition Width="auto" />
-                                                                </Grid.ColumnDefinitions>
-                                                                <TextBlock Text="{Binding Cinema.Name}" FontSize="18" FontWeight="Bold" Foreground="Black"/>
-                                                                <Grid Grid.Column="1"
-                                                                      VerticalAlignment="Stretch"
-                                                                      Margin="0 0 10 0">
-                                                                    <Button Click="btnAddNewDate_Click"
-                                                                            Content="Add new date"
-                                                                            Style="{StaticResource AddButtonStyle}"
-                                                                            Padding="10 5"/>
-                                                                    <DatePicker Style="{StaticResource datePicker}"
-                                                                                Padding="10 5"
-                                                                                SelectedDateChanged="DatePicker_SelectedDateChanged"
-                                                                                Visibility="Collapsed"/>
+                                            <ItemsControl ItemsSource="{Binding CinemaSchedules}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Expander Style="{StaticResource CustomExpanderStyle}"
+                                                                  Expanded="CinemaExpander_Expanded">
+                                                            <Expander.Header>
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="auto" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <TextBlock Text="{Binding Cinema.Name}" FontSize="18" FontWeight="Bold" Foreground="Black"/>
+                                                                    <Grid Grid.Column="1"
+                                                  VerticalAlignment="Stretch"
+                                                  Margin="0 0 10 0">
+                                                                        <Button Click="btnAddNewDate_Click"
+                                                                                Content="Add new date"
+                                                                                Padding="10 5">
+                                                                            <Button.Style>
+                                                                                <Style TargetType="Button" BasedOn="{StaticResource AddButtonStyle}">
+                                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </Button.Style>
+                                                                        </Button>
+                                                                        <DatePicker Style="{StaticResource datePicker}"
+                                                            Padding="10 5"
+                                                            SelectedDateChanged="DatePicker_SelectedDateChanged"
+                                                            Visibility="Collapsed"/>
+                                                                    </Grid>
                                                                 </Grid>
-                                                            </Grid>
-                                                        </Expander.Header>
-                                                        <Expander.Tag>
-                                                            <TextBlock Text="01" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextPurple}"/>
-                                                        </Expander.Tag>
-                                                        <ItemsControl ItemsSource="{Binding DatesSchedule}">
-                                                            <ItemsControl.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <Grid Margin="0,20,0,15">
-                                                                        <Grid.RowDefinitions>
-                                                                            <RowDefinition Height="*" />
-                                                                            <RowDefinition Height="*" />
-                                                                        </Grid.RowDefinitions>
-                                                                        <!-- Modern Date Header -->
-                                                                        <Grid Margin="0,0,0,8">
-                                                                            <Grid.ColumnDefinitions>
-                                                                                <ColumnDefinition Width="*" />
-                                                                                <ColumnDefinition Width="auto" />
-                                                                            </Grid.ColumnDefinitions>
-                                                                            <!-- Simple calendar icon or text block layout -->
-                                                                            <TextBlock Text="{Binding Date, StringFormat='{}{0:dddd, MMMM dd, yyyy}'}" 
-                                                            FontSize="14" FontWeight="SemiBold" Foreground="#666666"/>
+                                                            </Expander.Header>
+                                                            <Expander.Tag>
+                                                                <TextBlock Text="01" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextPurple}"/>
+                                                            </Expander.Tag>
+                                                            <ListBox ItemsSource="{Binding DatesSchedule}"
+                                                                     SelectedItem="{Binding SelectedDateSchedule}"
+                                                                     SelectionChanged="DateSchedule_SelectionChanged"
+                                                                     HorizontalContentAlignment="Stretch"
+                                                                     Background="Transparent"
+                                                                     BorderThickness="0">
+                                                                <ListBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <Grid Margin="0,20,0,15">
+                                                                            <Grid.RowDefinitions>
+                                                                                <RowDefinition Height="*" />
+                                                                                <RowDefinition Height="*" />
+                                                                            </Grid.RowDefinitions>
+                                                                            <!-- Modern Date Header -->
+                                                                            <Grid Margin="0,0,0,8">
+                                                                                <Grid.ColumnDefinitions>
+                                                                                    <ColumnDefinition Width="*" />
+                                                                                    <ColumnDefinition Width="auto" />
+                                                                                </Grid.ColumnDefinitions>
+                                                                                <!-- Simple calendar icon or text block layout -->
+                                                                                <TextBlock Text="{Binding Date, StringFormat='{}{0:dddd, MMMM dd, yyyy}'}" 
+                                                                                           FontSize="14" FontWeight="SemiBold" Foreground="#666666"/>
 
-                                                                            <Grid Grid.Column="1"
-                                                                                  VerticalAlignment="Stretch"
-                                                                                  Margin="0 0 20 0">
-                                                                                <Button Click="btnAddNewTime_Click"
-                                                                                        Content="Add new time"
-                                                                                        Style="{StaticResource AddButtonStyle}"
-                                                                                        Padding="10 5"/>
-                                                                                <tool:TimePicker HorizontalContentAlignment="Center"
-                                                                                                 Padding="10 5"
-                                                                                                 Visibility="Collapsed"
-                                                                                                 FormatString="HH\:mm"
-                                                                                                 ValueChanged="TimePicker_ValueChanged"/>
+                                                                                <Grid Grid.Column="1"
+                                                                                    VerticalAlignment="Stretch"
+                                                                                    Margin="0 0 20 0">
+                                                                                    <Button Click="btnAddNewTime_Click"
+                                                                                            Content="Add new time"
+                                                                                            Padding="10 5">
+                                                                                        <Button.Style>
+                                                                                            <Style TargetType="Button" BasedOn="{StaticResource AddButtonStyle}">
+                                                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                                                <Style.Triggers>
+                                                                                                    <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                                                    </DataTrigger>
+                                                                                                </Style.Triggers>
+                                                                                            </Style>
+                                                                                        </Button.Style>
+                                                                                    </Button>
+                                                                                    <tool:TimePicker HorizontalContentAlignment="Center"
+                                                                                                     Padding="10 5"
+                                                                                                     Visibility="Collapsed"
+                                                                                                     FormatString="HH\:mm"
+                                                                                                     ValueChanged="TimePicker_ValueChanged"/>
+                                                                                </Grid>
+
                                                                             </Grid>
 
+                                                                            <ListBox Grid.Row="1"
+                                                                                     ItemsSource="{Binding TimeSchedules}"
+                                                                                     SelectedItem="{Binding SelectedTimeSchedule}"
+                                                                                     Margin="0 20 0 0"
+                                                                                     SelectedValue="{Binding SelectedTimeSlot}"
+                                                                                     HorizontalContentAlignment="Center"
+                                                                                     Background="Transparent"
+                                                                                     BorderThickness="0">
+                                                                                <ListBox.ItemsPanel>
+                                                                                    <ItemsPanelTemplate>
+                                                                                        <UniformGrid Columns="3"/>
+                                                                                    </ItemsPanelTemplate>
+                                                                                </ListBox.ItemsPanel>
+                                                                                <ListBox.ItemTemplate>
+                                                                                    <DataTemplate>
+                                                                                        <!-- Modern Clickable Time Block (Chip Style) -->
+                                                                                        <Button Content="{Binding Time}" 
+                                                                                                Padding="14,8,14,8"
+                                                                                                Cursor="Hand"
+                                                                                                Style="{StaticResource TimeScheduleButton}"
+                                                                                                HorizontalAlignment="Stretch"
+                                                                                                Click="btnTimeSchedule_Click"/>
+                                                                                    </DataTemplate>
+                                                                                </ListBox.ItemTemplate>
+                                                                            </ListBox>
                                                                         </Grid>
-
-                                                                        <!-- Horizontal wrap layout for Showtimes -->
-                                                                        <ItemsControl Grid.Row="1"
-                                                                                      ItemsSource="{Binding TimeSchedules}"
-                                                                                      Margin="0 20 0 0">
-                                                                            <ItemsControl.ItemsPanel>
-                                                                                <ItemsPanelTemplate>
-                                                                                    <!-- Automatically wraps time blocks horizontally -->
-                                                                                    <UniformGrid Columns="3"/>
-                                                                                </ItemsPanelTemplate>
-                                                                            </ItemsControl.ItemsPanel>
-                                                                            <ItemsControl.ItemTemplate>
-                                                                                <DataTemplate>
-                                                                                    <!-- Modern Clickable Time Block (Chip Style) -->
-                                                                                    <Button Content="{Binding Time}" 
-                                                                                            Margin="0,0,8,8"
-                                                                                            Padding="14,8,14,8"
-                                                                                            Cursor="Hand"
-                                                                                            Style="{StaticResource TimeScheduleButton}"
-                                                                                            HorizontalAlignment="Stretch"
-                                                                                            Click="btnTimeSchedule_Click"/>
-                                                                                </DataTemplate>
-                                                                            </ItemsControl.ItemTemplate>
-                                                                        </ItemsControl>
-                                                                    </Grid>
-                                                                </DataTemplate>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </Expander>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </Expander>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <TextBlock Name="txtNoMovieSchedule" Text="No movie schedule yet" LineHeight="20" Foreground="#333333">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CinemaTypeSchedulesCollection.Count}" Value="0">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                                                                    </DataTemplate>
+                                                                </ListBox.ItemTemplate>
+                                                            </ListBox>
+                                                        </Expander>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock Name="txtNoMovieSchedule" Text="No movie schedule yet" LineHeight="20" Foreground="#333333">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CinemaTypeSchedulesCollection.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
                     </Grid>
-
                     <TextBlock Text="Watch movie trailer" 
                                 Margin="0 10 0 15"
                                 FontSize="16" FontWeight="SemiBold"/>

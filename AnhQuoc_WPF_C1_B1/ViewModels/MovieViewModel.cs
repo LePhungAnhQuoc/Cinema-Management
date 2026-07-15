@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -124,6 +125,26 @@ namespace AnhQuoc_WPF_C1_B1
                     return item;
             }
             return null;
+        }
+        public List<Movie> SearchMovies(string userInput)
+        {
+            userInput = userInput.Trim();
+
+            // 1. Handle empty or whitespace-only input safely
+            if (string.IsNullOrWhiteSpace(userInput))
+            {
+                return MovieRepo.Gets(); // Or return an empty list depending on your UX needs
+            }
+
+            var filteredMovies = MovieRepo.Gets()
+                .Where(m => m.Name != null &&
+                            CultureInfo.CurrentCulture.CompareInfo.IndexOf(
+                                m.Name,
+                                userInput,
+                                CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace) >= 0)
+                .ToList();
+
+            return filteredMovies;
         }
 
         public List<Movie> FillByList(List<Movie> lst)

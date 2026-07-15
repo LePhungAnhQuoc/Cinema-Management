@@ -104,7 +104,7 @@ namespace AnhQuoc_WPF_C1_B1
             this.Close();
             if (getFeature() == "add")
             {
-                GetAccount.Password = Argon2idHasher.HashPassword(GetAccount.Password);
+                GetAccount.PasswordHash = Argon2idHasher.HashPassword(GetAccount.PasswordHash);
                 getUcUserTable().AddData(GetAccount);
             }
             else if (getFeature() == "update")

@@ -153,7 +153,7 @@ namespace AnhQuoc_WPF_C1_B1
         {
             ucMovieInformation ucMovieInformation = new ucMovieInformation();
             ucMovieInformation.GetMovie = dgTable.SelectedItem as Movie;
-            ucMovieInformation.IsReadonly = false;
+            ucMovieInformation.IsReadOnly = false;
             Window frmMovieInformation = new Window();
             frmMovieInformation.Content = ucMovieInformation;
             frmMovieInformation.Show();

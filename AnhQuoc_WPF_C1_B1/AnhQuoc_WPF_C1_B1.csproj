@@ -162,10 +162,15 @@
     <Compile Include="Converters\CornerRadiusSideConverter.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Converters\IndexListViewItemConverter.cs" />
+    <Compile Include="Converters\ItemIndexConverter.cs" />
+    <Compile Include="Converters\LogicalNegationConverter.cs" />
+    <Compile Include="Converters\NullToBoolConverter.cs" />
+    <Compile Include="Converters\SeatStyleConverter.cs" />
     <Compile Include="Converters\StatusToLockConverter.cs" />
     <Compile Include="Converters\StatusToTextConverter.cs" />
     <Compile Include="Converters\StringArrayConverter.cs" />
     <Compile Include="Converters\TimeFormatToDateTimeFormatConverter.cs" />
+    <Compile Include="Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Converters\YesNoToBooleanConverter.cs" />
     <Compile Include="DataProviders\MenuData.cs" />
     <Compile Include="Enums\RoleTypes.cs" />
@@ -174,6 +179,7 @@
     <Compile Include="Extensions\TreeViewExtensions.cs" />
     <Compile Include="Helpers\Argon2idHasher.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
+    <Compile Include="Helpers\ScrollViewerBehavior.cs" />
     <Compile Include="Models\DTOs\AccountInfo.cs" />
     <Compile Include="Enums\CinemaType.cs" />
     <Compile Include="Models\CinemaSchedule.cs" />
@@ -188,6 +194,9 @@
     </Compile>
     <Compile Include="UserControls\Admin\ucUserTable.xaml.cs">
       <DependentUpon>ucUserTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Cashier\ucBankTransfer.xaml.cs">
+      <DependentUpon>ucBankTransfer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Cashier\ucBooking.xaml.cs">
       <DependentUpon>ucBooking.xaml</DependentUpon>
@@ -236,9 +245,20 @@
     <Compile Include="UserControls\Templates\ucDashboardCard.xaml.cs">
       <DependentUpon>ucDashboardCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ucDisplaySeats.xaml.cs">
+    <Compile Include="UserControls\Templates\ucDisplaySeats.xaml.cs">
       <DependentUpon>ucDisplaySeats.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Templates\ucNetflixStyleUI.xaml.cs">
+      <DependentUpon>ucNetflixStyleUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Templates\ucPaymentInformation.xaml.cs">
+      <DependentUpon>ucPaymentInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Templates\ucTicketSummary.xaml.cs">
+      <DependentUpon>ucTicketSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\Others\FormBase.cs" />
+    <Compile Include="Utilities\Others\SessionManager.cs" />
     <Compile Include="ViewModels\CinemaScheduleViewModel.cs" />
     <Compile Include="ViewModels\CinemaTypeScheduleViewModel.cs" />
     <Compile Include="ViewModels\CinemaTypeViewModel.cs" />
@@ -263,6 +283,9 @@
     </Compile>
     <Compile Include="Views\frmAddCinemaType.xaml.cs">
       <DependentUpon>frmAddCinemaType.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmBookingTicket.xaml.cs">
+      <DependentUpon>frmBookingTicket.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\frmCreateMovie.xaml.cs">
       <DependentUpon>frmCreateMovie.xaml</DependentUpon>
@@ -332,6 +355,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControls\Cashier\ucBankTransfer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Cashier\ucBooking.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -392,7 +419,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\ucDisplaySeats.xaml">
+    <Page Include="UserControls\Templates\ucDisplaySeats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Templates\ucNetflixStyleUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Templates\ucPaymentInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Templates\ucTicketSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -417,6 +456,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\frmAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\frmBookingTicket.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -518,7 +561,6 @@
     <Resource Include="bin\Debug\Assets\account.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="bin\Debug\Assets\logout.png" />
     <Resource Include="bin\Debug\Assets\movie-schedule.png" />
     <Resource Include="bin\Debug\Assets\movie.png" />
     <Resource Include="bin\Debug\Assets\Statistical.png" />
@@ -538,6 +580,29 @@
     <Resource Include="bin\Debug\Assets\UserImages\portrait-5.jpg" />
     <Resource Include="bin\Debug\Assets\UserImages\portrait-6.jpg" />
     <Resource Include="bin\Debug\Assets\UserImages\portrait-7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\Others\ticket.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\Others\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\Movies\portrait-7.jpg" />
+    <Resource Include="bin\Debug\Assets\Movies\poster1.png" />
+    <Resource Include="bin\Debug\Assets\Movies\poster2.png" />
+    <Resource Include="bin\Debug\Assets\Movies\poster3.png" />
+    <Resource Include="bin\Debug\Assets\Movies\poster4.png" />
+    <Resource Include="bin\Debug\Assets\Movies\poster5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\Others\Payment_Methods\ApplePay.jpg" />
+    <Resource Include="bin\Debug\Assets\Others\Payment_Methods\momoIcon.jpg" />
+    <Resource Include="bin\Debug\Assets\Others\Payment_Methods\Mv.jpg" />
+    <Resource Include="bin\Debug\Assets\Others\Payment_Methods\Payoo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Assets\Others\QR_Code.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,6 +11,19 @@ namespace AnhQuoc_WPF_C1_B1
 {
     public class Account: INotifyPropertyChanged
     {
+        public Guid Id { get; set; }
+
+        private string _FullName;
+        public string FullName
+        {
+            get { return _FullName; }
+            set 
+            { 
+                _FullName = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _Image;
         public string Image
         {
@@ -33,13 +46,13 @@ namespace AnhQuoc_WPF_C1_B1
             }
         }
 
-        private string _Password;
-        public string Password
+        private string _PasswordHash;
+        public string PasswordHash
         {
-            get { return _Password; }
+            get { return _PasswordHash; }
             set
             {
-                _Password = value;
+                _PasswordHash = value;
                 OnPropertyChanged();
             }
         }
@@ -91,10 +104,13 @@ namespace AnhQuoc_WPF_C1_B1
             }
         }
 
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+
         public Account()
         {
             this.Username = string.Empty;
-            this.Password = string.Empty;
+            this.PasswordHash = string.Empty;
             this.Status = 1;
         }
 
